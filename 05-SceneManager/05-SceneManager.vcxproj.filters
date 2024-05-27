@@ -75,6 +75,9 @@
     <ClCompile Include="Portal.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="SmallTree.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Animation.h">
@@ -146,5 +149,58 @@
     <ClInclude Include="Portal.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="SmallTree.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="mario-sample.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
+    <Text Include="x64\Debug\05-SceneManager.vcxproj.FileListAbsolute.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
+    <Text Include="land.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
+    <Text Include="boxcolor.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
+    <Text Include="background.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
+    <Text Include="specials.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
+    <Text Include="giftbox.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
+    <Text Include="map1.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
+    <Text Include="scene01.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
+    <Text Include="scene02.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
+    <Text Include="scene0005.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
+    <Text Include="brick.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
+    <Text Include="cloud.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
+    <Text Include="coin.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
+    <Text Include="goomba.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
+    <Text Include="mario.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
   </ItemGroup>
 </Project>

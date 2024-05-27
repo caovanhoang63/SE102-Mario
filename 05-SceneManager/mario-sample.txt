@@ -1,5 +1,5 @@
 [SETTINGS]
-start	5
+start	1
 width	320
 height	240
 
@@ -7,7 +7,7 @@ height	240
 # type: 0: intro, 1: play scene 
 [SCENES]
 0	intro.txt
-1	scene01.txt
+1	map1.txt
 2	scene02.txt
 5	scene0005.txt
 
@@ -17,3 +17,8 @@ height	240
 0	textures\mario.png
 10	textures\enemies.png
 20	textures\misc.png
+30	textures\sprite01.png
+40	textures\sprite02.png
+50	textures\sprite03.png
+60	textures\sprite04.png
+70	textures\sprite05.png

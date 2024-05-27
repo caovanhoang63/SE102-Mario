@@ -1,0 +1,68 @@
+# list of object assets to load in this scene
+[ASSETS]
+mario.txt
+brick.txt
+land.txt
+boxcolor.txt
+background.txt
+giftbox.txt
+specials.txt
+#
+[OBJECTS]
+# type	x	y	extra_settings per object type
+# type: 0 = Mario , 1 = Brick, 2 = Goomba, 3 = Koopas
+# See OBJECT_TYPE constants in AssetIDs.h
+
+
+#Obj background start
+7	79	120	128	64	200000
+7	910	104	128	64	200000	
+#7	944	112	62	48	200001	
+#small tree
+#type	x	y	width	height	idSprite
+7	167	144	16	16	210000
+7	183	144	16	16	210000
+7	199	144	16	16	210000
+
+7	679	128	16	16	210000
+7	695	128	16	16	210000
+7	711	128	16	16	210000
+7	727	128	16	16	210000
+7	743	128	16	16	210000
+7	759	128	16	16	210000
+
+7	1047	128	16	16	210000
+7	1063	128	16	16	210000
+#Obj background end
+
+#Box color
+#type	x	y	width	height	
+6	264	128	48	48	70000	0
+6	300	112	56	80	70001	8
+
+6	439	128	80	48	71000	0
+6	563	136	104	32	71001	8
+6	495	112	64	80	71002	0
+6	547	96	72	112	71003	8
+
+#Platform
+#type	x	y	width	height	amount	begin mid end
+5 	8	160	16	15	39	60000	61000	62000
+5 	632	160	16	15	29	63000	64000	65000
+5 	632	144	16	15	29	60000	61000	62000
+5 	1160	160	16	15	22	60000	61000	62000
+5 	1544	160	16	15	5	60000	61000	62000
+5 	1672	160	16	15	36	60000	61000	62000
+5 	2264	160	16	15	35	60000	61000	62000
+
+#Giftbox
+8	183	96	0
+8	199	96	0
+8	231	48	0
+8	247	48	1
+8	663	128	1
+8	711	96	1
+8	423	64	1
+
+# MARIO
+0	30	120

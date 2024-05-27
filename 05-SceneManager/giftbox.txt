@@ -1,0 +1,15 @@
+# id	left	top	right	bottom	texture_id
+[SPRITES]
+#Idle
+80000	1140	1	1155	16	30
+81000	1157	1	1172	16	30
+82000	1174	1	1189	16	30
+83000	1191	1	1206	16	30
+
+#Opened
+84000	1208	1	1223	16	30
+
+# ani_id	sprite1_id	time1	sprite2_id	time2	...
+[ANIMATIONS]
+80000	80000	200	81000	200	82000	200	83000	200
+84000	84000	100

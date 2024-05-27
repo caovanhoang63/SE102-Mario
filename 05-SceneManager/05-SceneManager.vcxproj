@@ -161,6 +161,7 @@
     <ClCompile Include="PlayScene.cpp" />
     <ClCompile Include="Portal.cpp" />
     <ClCompile Include="SampleKeyEventHandler.cpp" />
+    <ClCompile Include="SmallTree.cpp" />
     <ClCompile Include="Sprite.cpp" />
     <ClCompile Include="Sprites.cpp" />
     <ClCompile Include="Textures.cpp" />
@@ -185,11 +186,30 @@
     <ClInclude Include="Portal.h" />
     <ClInclude Include="SampleKeyEventHandler.h" />
     <ClInclude Include="Scene.h" />
+    <ClInclude Include="SmallTree.h" />
     <ClInclude Include="Sprite.h" />
     <ClInclude Include="Sprites.h" />
     <ClInclude Include="Texture.h" />
     <ClInclude Include="Textures.h" />
     <ClInclude Include="Utils.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="background.txt" />
+    <Text Include="boxcolor.txt" />
+    <Text Include="brick.txt" />
+    <Text Include="cloud.txt" />
+    <Text Include="coin.txt" />
+    <Text Include="giftbox.txt" />
+    <Text Include="goomba.txt" />
+    <Text Include="land.txt" />
+    <Text Include="map1.txt" />
+    <Text Include="mario-sample.txt" />
+    <Text Include="mario.txt" />
+    <Text Include="scene0005.txt" />
+    <Text Include="scene01.txt" />
+    <Text Include="scene02.txt" />
+    <Text Include="specials.txt" />
+    <Text Include="x64\Debug\05-SceneManager.vcxproj.FileListAbsolute.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

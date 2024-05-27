@@ -9,6 +9,7 @@
 #include "Portal.h"
 #include "Coin.h"
 #include "Platform.h"
+#include "SmallTree.h"
 
 #include "SampleKeyEventHandler.h"
 
@@ -119,7 +120,17 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 	case OBJECT_TYPE_GOOMBA: obj = new CGoomba(x,y); break;
 	case OBJECT_TYPE_BRICK: obj = new CBrick(x,y); break;
 	case OBJECT_TYPE_COIN: obj = new CCoin(x, y); break;
+	case OBJECT_TYPE_BACKGROUND:{
+		
+		int sprite_width = atoi(tokens[3].c_str());
+		int sprite_height = atoi(tokens[4].c_str());
+		int sprite_id = atoi(tokens[5].c_str());
 
+
+		obj = new CSmallTree(x, y, sprite_width, sprite_height, sprite_id);
+
+
+	}; break;
 	case OBJECT_TYPE_PLATFORM:
 	{
 
@@ -237,7 +248,7 @@ void CPlayScene::Update(DWORD dt)
 	// TO-DO: This is a "dirty" way, need a more organized way 
 
 	vector<LPGAMEOBJECT> coObjects;
-	for (size_t i = 1; i < objects.size(); i++)
+	for (size_t i = 0; i < objects.size(); i++)
 	{
 		coObjects.push_back(objects[i]);
 	}
