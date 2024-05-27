@@ -4,7 +4,6 @@
 
 class CColorBox : public  CGameObject 
 {
-
 protected:
 	int Width, Height, IdSprite;
 public:

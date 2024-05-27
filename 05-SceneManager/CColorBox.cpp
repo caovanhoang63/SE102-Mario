@@ -9,11 +9,8 @@
 
 void CColorBox::Render()
 {
-	/*CAnimations* animations = CAnimations::GetInstance();
-	animations->Get(this->IdSprite)->Render(x, y);*/
 	CSprites* s = CSprites::GetInstance();
 	s->Get(this->IdSprite)->Draw(x, y);
-	//RenderBoundingBox();
 }
 
 void CColorBox::GetBoundingBox(float& l, float& t, float& r, float& b)

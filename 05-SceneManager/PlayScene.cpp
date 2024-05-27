@@ -11,7 +11,7 @@
 #include "Platform.h"
 #include "SmallTree.h"
 #include "CColorBox.h"
-
+#include "CGiftBox.h"
 
 #include "SampleKeyEventHandler.h"
 
@@ -122,7 +122,7 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 	case OBJECT_TYPE_GOOMBA: obj = new CGoomba(x,y); break;
 	case OBJECT_TYPE_BRICK: obj = new CBrick(x,y); break;
 	case OBJECT_TYPE_COIN: obj = new CCoin(x, y); break;
-	case OBJECT_TYPE_BACKGROUND_BOX:
+	case OBJECT_TYPE_COLOR_BOX:
 	{
 
 		int sprite_width = atoi(tokens[3].c_str());
@@ -139,11 +139,11 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 		int sprite_height = atoi(tokens[4].c_str());
 		int sprite_id = atoi(tokens[5].c_str());
 
-
 		obj = new CSmallTree(x, y, sprite_width, sprite_height, sprite_id);
 
 
 	}; break;
+	case OBJECT_TYPE_GIFT_BOX:obj = new CGiftBox(x, y); break;
 	case OBJECT_TYPE_PLATFORM:
 	{
 
