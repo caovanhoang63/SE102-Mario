@@ -8,7 +8,7 @@
 #include "Coin.h"
 #include "Portal.h"
 #include "CColorBox.h"
-
+#include "CGiftBox.h"
 #include "Collision.h"
 
 void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
@@ -55,8 +55,25 @@ void CMario::OnCollisionWith(LPCOLLISIONEVENT e)
 		OnCollisionWithCoin(e);
 	else if (dynamic_cast<CPortal*>(e->obj))
 		OnCollisionWithPortal(e);
+	else if (dynamic_cast<CGiftBox*>(e->obj))
+		OnCollosionWithGiftBox(e);
+
 }
 
+void CMario::OnCollosionWithGiftBox(LPCOLLISIONEVENT e) {
+	CGiftBox* box = dynamic_cast<CGiftBox*>(e->obj);
+
+	if (e->ny > 0)
+	{
+		if (box->GetState() != GIFTBOX_STATE_OPENED)
+		{
+			box->SetState(GIFTBOX_STATE_OPENED);
+		}
+	}
+
+
+
+}
 
 
 

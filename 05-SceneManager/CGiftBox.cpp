@@ -1,10 +1,23 @@
 #include "CGiftBox.h"
 
+CGiftBox::CGiftBox(float x, float y) : CGameObject(x, y) {
+	this->SetState(GIFTBOX_STATE_CLOSED);
+}
+
+
+void CGiftBox::SetState(int state) {
+	CGameObject::SetState(state);
+}
+
+
 
 void CGiftBox::Render()
 {
 	CAnimations* animations = CAnimations::GetInstance();
-	animations->Get(ID_ANI_GIFTBOX)->Render(x, y);
+	if (this->GetState() == GIFTBOX_STATE_CLOSED)
+		animations->Get(ID_ANI_GIFTBOX_CLOSED)->Render(x, y);
+	else 
+		animations->Get(ID_ANI_GIFTBOX_OPENED)->Render(x, y);
 }
 
 void CGiftBox::GetBoundingBox(float& l, float& t, float& r, float& b)
