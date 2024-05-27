@@ -78,6 +78,12 @@
     <ClCompile Include="SmallTree.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="CColorBox.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="CGiftBox.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Animation.h">
@@ -150,6 +156,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="SmallTree.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CColorBox.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CGiftBox.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

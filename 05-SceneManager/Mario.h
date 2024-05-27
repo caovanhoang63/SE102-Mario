@@ -148,7 +148,7 @@ public:
 
 	void OnNoCollision(DWORD dt);
 	void OnCollisionWith(LPCOLLISIONEVENT e);
-
+	void OnCollisionWithBackGroundBox(LPCOLLISIONEVENT e);
 	void SetLevel(int l);
 	void StartUntouchable() { untouchable = 1; untouchable_start = GetTickCount64(); }
 

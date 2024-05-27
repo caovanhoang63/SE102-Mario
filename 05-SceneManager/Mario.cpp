@@ -7,6 +7,7 @@
 #include "Goomba.h"
 #include "Coin.h"
 #include "Portal.h"
+#include "CColorBox.h"
 
 #include "Collision.h"
 
@@ -55,6 +56,9 @@ void CMario::OnCollisionWith(LPCOLLISIONEVENT e)
 	else if (dynamic_cast<CPortal*>(e->obj))
 		OnCollisionWithPortal(e);
 }
+
+
+
 
 void CMario::OnCollisionWithGoomba(LPCOLLISIONEVENT e)
 {
