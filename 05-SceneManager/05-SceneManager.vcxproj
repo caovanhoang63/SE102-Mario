@@ -155,6 +155,7 @@
     <ClCompile Include="Coin.cpp" />
     <ClCompile Include="Collision.cpp" />
     <ClCompile Include="debug.cpp" />
+    <ClCompile Include="FireBullet.cpp" />
     <ClCompile Include="Flower.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="GameObject.cpp" />
@@ -183,6 +184,7 @@
     <ClInclude Include="Coin.h" />
     <ClInclude Include="Collision.h" />
     <ClInclude Include="debug.h" />
+    <ClInclude Include="FireBullet.h" />
     <ClInclude Include="Flower.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="GameObject.h" />
@@ -207,6 +209,7 @@
     <Text Include="brick.txt" />
     <Text Include="cloud.txt" />
     <Text Include="coin.txt" />
+    <Text Include="firebullet.txt" />
     <Text Include="flower.txt" />
     <Text Include="giftbox.txt" />
     <Text Include="goomba.txt" />

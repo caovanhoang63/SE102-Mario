@@ -14,7 +14,7 @@
 #include "CGiftBox.h"
 #include "CBlock.h"
 #include "Flower.h"
-
+#include "FireBullet.h"
 #include "SampleKeyEventHandler.h"
 
 using namespace std;
@@ -142,6 +142,7 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 
 
 	}; break;
+	case OBJECT_TYPE_FIRE_BULLET:obj = new CFireBullet(x, y, player); break;
 	case OBJECT_TYPE_GIFT_BOX:obj = new CGiftBox(x, y); break;
 	case OBJECT_TYPE_BLOCK: {
 		int sprite_width = atoi(tokens[3].c_str());
@@ -304,8 +305,9 @@ void CPlayScene::Update(DWORD dt)
 
 void CPlayScene::Render()
 {
-	for (int i = 0; i < objects.size(); i++)
+	for (int i = 0; i < objects.size(); i++) {
 		objects[i]->Render();
+	}
 	player->Render();
 }
 

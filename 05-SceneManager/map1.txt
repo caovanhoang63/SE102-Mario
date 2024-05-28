@@ -10,6 +10,7 @@ pipe.txt
 specials.txt
 flower.txt
 goomba.txt
+firebullet.txt
 #
 [OBJECTS]
 # type	x	y	extra_settings per object type
@@ -75,7 +76,6 @@ goomba.txt
 #Pipe
 9	368	112	29	16	90001	0
 9	368	136	29	31	90002	0
-
 
 
 2	236	120

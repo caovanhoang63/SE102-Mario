@@ -33,7 +33,12 @@ public:
 	virtual void Render();
 	virtual void Unload();
 
+
 	LPGAMEOBJECT GetPlayer() { return player; }
+
+	void AddNewObject(LPGAMEOBJECT obj) {
+		this->objects.push_back(obj);
+	}
 
 	void Clear();
 	void PurgeDeletedObjects();

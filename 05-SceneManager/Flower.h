@@ -4,6 +4,9 @@
 #include <math.h>
 #include "debug.h"
 #include "Mario.h"
+#include "FireBullet.h"
+#include "PlayScene.h"
+#include "Scene.h"
 
 
 #define ANI_BASE_KEY 100000
@@ -55,7 +58,7 @@ public:
 	void StartRestTime() { isRest = true  ,rest_start = GetTickCount64(); }
 	int IsBlocking() { return 1; }
 	virtual void Observe();
-	virtual void Attack();
+	virtual void Attack(vector<LPGAMEOBJECT>* coObjects);
 	virtual void SetState(int state);
 };
 

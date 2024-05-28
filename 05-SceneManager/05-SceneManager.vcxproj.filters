@@ -90,6 +90,9 @@
     <ClCompile Include="Flower.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="FireBullet.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Animation.h">
@@ -176,6 +179,9 @@
     <ClInclude Include="Flower.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="FireBullet.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Text Include="mario-sample.txt">
@@ -232,5 +238,6 @@
     <Text Include="flower.txt">
       <Filter>Resource Files</Filter>
     </Text>
+    <Text Include="firebullet.txt" />
   </ItemGroup>
 </Project>
