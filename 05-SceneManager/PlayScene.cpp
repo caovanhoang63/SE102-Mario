@@ -108,6 +108,7 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 
 	CGameObject *obj = NULL;
 
+	
 	switch (object_type)
 	{
 	case OBJECT_TYPE_MARIO:
@@ -118,22 +119,18 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 		}
 		obj = new CMario(x,y); 
 		player = (CMario*)obj;  
-
+		player->SetPosition(x, y);
 		DebugOut(L"[INFO] Player object has been created!\n");
-		break;
+		return;
 	case OBJECT_TYPE_GOOMBA: obj = new CGoomba(x,y); break;
 	case OBJECT_TYPE_BRICK: obj = new CBrick(x,y); break;
 	case OBJECT_TYPE_COIN: obj = new CCoin(x, y); break;
 	case OBJECT_TYPE_COLOR_BOX:
 	{
-
 		int sprite_width = atoi(tokens[3].c_str());
 		int sprite_height = atoi(tokens[4].c_str());
 		int sprite_id = atoi(tokens[5].c_str());
-
-
 		obj = new CColorBox(x, y, sprite_width, sprite_height, sprite_id);
-
 	}; break;
 	case OBJECT_TYPE_BACKGROUND:{
 		
@@ -158,7 +155,7 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 		int width = atoi(tokens[3].c_str());
 		int height = atoi(tokens[4].c_str());
 		int color = atoi(tokens[5].c_str());
-		obj = new CFlower(x, y, width, height, color);
+		obj = new CFlower(x, y, width, height, color,(CMario*)player);
 		break;
 	}
 	case OBJECT_TYPE_PLATFORM:
@@ -197,7 +194,6 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 
 	// General object setup
 	obj->SetPosition(x, y);
-
 
 	objects.push_back(obj);
 }
@@ -278,19 +274,19 @@ void CPlayScene::Update(DWORD dt)
 	// TO-DO: This is a "dirty" way, need a more organized way 
 
 	vector<LPGAMEOBJECT> coObjects;
-	for (size_t i = 0; i < objects.size(); i++)
+	for (size_t i = 0; i < objects.size() ; i++)
 	{
 		coObjects.push_back(objects[i]);
 	}
 
-	for (size_t i = 0; i < objects.size(); i++)
+	for (size_t i = 0; i < objects.size() ; i++)
 	{
 		objects[i]->Update(dt, &coObjects);
 	}
 
 	// skip the rest if scene was already unloaded (Mario::Update might trigger PlayScene::Unload)
 	if (player == NULL) return; 
-
+	player->Update(dt, &coObjects);
 	// Update camera to follow mario
 	float cx, cy;
 	player->GetPosition(cx, cy);
@@ -310,6 +306,7 @@ void CPlayScene::Render()
 {
 	for (int i = 0; i < objects.size(); i++)
 		objects[i]->Render();
+	player->Render();
 }
 
 /*
@@ -363,3 +360,5 @@ void CPlayScene::PurgeDeletedObjects()
 		std::remove_if(objects.begin(), objects.end(), CPlayScene::IsGameObjectDeleted),
 		objects.end());
 }
+
+

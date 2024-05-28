@@ -16,6 +16,8 @@ goomba.txt
 # type: 0 = Mario , 1 = Brick, 2 = Goomba, 3 = Koopas
 # See OBJECT_TYPE constants in AssetIDs.h
 
+# MARIO
+0	30	120
 
 #Obj background start
 7	79	120	128	64	200000
@@ -68,7 +70,7 @@ goomba.txt
 8	423	64	1 
 
 #Red Flower
-10	368	88	16	32	0
+10	368	120	16	32	0
 
 #Pipe
 9	368	112	29	16	90001	0
@@ -78,5 +80,4 @@ goomba.txt
 
 2	236	120
 2	620	120
-# MARIO
-0	30	120
+

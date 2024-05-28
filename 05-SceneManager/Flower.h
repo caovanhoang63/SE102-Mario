@@ -1,6 +1,12 @@
 #pragma once
 #include "GameObject.h"
+#include "Game.h"
+#include <math.h>
+#include "debug.h"
+#include "Mario.h"
 
+
+#define ANI_BASE_KEY 100000
 #define ID_ANI_TOP 101000
 #define ID_ANI_TOP_MOVE 101001
 #define ID_ANI_BOTTOM_LEFT 102000 
@@ -11,38 +17,45 @@
 #define ID_ANI_TOP_RIGHT 105001
 #define ID_ANI_TOP_RIGHT_MOVE 105001
 
+#define FLOWER_MOVING_TIME 1000
+
+#define FLOWER_HEAD_HIGHT_GAP 1
+
+#define ATTACK_TIME 500
+#define REST_TIME 500
+
+
 #define FLOWER_COLOR_RED 0
 #define FLOWER_COLOR_GREEN 10000
 
-#define FLOWER_STATE_BOTTOM_LEFT_UP 110
-#define FLOWER_STATE_BOTTOM_LEFT_DOWN 120
-#define FLOWER_STATE_BOTTOM_LEFT_STOP 130
-#define FLOWER_STATE_TOP_LEFT_UP 210
-#define FLOWER_STATE_TOP_LEFT_DOWN 220
-#define FLOWER_STATE_TOP_LEFT_STOP 230
-#define FLOWER_STATE_BOTTOM_RIGHT_UP 310
-#define FLOWER_STATE_BOTTOM_RIGHT_DOWN 320
-#define FLOWER_STATE_BOTTOM_RIGHT_STOP 330
-#define FLOWER_STATE_TOP_RIGHT_UP 410
-#define FLOWER_STATE_TOP_RIGHT_DOWN 420
-#define FLOWER_STATE_TOP_RIGHT_STOP 430
-#define FLOWER_STATE_TOP_UP 510
-#define FLOWER_STATE_TOP_DOWN 520
-#define FLOWER_STATE_TOP_STOP 530
-#define FLOWER_STATE_HIDDEN 610
+#define FLOWER_DIRECTION_TOP 1000
+#define FLOWER_DIRECTION_BOTTOM_LEFT 2000
+#define FLOWER_DIRECTION_TOP_LEFT 3000
+#define FLOWER_DIRECTION_BOTTOM_RIGHT 4000
+#define FLOWER_DIRECTION_TOP_RIGHT 5000
 
+#define FLOWER_STATE_DOWN 2
+#define FLOWER_STATE_HIDDEN -100
+#define FLOWER_STATE_UP 1
+#define FLOWER_STATE_STOP 0
 
 class CFlower : public CGameObject
 {
 protected: 
-	int color,width,height;
+	int color,width,height,direction,initY;
+	ULONGLONG attack_start,rest_start;
+	bool isRest = false ;
+	CMario* Mario;
 public:
-	CFlower(float x, float y,int  width,int height,int color);
+	CFlower(float x, float y,int  width,int height,int color, CMario* Mario);
 	void Render();
-	void Update(DWORD dt);
+	virtual void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);
 	void GetBoundingBox(float& l, float& t, float& r, float& b);
+	void StartAttack() { attack_start = GetTickCount64(); }
+	void StartRestTime() { isRest = true  ,rest_start = GetTickCount64(); }
 	int IsBlocking() { return 1; }
-	void Observe();
+	virtual void Observe();
+	virtual void Attack();
 	virtual void SetState(int state);
 };
 
