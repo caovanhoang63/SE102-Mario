@@ -1,0 +1,10 @@
+﻿# id	left	top	right	bottom	texture_id
+[SPRITES]
+#cái nắp
+90001	5	28	36	43	40
+#thân ống
+90002	6	44	35	75	40
+
+
+# ani_id	sprite1_id	time1	sprite2_id	time2	...
+[ANIMATIONS]

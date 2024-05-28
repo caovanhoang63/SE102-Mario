@@ -84,6 +84,12 @@
     <ClCompile Include="CGiftBox.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="CBlock.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Flower.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Animation.h">
@@ -164,6 +170,12 @@
     <ClInclude Include="CGiftBox.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="CBlock.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Flower.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Text Include="mario-sample.txt">
@@ -212,6 +224,12 @@
       <Filter>Resource Files</Filter>
     </Text>
     <Text Include="mario.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
+    <Text Include="pipe.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
+    <Text Include="flower.txt">
       <Filter>Resource Files</Filter>
     </Text>
   </ItemGroup>

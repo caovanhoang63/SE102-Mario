@@ -10,9 +10,6 @@
 #define GIFTBOX_STATE_OPENED 200
 
 
-
-
-
 class CGiftBox : public CGameObject
 {
 public:

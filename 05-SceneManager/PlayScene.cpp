@@ -12,6 +12,8 @@
 #include "SmallTree.h"
 #include "CColorBox.h"
 #include "CGiftBox.h"
+#include "CBlock.h"
+#include "Flower.h"
 
 #include "SampleKeyEventHandler.h"
 
@@ -144,6 +146,21 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 
 	}; break;
 	case OBJECT_TYPE_GIFT_BOX:obj = new CGiftBox(x, y); break;
+	case OBJECT_TYPE_BLOCK: {
+		int sprite_width = atoi(tokens[3].c_str());
+		int sprite_height = atoi(tokens[4].c_str());
+		int sprite_id = atoi(tokens[5].c_str());
+
+		obj = new CBlock(x, y, sprite_width, sprite_height, sprite_id);
+
+	}; break;
+	case OBJECT_TYPE_FLOWER: {
+		int width = atoi(tokens[3].c_str());
+		int height = atoi(tokens[4].c_str());
+		int color = atoi(tokens[5].c_str());
+		obj = new CFlower(x, y, width, height, color);
+		break;
+	}
 	case OBJECT_TYPE_PLATFORM:
 	{
 

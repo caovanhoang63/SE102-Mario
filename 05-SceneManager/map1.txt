@@ -1,4 +1,4 @@
-# list of object assets to load in this scene
+﻿# list of object assets to load in this scene
 [ASSETS]
 mario.txt
 brick.txt
@@ -6,7 +6,10 @@ land.txt
 boxcolor.txt
 background.txt
 giftbox.txt
+pipe.txt
 specials.txt
+flower.txt
+goomba.txt
 #
 [OBJECTS]
 # type	x	y	extra_settings per object type
@@ -62,7 +65,18 @@ specials.txt
 8	247	48	1
 8	663	128	1
 8	711	96	1
-8	423	64	1
+8	423	64	1 
 
+#Red Flower
+10	368	88	16	32	0
+
+#Pipe
+9	368	112	29	16	90001	0
+9	368	136	29	31	90002	0
+
+
+
+2	236	120
+2	620	120
 # MARIO
 0	30	120

@@ -4,7 +4,7 @@
 #include <d3dx10.h>
 #include <unordered_map>
 #include <string>
-
+#include "debug.h"
 using namespace std;
 
 #define DIRECTINPUT_VERSION 0x0800
