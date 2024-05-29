@@ -99,6 +99,9 @@
     <ClCompile Include="Mushroom.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Koopa.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Animation.h">
@@ -194,6 +197,9 @@
     <ClInclude Include="Mushroom.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Koopa.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Text Include="mario-sample.txt">
@@ -252,5 +258,6 @@
     </Text>
     <Text Include="firebullet.txt" />
     <Text Include="mushroom.txt" />
+    <Text Include="koopa.txt" />
   </ItemGroup>
 </Project>

@@ -142,6 +142,14 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 
 
 	}; break;
+	case OBJECT_TYPE_KOOPA: {
+
+	int color = atoi(tokens[3].c_str());
+	int patrol_radius = atoi(tokens[4].c_str());
+	obj = new CKoopa(x, y,color, patrol_radius );
+	}
+	break;
+
 	case OBJECT_TYPE_FIRE_BULLET:obj = new CFireBullet(x, y, player); break;
 	case OBJECT_TYPE_GIFT_BOX: {
 		bool hasBuff = atoi(tokens[3].c_str());

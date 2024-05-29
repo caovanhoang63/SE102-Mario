@@ -1,0 +1,42 @@
+#pragma once
+#include "GameObject.h"
+
+#define KOOPA_GRAVITY 0.02f
+#define KOOPA_WALKING_SPEED 0.05f
+
+#define KOOPA_COLOR_RED 0
+#define KOOPA_COLOR_GREEN	1000
+
+#define ID_ANI_KOOPA_WALKING_LEFT	130000
+#define ID_ANI_KOOPA_WALKING_RIGHT	130100
+
+#define KOOPA_STATE_WALKING_LEFT 0
+#define KOOPA_STATE_WALKING_RIGHT 100
+#define KOOPA_STATE_DIE -100
+
+#define KOOPA_BBOX_WIDTH	16
+#define KOOPA_BBOX_HEIGHT	16
+
+class CKoopa : public CGameObject
+{
+protected:
+	float ax;
+	float ay;
+	float patrol_radius;
+	bool has_patrol_radius;
+	int color;
+	ULONGLONG die_start;
+	virtual void GetBoundingBox(float& left, float& top, float& right, float& bottom);
+	virtual void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);
+	virtual void Render();
+	virtual int IsCollidable() { return 1; };
+	virtual int IsBlocking() { return 0; }
+	virtual void OnNoCollision(DWORD dt);
+	virtual void OnCollisionWith(LPCOLLISIONEVENT e);
+	virtual int GetAniId();
+public:
+	CKoopa(float x, float y, int color, float patrol_radius);
+	virtual void SetState(int state);
+};
+
+
