@@ -24,17 +24,16 @@ void CGiftBox::GenerateGift() {
 		CPlayScene* scene = (CPlayScene*)CGame::GetInstance()->GetCurrentScene();
 		if (!hasBuff) {
 			CFlyingCoin* coin = new CFlyingCoin(x, y);
-			scene->AddNewObjectToTail(coin);
+			scene->AddBeforeObject(coin,this);
 		}
 	}
 }
-
 
 void CGiftBox::GenerateBuff() {
 	if (dynamic_cast<CPlayScene*>(CGame::GetInstance()->GetCurrentScene())) {
 		CPlayScene* scene = (CPlayScene*)CGame::GetInstance()->GetCurrentScene();
 		CMushroom* mushroom = new CMushroom(x, y);
-		scene->AddNewObjectToTail(mushroom);
+		scene->AddBeforeObject(mushroom,this);
 	}
 }
 

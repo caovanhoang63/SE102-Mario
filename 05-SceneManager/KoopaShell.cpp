@@ -24,7 +24,6 @@ void CKoopaShell::Render() {
 		CSprites* s = CSprites::GetInstance();
 		s->Get(ID_SPRITE_KOOPA_SHELL)->Draw(x, y);
 	}
-	RenderBoundingBox();
 }
 
 void CKoopaShell::StartMove(float mx) {

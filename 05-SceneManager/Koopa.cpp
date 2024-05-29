@@ -18,7 +18,6 @@ CKoopa::CKoopa(float x, float y, int color, float patrol_radius) : CGameObject(x
 void CKoopa::Render() {
 	CAnimations* animations = CAnimations::GetInstance();
 	animations->Get(this->GetAniId() + this->color)->Render(x, y);
-	RenderBoundingBox();
 }
 
 void CKoopa::Die() {

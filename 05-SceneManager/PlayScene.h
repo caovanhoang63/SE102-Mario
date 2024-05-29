@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #include "Game.h"
 #include "Textures.h"
 #include "Scene.h"
@@ -43,6 +43,28 @@ public:
 	void AddNewObjectToHead(LPGAMEOBJECT obj) {
 		this->objects.insert(this->objects.begin(), obj);
 	}
+	void AddAfterObject(LPGAMEOBJECT obj,LPGAMEOBJECT after) {
+		// Tìm vị trí của đối tượng 'after' trong danh sách
+		auto it = std::find(objects.begin(), objects.end(), after);
+		// Nếu không tìm thấy đối tượng 'after', không làm gì
+		if (it == objects.end()) {
+			return;
+		}
+		// Chèn đối tượng mới vào ngay sau vị trí của 'after'
+		objects.insert(it + 1, obj);
+	}
+
+	void AddBeforeObject(LPGAMEOBJECT obj, LPGAMEOBJECT before) {
+		// Tìm vị trí của đối tượng 'before' trong danh sách
+		auto it = std::find(objects.begin(), objects.end(), before);
+		// Nếu không tìm thấy đối tượng 'before', không làm gì
+		if (it == objects.end()) {
+			return;
+		}
+		// Chèn đối tượng mới vào ngay trước vị trí của 'before'
+		objects.insert(it, obj);
+	}
+
 
 	void Clear();
 	void PurgeDeletedObjects();
