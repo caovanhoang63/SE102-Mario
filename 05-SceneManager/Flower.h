@@ -45,7 +45,7 @@
 class CFlower : public CGameObject
 {
 protected: 
-	int color,width,height,direction,initY;
+	int color,width,height,direction;
 	ULONGLONG attack_start,rest_start;
 	bool isRest = false ;
 	CMario* Mario;

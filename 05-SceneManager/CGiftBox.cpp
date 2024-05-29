@@ -31,7 +31,11 @@ void CGiftBox::GenerateGift() {
 
 
 void CGiftBox::GenerateBuff() {
-
+	if (dynamic_cast<CPlayScene*>(CGame::GetInstance()->GetCurrentScene())) {
+		CPlayScene* scene = (CPlayScene*)CGame::GetInstance()->GetCurrentScene();
+		CMushroom* mushroom = new CMushroom(x, y);
+		scene->AddNewObject(mushroom);
+	}
 }
 
 void CGiftBox::Render()

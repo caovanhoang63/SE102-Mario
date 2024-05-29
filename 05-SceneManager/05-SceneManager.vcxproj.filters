@@ -96,6 +96,9 @@
     <ClCompile Include="FlyingCoin.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Mushroom.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Animation.h">
@@ -188,6 +191,9 @@
     <ClInclude Include="FlyingCoin.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Mushroom.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Text Include="mario-sample.txt">
@@ -245,5 +251,6 @@
       <Filter>Resource Files</Filter>
     </Text>
     <Text Include="firebullet.txt" />
+    <Text Include="mushroom.txt" />
   </ItemGroup>
 </Project>

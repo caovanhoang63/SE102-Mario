@@ -3,6 +3,7 @@
 #include "Game.h"
 #include "PlayScene.h"
 #include "FlyingCoin.h"
+#include "Mushroom.h"
 #define ID_ANI_GIFTBOX_CLOSED 80000
 #define ID_ANI_GIFTBOX_OPENED 84000
 #define GIFTBOX_WIDTH 16

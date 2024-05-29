@@ -12,6 +12,7 @@ flower.txt
 goomba.txt
 firebullet.txt
 coin.txt
+mushroom.txt
 #
 [OBJECTS]
 # type	x	y	extra_settings per object type

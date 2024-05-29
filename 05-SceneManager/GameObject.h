@@ -20,6 +20,8 @@ protected:
 
 	float x; 
 	float y;
+	float initX;
+	float initY;
 
 	float vx;
 	float vy;
@@ -31,8 +33,8 @@ protected:
 	bool isDeleted; 
 
 public: 
-	void SetPosition(float x, float y) { this->x = x, this->y = y; }
-	void SetSpeed(float vx, float vy) { this->vx = vx, this->vy = vy; }
+	void SetPosition(float x, float y) { this->x = x, this->y = y;}
+	void SetSpeed(float vx, float vy) { this->vx = vx, this->vy = vy; } 
 	void GetPosition(float &x, float &y) { x = this->x; y = this->y; }
 	void GetSpeed(float &vx, float &vy) { vx = this->vx; vy = this->vy; }
 
@@ -41,9 +43,8 @@ public:
 	bool IsDeleted() { return isDeleted; }
 
 	void RenderBoundingBox();
-
 	CGameObject();
-	CGameObject(float x, float y) :CGameObject() { this->x = x; this->y = y; }
+	CGameObject(float x, float y) :CGameObject() { this->x = x; this->y = y;  this->initX = x, this->initY = y;}
 
 
 	virtual void GetBoundingBox(float &left, float &top, float &right, float &bottom) = 0;

@@ -76,7 +76,6 @@ void CFlower::Attack(vector<LPGAMEOBJECT>* coObjects) {
 	float mx, my;
 	this->Mario->GetPosition(mx, my);
 	CFireBullet* bullet = new CFireBullet(x, y-10, Mario);
-	DebugOut(L"%f %f\n",y-10, my);
 	CPlayScene* a = (CPlayScene*)CGame::GetInstance()->GetCurrentScene();
 	a->AddNewObject(bullet);
 	this->SetState(FLOWER_STATE_DOWN);
