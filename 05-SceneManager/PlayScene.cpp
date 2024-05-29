@@ -287,7 +287,7 @@ void CPlayScene::Update(DWORD dt)
 
 	// skip the rest if scene was already unloaded (Mario::Update might trigger PlayScene::Unload)
 	if (player == NULL) return; 
-	player->Update(dt, &coObjects);
+	player->Update(dt,&coObjects);
 	// Update camera to follow mario
 	float cx, cy;
 	player->GetPosition(cx, cy);

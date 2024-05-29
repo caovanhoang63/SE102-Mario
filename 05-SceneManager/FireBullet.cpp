@@ -33,6 +33,7 @@ void CFireBullet::FindDirection() {
 
     // Tính góc alpha giữa vector (dx, dy) và trục hoành Ox
     direction = atan2(dy, dx);
+    DebugOut(L"%f\n",direction);
 
     // Chuyển đổi góc về khoảng từ 0 đến 2π (từ 0 độ đến 360 độ)
     if (direction < 0) {
@@ -79,4 +80,5 @@ void CFireBullet::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects) {
     this->y += dt * vy;
     CCollision::GetInstance()->Process(this, dt, coObjects);
 }
+
 

@@ -9,6 +9,7 @@ height	240
 0	intro.txt
 1	map1.txt
 2	scene02.txt
+3	scene01.txt
 5	scene0005.txt
 
 # id	file 

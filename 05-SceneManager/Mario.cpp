@@ -68,6 +68,7 @@ void CMario::OnCollosionWithGiftBox(LPCOLLISIONEVENT e) {
 		if (box->GetState() != GIFTBOX_STATE_OPENED)
 		{
 			box->SetState(GIFTBOX_STATE_OPENED);
+			box->StartMove();
 		}
 	}
 
