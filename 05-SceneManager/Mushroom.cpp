@@ -40,6 +40,7 @@ void CMushroom::StopRaising() {
 	this->ay = MUSHROOM_GRAVITY;
 	this->vx = MUSHROOM_SPEED_X;
 	this->state = MUSHROOM_STATE_WALKING;
+
 }
 
 
@@ -51,7 +52,6 @@ void CMushroom::OnNoCollision(DWORD dt)
 
 void CMushroom::OnCollisionWith(LPCOLLISIONEVENT e)
 {
-	DebugOut(L"OK");
 	if (this->state == MUSHROOM_STATE_RAISING) return;
 	if (!e->obj->IsBlocking()) return;
 	if (dynamic_cast<CMushroom*>(e->obj)) return;

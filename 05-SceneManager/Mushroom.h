@@ -2,7 +2,7 @@
 #include "GameObject.h"
 
 #define ID_SPRITE_MUSHROOM 120000
-#define MUSHROOM_SPEED_X 0.05f
+#define MUSHROOM_SPEED_X -0.05f
 #define MUSHROOM_SPEED_Y -0.01f
 #define MUSHROOM_GRAVITY 0.002f
 #define MUSHROOM_BBOX_WIDTH 16

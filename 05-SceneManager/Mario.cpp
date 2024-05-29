@@ -5,6 +5,7 @@
 #include "Game.h"
 
 #include "Goomba.h"
+#include "Mushroom.h"
 #include "Coin.h"
 #include "Portal.h"
 #include "CColorBox.h"
@@ -57,9 +58,15 @@ void CMario::OnCollisionWith(LPCOLLISIONEVENT e)
 		OnCollisionWithPortal(e);
 	else if (dynamic_cast<CGiftBox*>(e->obj))
 		OnCollosionWithGiftBox(e);
+	else if (dynamic_cast<CMushroom*>(e->obj))
+		OnCollisionWithMushroom(e);
 
 }
-
+void CMario::OnCollisionWithMushroom(LPCOLLISIONEVENT e) {
+	CMushroom* mushroom = dynamic_cast<CMushroom*>(e->obj);
+	level = MARIO_LEVEL_BIG;	
+	mushroom->Delete();
+}
 void CMario::OnCollosionWithGiftBox(LPCOLLISIONEVENT e) {
 	CGiftBox* box = dynamic_cast<CGiftBox*>(e->obj);
 	float mx, my;
