@@ -3,16 +3,16 @@
 
 #define ID_ANI_FLYING_COIN 12000
 
-#define FLYING_DISTANCE 50
-#define FLYING_TIME 5000
+#define FLYING_DISTANCE 40
+#define FLYING_TIME 100
 
-//class CFlyingCoin :public CCoin
-//{
-//protected:
-//	float distance;
-//public:
-//	//CFlyingCoin(float x, float y);
-//	//void Render();
-//	//void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);
-//};
-//
+class CFlyingCoin :public CCoin
+{
+protected:
+	float distance;
+public:
+	CFlyingCoin(float x, float y);
+	virtual void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects = NULL);
+	virtual void Render();
+};
+

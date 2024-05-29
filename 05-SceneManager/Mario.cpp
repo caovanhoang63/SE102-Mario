@@ -62,18 +62,17 @@ void CMario::OnCollisionWith(LPCOLLISIONEVENT e)
 
 void CMario::OnCollosionWithGiftBox(LPCOLLISIONEVENT e) {
 	CGiftBox* box = dynamic_cast<CGiftBox*>(e->obj);
-
+	float mx, my;
+	box->GetPosition(mx, my);
 	if (e->ny > 0)
-	{
+	{ 
 		if (box->GetState() != GIFTBOX_STATE_OPENED)
 		{
 			box->SetState(GIFTBOX_STATE_OPENED);
 			box->StartMove();
+			box->GenerateGift();
 		}
 	}
-
-
-
 }
 
 

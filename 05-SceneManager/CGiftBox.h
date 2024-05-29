@@ -2,7 +2,7 @@
 #include "GameObject.h"
 #include "Game.h"
 #include "PlayScene.h"
-
+#include "FlyingCoin.h"
 #define ID_ANI_GIFTBOX_CLOSED 80000
 #define ID_ANI_GIFTBOX_OPENED 84000
 #define GIFTBOX_WIDTH 16
@@ -20,16 +20,18 @@ class CGiftBox : public CGameObject
 {
 protected:
 	float ay,initY;
-	bool isMoving;
+	bool isMoving,hasBuff;
 public:
-	CGiftBox(float x, float y);
+	CGiftBox(float x, float y,bool hasBuff);
 	void Render();
 	void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);
 	void GetBoundingBox(float& l, float& t, float& r, float& b);
 	int IsBlocking() { return 1; }
 	virtual void SetState(int state);
+	int IsCollidable() { return 1; };
 	void StartMove();
 	void GenerateGift();
+	void GenerateBuff();
 };
 
 

@@ -11,6 +11,7 @@ specials.txt
 flower.txt
 goomba.txt
 firebullet.txt
+coin.txt
 #
 [OBJECTS]
 # type	x	y	extra_settings per object type
@@ -66,9 +67,9 @@ firebullet.txt
 8	199	96	0
 8	231	48	0
 8	247	48	1
-8	663	128	1
+8	663	128	0
 8	711	96	1
-8	423	64	1 
+8	423	64	0 
 
 #Red Flower
 10	368	120	16	32	0

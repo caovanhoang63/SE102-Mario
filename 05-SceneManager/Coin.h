@@ -13,8 +13,8 @@
 class CCoin : public CGameObject {
 public:
 	CCoin(float x, float y) : CGameObject(x, y) {}
-	void Render();
-	virtual void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects ) {}
+	virtual void Render();
+	virtual void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects = NULL) {};
 	virtual void GetBoundingBox(float& l, float& t, float& r, float& b);
-	int IsBlocking() { return 0; }
+	//int IsBlocking() { return 0; }
 };

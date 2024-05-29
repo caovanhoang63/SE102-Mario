@@ -143,7 +143,10 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 
 	}; break;
 	case OBJECT_TYPE_FIRE_BULLET:obj = new CFireBullet(x, y, player); break;
-	case OBJECT_TYPE_GIFT_BOX:obj = new CGiftBox(x, y); break;
+	case OBJECT_TYPE_GIFT_BOX: {
+		bool hasBuff = atoi(tokens[3].c_str());
+		obj = new CGiftBox(x, y,hasBuff); break;
+	}
 	case OBJECT_TYPE_BLOCK: {
 		int sprite_width = atoi(tokens[3].c_str());
 		int sprite_height = atoi(tokens[4].c_str());
