@@ -46,7 +46,7 @@ void CFlower::Observe() {
 
 	//float d = sqrt((mx - x) * (mx - x) + (my - y) * (my - y));
 	float d = abs(mx - x);
-	if (d <= 150  ){
+	if (d <= 200  && !(my > y && d < 25)){
 
 		if (this->state == FLOWER_STATE_HIDDEN && !isRest) {
 			this->SetState(FLOWER_STATE_UP);

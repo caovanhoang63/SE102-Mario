@@ -30,48 +30,77 @@ void CFireBullet::FindDirection() {
 
     float dx = targetX - x;
     float dy = targetY - y;
-
+    int angleFire = 0;
     // Tính góc alpha giữa vector (dx, dy) và trục hoành Ox
-    direction = atan2(dy, dx);
-
-    // Chuyển đổi góc về khoảng từ 0 đến 2π (từ 0 độ đến 360 độ)
-    if (direction < 0) {
-        direction += 2 * M_PI;
+    float angle  = atan2(dy, dx) * 180/M_PI;
+    DebugOut(L"angle: %f \n",angle);
+    if (angle < 0 && angle >= -30)
+    {
+        angleFire = -30;
+    }
+    else if (angle < -30 && angle >= -90)
+    {
+        angleFire = -60;
+    }
+    else if (angle < -90 && angle >= -120)
+    {
+        angleFire = -120;
+    }
+    else if (angle < -120 && angle >= -180)
+    {
+        angleFire = -150;
+    }
+    else if   (angle >= 0 && angle <= 30) 
+    {
+        angleFire = 30;
+    }
+    else if (angle > 30 && angle <= 90) 
+    {
+        angleFire = 60;
+    }
+    else if (angle > 90 && angle <= 120) 
+    {
+        angleFire = 120;
+    }
+    else 
+    {
+        angleFire = 150;
     }
 
-    // Xác định hướng dựa trên góc alpha
-    if (direction >= 0 && direction < DIRECTION_1) {
-        // Hướng phải trên (30 độ)
-        direction = DIRECTION_1;
-    }
-    else if (direction >= DIRECTION_1 && direction < DIRECTION_2) {
-        // Hướng phải trên (60 độ)
-        direction = DIRECTION_2;
-    }
-    else if (direction >= DIRECTION_2 && direction < M_PI / 2) {
-        // Hướng trên (90 độ)
-        direction = M_PI / 2;
-    }
-    else if (direction >= M_PI / 2 && direction < DIRECTION_4) {
-        // Hướng trái trên (150 độ)
-        direction = DIRECTION_4;
-    }
-    else if (direction >= DIRECTION_4 && direction < DIRECTION_5) {
-        // Hướng trái (210 độ)
-        direction = DIRECTION_5;
-    }
-    else if (direction >= DIRECTION_5 && direction < 3 * M_PI / 2) {
-        // Hướng dưới (270 độ)
-        direction = 3 * M_PI / 2;
-    }
-    else if (direction >= 3 * M_PI / 2 && direction < DIRECTION_7) {
-        // Hướng trái dưới (330 độ)
-        direction = DIRECTION_7;
-    }
-    else {
-        // Hướng phải trên (30 độ)
-        direction = DIRECTION_1;
-    }
+    direction = angleFire / (180 / M_PI);
+    //// Xác định hướng dựa trên góc alpha
+    //if (direction >= 0 && direction < DIRECTION_1) {
+    //    // Hướng phải trên (30 độ)
+    //    direction = DIRECTION_1;
+    //}
+    //else if (direction >= DIRECTION_1 && direction < DIRECTION_2) {
+    //    // Hướng phải trên (60 độ)
+    //    direction = DIRECTION_2;
+    //}
+    //else if (direction >= DIRECTION_2 && direction < M_PI / 2) {
+    //    // Hướng trên (90 độ)
+    //    direction = M_PI / 2;
+    //}
+    //else if (direction >= M_PI / 2 && direction < DIRECTION_4) {
+    //    // Hướng trái trên (150 độ)
+    //    direction = DIRECTION_4;
+    //}
+    //else if (direction >= DIRECTION_4 && direction < DIRECTION_5) {
+    //    // Hướng trái (210 độ)
+    //    direction = DIRECTION_5;
+    //}
+    //else if (direction >= DIRECTION_5 && direction < 3 * M_PI / 2) {
+    //    // Hướng dưới (270 độ)
+    //    direction = 3 * M_PI / 2;
+    //}
+    //else if (direction >= 3 * M_PI / 2 && direction < DIRECTION_7) {
+    //    // Hướng trái dưới (330 độ)
+    //    direction = DIRECTION_7;
+    //}
+    //else {
+    //    // Hướng phải trên (30 độ)
+    //    direction = DIRECTION_1;
+    //}
 }
 
 void CFireBullet::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects) {
