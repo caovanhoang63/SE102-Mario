@@ -1,6 +1,6 @@
 #pragma once
 #include "GameObject.h"
-
+#include "CGiftBox.h"
 #define KOOPA_SHELL_SPEED 0.2f
 #define KOOPA_SHELL_GRAVITY 0.02f
 

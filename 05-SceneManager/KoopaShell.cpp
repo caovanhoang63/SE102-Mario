@@ -53,6 +53,15 @@ void CKoopaShell::OnNoCollision(DWORD dt) {
 void CKoopaShell::OnCollisionWith(LPCOLLISIONEVENT e) {
 	if (!e->obj->IsBlocking()) return;
 	if (dynamic_cast<CKoopaShell*>(e->obj)) return;
+	if (dynamic_cast<CGiftBox*>(e->obj)) {
+		CGiftBox* box = dynamic_cast<CGiftBox*>(e->obj);
+		if (box->GetState() != GIFTBOX_STATE_OPENED)
+		{
+			box->SetState(GIFTBOX_STATE_OPENED);
+			box->StartMove();
+			box->GenerateGift();
+		}
+	}
 	if (e->ny != 0)
 	{
 		vy = 0;
