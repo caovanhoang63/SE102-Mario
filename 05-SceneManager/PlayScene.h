@@ -36,8 +36,11 @@ public:
 
 	LPGAMEOBJECT GetPlayer() { return player; }
 
-	void AddNewObject(LPGAMEOBJECT obj) {
+	void AddNewObjectToTail(LPGAMEOBJECT obj) {
 		this->objects.push_back(obj);
+	}
+	void AddNewObjectToHead(LPGAMEOBJECT obj) {
+		this->objects.insert(this->objects.begin(), obj);
 	}
 
 	void Clear();

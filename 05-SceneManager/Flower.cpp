@@ -77,7 +77,7 @@ void CFlower::Attack(vector<LPGAMEOBJECT>* coObjects) {
 	this->Mario->GetPosition(mx, my);
 	CFireBullet* bullet = new CFireBullet(x, y-10, Mario);
 	CPlayScene* a = (CPlayScene*)CGame::GetInstance()->GetCurrentScene();
-	a->AddNewObject(bullet);
+	a->AddNewObjectToTail(bullet);
 	this->SetState(FLOWER_STATE_DOWN);
 }
 const float MIN_MOVE_DISTANCE = 0.1f; // Khoảng cách di chuyển tối thiểu trong mỗi khung hình
