@@ -15,7 +15,7 @@
 #define KOOPA_STATE_DIE -100
 
 #define KOOPA_BBOX_WIDTH	16
-#define KOOPA_BBOX_HEIGHT	16
+#define KOOPA_BBOX_HEIGHT	24
 
 class CKoopa : public CGameObject
 {
@@ -25,7 +25,6 @@ protected:
 	float patrol_radius;
 	bool has_patrol_radius;
 	int color;
-	ULONGLONG die_start;
 	virtual void GetBoundingBox(float& left, float& top, float& right, float& bottom);
 	virtual void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);
 	virtual void Render();
