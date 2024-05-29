@@ -11,6 +11,8 @@
 #include "CColorBox.h"
 #include "CGiftBox.h"
 #include "Collision.h"
+#include "Koopa.h"
+#include "KoopaShell.h"
 
 void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 {
@@ -60,8 +62,61 @@ void CMario::OnCollisionWith(LPCOLLISIONEVENT e)
 		OnCollosionWithGiftBox(e);
 	else if (dynamic_cast<CMushroom*>(e->obj))
 		OnCollisionWithMushroom(e);
-
+	else if (dynamic_cast<CKoopa*>(e->obj))
+		OnCollisionWithKoopa(e);
+	else if (dynamic_cast<CKoopaShell*>(e->obj))
+		OnCollisionWithKoopaShell(e);
 }
+
+
+void CMario::OnCollisionWithKoopa(LPCOLLISIONEVENT e) {
+	CKoopa* koopa = dynamic_cast<CKoopa*>(e->obj);
+	// jump on top >> kill Koopa and deflect a bit 
+	if (e->ny < 0)
+	{
+
+		koopa->Die();
+		vy = -MARIO_JUMP_DEFLECT_SPEED;
+	}
+	else // hit by Koopa
+	{
+		if (untouchable == 0)
+		{
+			if (level > MARIO_LEVEL_SMALL)
+			{
+				level = MARIO_LEVEL_SMALL;
+				StartUntouchable();
+			}
+			else
+			{
+				DebugOut(L">>> Mario DIE >>> \n");
+				SetState(MARIO_STATE_DIE);
+			}
+		}
+	}
+}
+void CMario::OnCollisionWithKoopaShell(LPCOLLISIONEVENT e) {
+	CKoopaShell* shell = dynamic_cast<CKoopaShell*>(e->obj);
+	if (shell->GetState() == KOOPA_SHELL_STATE_STOP) {
+		shell->StartMove(x);
+	}
+	else {
+		if (untouchable == 0)
+		{
+			if (level > MARIO_LEVEL_SMALL)
+			{
+				level = MARIO_LEVEL_SMALL;
+				StartUntouchable();
+			}
+			else
+			{
+				DebugOut(L">>> Mario DIE >>> \n");
+				SetState(MARIO_STATE_DIE);
+			}
+		}
+	}
+}
+
 void CMario::OnCollisionWithMushroom(LPCOLLISIONEVENT e) {
 	CMushroom* mushroom = dynamic_cast<CMushroom*>(e->obj);
 	level = MARIO_LEVEL_BIG;	

@@ -6,9 +6,12 @@ CKoopaShell::CKoopaShell(float x, float y, int color) : CGameObject(x,y) {
 	this->state = KOOPA_SHELL_STATE_STOP;
 	this->color = color;
 	this->vx = 0;
+	this->vy = 0;
 }
 
 void CKoopaShell::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects) {
+	vx += ax * dt;
+	vy += ay * dt;
 	CCollision::GetInstance()->Process(this, dt, coObjects);
 }
 
@@ -21,11 +24,12 @@ void CKoopaShell::Render() {
 		CSprites* s = CSprites::GetInstance();
 		s->Get(ID_SPRITE_KOOPA_SHELL)->Draw(x, y);
 	}
-
+	RenderBoundingBox();
 }
 
 void CKoopaShell::StartMove(float mx) {
-	if (mx <= this->x) {
+	this->state = KOOPA_SHELL_STATE_MOVING;
+	if (mx >= this->x) {
 		this->vx = -KOOPA_SHELL_SPEED;
 	}
 	else {
@@ -43,7 +47,7 @@ void CKoopaShell::GetBoundingBox(float& l, float& t, float& r, float& b) {
 
 void CKoopaShell::OnNoCollision(DWORD dt) {
 	x += vx * dt;
-	y += vy *dt;
+	y += vy * dt;
 }
 
 void CKoopaShell::OnCollisionWith(LPCOLLISIONEVENT e) {

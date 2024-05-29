@@ -18,10 +18,17 @@ CKoopa::CKoopa(float x, float y, int color, float patrol_radius) : CGameObject(x
 void CKoopa::Render() {
 	CAnimations* animations = CAnimations::GetInstance();
 	animations->Get(this->GetAniId() + this->color)->Render(x, y);
-	//RenderBoundingBox();
+	RenderBoundingBox();
 }
 
-
+void CKoopa::Die() {
+	this->isDeleted = true;
+	if (dynamic_cast<CPlayScene*>(CGame::GetInstance()->GetCurrentScene())) {
+		CPlayScene* scene = (CPlayScene*)(CGame::GetInstance()->GetCurrentScene());
+		CKoopaShell* shell = new CKoopaShell(x, y + 2, color);
+		scene->AddNewObjectToTail(shell);
+	}
+}
 void CKoopa::GetBoundingBox(float& left, float& top, float& right, float& bottom) {
 	left = x - KOOPA_BBOX_WIDTH / 2;
 	top = y - KOOPA_BBOX_HEIGHT / 2;
@@ -62,7 +69,6 @@ void CKoopa::OnCollisionWith(LPCOLLISIONEVENT e)
 {
 	if (!e->obj->IsBlocking()) return;
 	if (dynamic_cast<CKoopa*>(e->obj)) return;
-
 	if (e->ny != 0)
 	{
 		vy = 0;

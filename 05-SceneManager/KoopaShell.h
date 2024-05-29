@@ -1,8 +1,7 @@
 #pragma once
 #include "GameObject.h"
 
-#define KOOPA_SHELL_SPEED 0.5f
-#define KOOPA_AX 0.02f
+#define KOOPA_SHELL_SPEED 0.2f
 #define KOOPA_SHELL_GRAVITY 0.02f
 
 #define ID_ANI_KOOPA_SHELL_ROTATE  130010
@@ -16,7 +15,7 @@
 
 
 #define KOOPA_SHELL_BBOX_WIDTH	16
-#define KOOPA_SHELL_BBOX_HEIGHT	16
+#define KOOPA_SHELL_BBOX_HEIGHT	14
 
 class CKoopaShell :
     public CGameObject
@@ -32,6 +31,7 @@ public:
 	void StartMove(float x);
 	virtual void OnNoCollision(DWORD dt);
 	virtual void OnCollisionWith(LPCOLLISIONEVENT e);
-	int IsBlocking() { return 1; }
+	virtual int IsCollidable() { return 1; };
+	virtual int IsBlocking() { return 0; }
 };
 

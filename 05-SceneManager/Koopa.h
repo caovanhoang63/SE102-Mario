@@ -1,5 +1,7 @@
 #pragma once
 #include "GameObject.h"
+#include "KoopaShell.h"
+#include "PlayScene.h"
 
 #define KOOPA_GRAVITY 0.02f
 #define KOOPA_WALKING_SPEED 0.05f
@@ -36,6 +38,7 @@ protected:
 public:
 	CKoopa(float x, float y, int color, float patrol_radius);
 	virtual void SetState(int state);
+	virtual void Die();
 };
 
 
