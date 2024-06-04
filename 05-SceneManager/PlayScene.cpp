@@ -143,10 +143,8 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 
 	}; break;
 	case OBJECT_TYPE_KOOPA: {
-
 	int color = atoi(tokens[3].c_str());
-	int patrol_radius = atoi(tokens[4].c_str());
-	obj = new CKoopa(x, y,color, patrol_radius );
+	obj = new CKoopa(x, y,color);
 	}
 	break;
 

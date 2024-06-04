@@ -24,8 +24,6 @@ class CKoopa : public CGameObject
 protected:
 	float ax;
 	float ay;
-	float patrol_radius;
-	bool has_patrol_radius;
 	int color;
 	virtual void GetBoundingBox(float& left, float& top, float& right, float& bottom);
 	virtual void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);
@@ -36,7 +34,7 @@ protected:
 	virtual void OnCollisionWith(LPCOLLISIONEVENT e);
 	virtual int GetAniId();
 public:
-	CKoopa(float x, float y, int color, float patrol_radius);
+	CKoopa(float x, float y, int color);
 	virtual void SetState(int state);
 	virtual void Die();
 };

@@ -1,17 +1,10 @@
 #include "Koopa.h"
 
-CKoopa::CKoopa(float x, float y, int color, float patrol_radius) : CGameObject(x, y) {
+CKoopa::CKoopa(float x, float y, int color) : CGameObject(x, y) {
 	this->ay = KOOPA_GRAVITY;
 	this->vx = KOOPA_WALKING_SPEED;
 	this->ax = 0;
 	this->color = color;
-	this->patrol_radius = patrol_radius;
-	if (this->patrol_radius > 0) {
-		this->has_patrol_radius = true;
-	}
-	else {
-		this->has_patrol_radius = false;
-	}
 	this->state = KOOPA_STATE_WALKING_LEFT;
 }
 
@@ -38,12 +31,6 @@ void CKoopa::GetBoundingBox(float& left, float& top, float& right, float& bottom
 void CKoopa::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects) {
 	vx += ax * dt;
 	vy += ay * dt;
-	if (has_patrol_radius) {
-		float d = abs(initX - x);
-		if (d >= patrol_radius) {
-			this->vx = -vx;
-		}
-	}
 	CCollision::GetInstance()->Process(this, dt, coObjects);
 }
 
