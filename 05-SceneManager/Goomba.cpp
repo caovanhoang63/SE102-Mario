@@ -1,6 +1,6 @@
 #include "Goomba.h"
 
-CGoomba::CGoomba(float x, float y): CGameObject(x, y )
+CGoomba::CGoomba(float x, float y): CEnemy(x, y )
 {
 	this->ax = 0;
 	this->ay = GOOMBA_GRAVITY;
@@ -36,7 +36,6 @@ void CGoomba::OnCollisionWith(LPCOLLISIONEVENT e)
 {
 	if (!e->obj->IsBlocking()) return; 
 	if (dynamic_cast<CGoomba*>(e->obj)) return; 
-
 	if (e->ny != 0 )
 	{
 		vy = 0;

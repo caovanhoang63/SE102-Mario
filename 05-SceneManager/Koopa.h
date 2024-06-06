@@ -1,7 +1,7 @@
 #pragma once
 #include "Enemy.h"
 #include "KoopaShell.h"
-#include "PlayScene.h"
+#include "InvisibleBlock.h"
 
 #define KOOPA_GRAVITY 0.02f
 #define KOOPA_WALKING_SPEED 0.05f
@@ -25,6 +25,7 @@ protected:
 	float ax;
 	float ay;
 	int color;
+	CInvisibleBlock* block;
 	virtual void GetBoundingBox(float& left, float& top, float& right, float& bottom);
 	virtual void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);
 	virtual void Render();
@@ -34,13 +35,7 @@ protected:
 	virtual void OnCollisionWith(LPCOLLISIONEVENT e);
 	virtual int GetAniId();
 public:
-	CKoopa(float x, float y, int color, float lb, float rb) : CEnemy(x, y,lb,rb) {
-		this->ay = KOOPA_GRAVITY;
-		this->vx = KOOPA_WALKING_SPEED;
-		this->ax = 0;
-		this->color = color;
-		this->state = KOOPA_STATE_WALKING_LEFT;
-	}
+	CKoopa(float x, float y, int color);
 	virtual void SetState(int state);
 	virtual void Die();
 };
