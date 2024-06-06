@@ -34,7 +34,7 @@ protected:
 	virtual void OnCollisionWith(LPCOLLISIONEVENT e);
 	virtual int GetAniId();
 public:
-	CKoopa(float x, float y, int color, float lb, float rb) : CEnemy(x, y) {
+	CKoopa(float x, float y, int color, float lb, float rb) : CEnemy(x, y,lb,rb) {
 		this->ay = KOOPA_GRAVITY;
 		this->vx = KOOPA_WALKING_SPEED;
 		this->ax = 0;

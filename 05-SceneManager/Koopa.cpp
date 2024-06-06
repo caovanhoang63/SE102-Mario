@@ -21,6 +21,7 @@ void CKoopa::GetBoundingBox(float& left, float& top, float& right, float& bottom
 }
 
 void CKoopa::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects) {
+	CEnemy::Update(dt, coObjects);
 	vx += ax * dt;
 	vy += ay * dt;
 	CCollision::GetInstance()->Process(this, dt, coObjects);
