@@ -1,5 +1,5 @@
 #pragma once
-#include "GameObject.h"
+#include "Enemy.h"
 #include "KoopaShell.h"
 #include "PlayScene.h"
 
@@ -19,7 +19,7 @@
 #define KOOPA_BBOX_WIDTH	16
 #define KOOPA_BBOX_HEIGHT	24
 
-class CKoopa : public CGameObject
+class CKoopa : public CEnemy
 {
 protected:
 	float ax;
@@ -34,7 +34,13 @@ protected:
 	virtual void OnCollisionWith(LPCOLLISIONEVENT e);
 	virtual int GetAniId();
 public:
-	CKoopa(float x, float y, int color);
+	CKoopa(float x, float y, int color, float lb, float rb) : CEnemy(x, y) {
+		this->ay = KOOPA_GRAVITY;
+		this->vx = KOOPA_WALKING_SPEED;
+		this->ax = 0;
+		this->color = color;
+		this->state = KOOPA_STATE_WALKING_LEFT;
+	}
 	virtual void SetState(int state);
 	virtual void Die();
 };

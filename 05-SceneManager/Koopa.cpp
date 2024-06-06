@@ -1,13 +1,5 @@
 #include "Koopa.h"
 
-CKoopa::CKoopa(float x, float y, int color) : CGameObject(x, y) {
-	this->ay = KOOPA_GRAVITY;
-	this->vx = KOOPA_WALKING_SPEED;
-	this->ax = 0;
-	this->color = color;
-	this->state = KOOPA_STATE_WALKING_LEFT;
-}
-
 void CKoopa::Render() {
 	CAnimations* animations = CAnimations::GetInstance();
 	animations->Get(this->GetAniId() + this->color)->Render(x, y);
