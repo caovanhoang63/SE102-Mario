@@ -33,7 +33,6 @@ void CFireBullet::FindDirection() {
     int angleFire = 0;
     // Tính góc alpha giữa vector (dx, dy) và trục hoành Ox
     float angle  = atan2(dy, dx) * 180/M_PI;
-    DebugOut(L"angle: %f \n",angle);
     if (angle < 0 && angle >= -30)
     {
         angleFire = -30;

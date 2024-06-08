@@ -13,6 +13,8 @@
 #include "Collision.h"
 #include "Koopa.h"
 #include "KoopaShell.h"
+#include "FireBullet.h"
+
 
 void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 {
@@ -66,6 +68,9 @@ void CMario::OnCollisionWith(LPCOLLISIONEVENT e)
 		OnCollisionWithKoopa(e);
 	else if (dynamic_cast<CKoopaShell*>(e->obj))
 		OnCollisionWithKoopaShell(e);
+	else if (dynamic_cast<CFireBullet*>(e->obj))
+		OnCollisionWithFireBullet(e);
+
 }
 
 
@@ -119,6 +124,24 @@ void CMario::OnCollisionWithKoopaShell(LPCOLLISIONEVENT e) {
 				DebugOut(L">>> Mario DIE >>> \n");
 				SetState(MARIO_STATE_DIE);
 			}
+		}
+	}
+}
+
+void CMario::OnCollisionWithFireBullet(LPCOLLISIONEVENT e)
+{
+	CFireBullet* bullet = dynamic_cast<CFireBullet*>(e->obj);
+	if (untouchable == 0)
+	{
+		if (level > MARIO_LEVEL_SMALL)
+		{
+			level = MARIO_LEVEL_SMALL;
+			StartUntouchable();
+		}
+		else
+		{
+			DebugOut(L">>> Mario DIE >>> \n");
+			SetState(MARIO_STATE_DIE);
 		}
 	}
 }
