@@ -2,25 +2,14 @@
 #include "CGiftBox.h"
 
 
-CKoopaShell::CKoopaShell(float x, float y, int color) : CGameObject(x,y) {
-	this->ax = 0;
-	this->ay = KOOPA_SHELL_GRAVITY;
-	this->state = KOOPA_SHELL_STATE_STOP;
-	this->color = color;
-	this->vx = 0;
-	this->vy = 0;
-}
-
-void CKoopaShell::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects) {
-	vx += ax * dt;
-	vy += ay * dt;
-	CCollision::GetInstance()->Process(this, dt, coObjects);
-}
-
 void CKoopaShell::Render() {
 	if (this->state == KOOPA_SHELL_STATE_MOVING) {
 		CAnimations* animations = CAnimations::GetInstance();
 		animations->Get(ID_ANI_KOOPA_SHELL_ROTATE)->Render(x,y);
+	}
+	else if (this->state == KOOPA_SHELL_STATE_SHAKE) {
+		CAnimations* animations = CAnimations::GetInstance();
+		animations->Get(ID_ANI_KOOPA_SHELL_SHAKE)->Render(x, y);
 	}
 	else {
 		CSprites* s = CSprites::GetInstance();
@@ -36,11 +25,6 @@ void CKoopaShell::StartMove(float mx) {
 	else {
 		this->vx = KOOPA_SHELL_SPEED;
 	}
-}
-
-void CKoopaShell::StopMove() {
-	this->state = KOOPA_SHELL_STATE_STOP;
-	this->vx = 0;
 }
 
 void CKoopaShell::GetBoundingBox(float& l, float& t, float& r, float& b) {

@@ -72,7 +72,7 @@ void CKoopa::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects) {
 		}
 		CCollision::GetInstance()->Process(this, dt, coObjects);
 	}
-	else if (this->shell->GetState() == KOOPA_SHELL_STATE_STOP && GetTickCount64() - this->in_shell_start > KOOPA_IN_SHELL_TIME)
+	else if (this->shell->GetState() != KOOPA_SHELL_STATE_MOVING && GetTickCount64() - this->in_shell_start > KOOPA_IN_SHELL_TIME)
 	{
 		this->in_shell_start = 0;
 		this->is_in_shell = false;
