@@ -71,11 +71,9 @@ void CMario::OnCollisionWith(LPCOLLISIONEVENT e)
 
 void CMario::OnCollisionWithKoopa(LPCOLLISIONEVENT e) {
 	CKoopa* koopa = dynamic_cast<CKoopa*>(e->obj);
-	// jump on top >> kill Koopa and deflect a bit 
 	if (e->ny < 0)
 	{
-
-		koopa->Die();
+		koopa->EnterShell();
 		vy = -MARIO_JUMP_DEFLECT_SPEED;
 	}
 	else // hit by Koopa
@@ -98,10 +96,18 @@ void CMario::OnCollisionWithKoopa(LPCOLLISIONEVENT e) {
 void CMario::OnCollisionWithKoopaShell(LPCOLLISIONEVENT e) {
 	CKoopaShell* shell = dynamic_cast<CKoopaShell*>(e->obj);
 	if (shell->GetState() == KOOPA_SHELL_STATE_STOP) {
-		shell->StartMove(x);
+		if (this->state == MARIO_STATE_RUNNING_LEFT || this->state == MARIO_STATE_RUNNING_RIGHT) {
+
+		} else {
+			shell->StartMove(x);
+		}
 	}
 	else {
-		if (untouchable == 0)
+		if (e->ny < 0)
+		{
+			shell->StopMove();
+		}
+		else if (untouchable == 0)
 		{
 			if (level > MARIO_LEVEL_SMALL)
 			{
@@ -330,7 +336,7 @@ void CMario::Render()
 void CMario::SetState(int state)
 {
 	// DIE is the end state, cannot be changed! 
-	if (this->state == MARIO_STATE_DIE) return; 
+	//if (this->state == MARIO_STATE_DIE) return; 
 
 	switch (state)
 	{

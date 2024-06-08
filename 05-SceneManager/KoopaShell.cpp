@@ -1,4 +1,6 @@
 #include "KoopaShell.h"
+#include "CGiftBox.h"
+
 
 CKoopaShell::CKoopaShell(float x, float y, int color) : CGameObject(x,y) {
 	this->ax = 0;
@@ -36,6 +38,10 @@ void CKoopaShell::StartMove(float mx) {
 	}
 }
 
+void CKoopaShell::StopMove() {
+	this->state = KOOPA_SHELL_STATE_STOP;
+	this->vx = 0;
+}
 
 void CKoopaShell::GetBoundingBox(float& l, float& t, float& r, float& b) {
 	l = x - KOOPA_SHELL_BBOX_WIDTH / 2;

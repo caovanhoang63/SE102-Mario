@@ -19,13 +19,19 @@
 #define KOOPA_BBOX_WIDTH	16
 #define KOOPA_BBOX_HEIGHT	24
 
+#define KOOPA_IN_SHELL_TIME 2000
+
+
+
 class CKoopa : public CEnemy
 {
 protected:
-	float ax;
-	float ay;
+	CKoopaShell* shell;
+	float ax,ay,width,height;
 	int color;
 	CInvisibleBlock* block;
+	bool is_in_shell;
+	ULONGLONG in_shell_start;
 	virtual void GetBoundingBox(float& left, float& top, float& right, float& bottom);
 	virtual void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);
 	virtual void Render();
@@ -37,7 +43,8 @@ protected:
 public:
 	CKoopa(float x, float y, int color);
 	virtual void SetState(int state);
-	virtual void Die();
+	virtual void EnterShell();
+	virtual void ExitShell();
 };
 
 

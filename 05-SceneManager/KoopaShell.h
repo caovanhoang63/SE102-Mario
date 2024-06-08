@@ -1,7 +1,6 @@
 #pragma once
 #include "GameObject.h"
-#include "CGiftBox.h"
-#define KOOPA_SHELL_SPEED 0.2f
+#define KOOPA_SHELL_SPEED 0.1f
 #define KOOPA_SHELL_GRAVITY 0.02f
 
 #define ID_ANI_KOOPA_SHELL_ROTATE  130010
@@ -29,6 +28,7 @@ public:
 	void Render();
 	void GetBoundingBox(float& l, float& t, float& r, float& b);
 	void StartMove(float x);
+	void StopMove();
 	virtual void OnNoCollision(DWORD dt);
 	virtual void OnCollisionWith(LPCOLLISIONEVENT e);
 	virtual int IsCollidable() { return 1; };
