@@ -73,7 +73,9 @@ void CSampleKeyHandler::KeyState(BYTE *states)
 		mario->SetState(MARIO_STATE_IDLE);
 
 	if (mario->IsHoldingShell()) {
-		if (!game->IsKeyDown(DIK_A))
+		if (!game->IsKeyDown(DIK_A)) {
 			mario->ReleaseShell();
+			DebugOut(L"Release");
+		}
 	}
 }

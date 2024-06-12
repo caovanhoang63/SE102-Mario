@@ -65,6 +65,18 @@
 #define ID_ANI_MARIO_BRACE_LEFT 1001
 
 
+#define ID_ANI_MARIO_HOLDING_SHELL_RUN_LEFT	1010
+#define ID_ANI_MARIO_HOLDING_SHELL_RUN_RIGHT	1011
+
+#define ID_ANI_MARIO_HOLDING_SHELL_JUMP_LEFT	1020
+#define ID_ANI_MARIO_HOLDING_SHELL_JUMP_RIGHT	1021
+
+#define ID_ANI_MARIO_LEFT_KICK 1030
+#define ID_ANI_MARIO_RIGHT_KICK 1031
+
+#define ID_ANI_MARIO_HOLDING_SHELL_IDLE_LEFT 1040
+#define ID_ANI_MARIO_HOLDING_SHELL_IDLE_RIGHT 1041
+
 
 #define ID_ANI_MARIO_DIE 999
 
@@ -93,6 +105,8 @@
 #define ID_ANI_MARIO_SMALL_HOLDING_SHELL_JUMP_LEFT	1800
 #define ID_ANI_MARIO_SMALL_HOLDING_SHELL_JUMP_RIGHT	1801
 
+#define ID_ANI_MARIO_SMALL_LEFT_KICK 1900
+#define ID_ANI_MARIO_SMALL_RIGHT_KICK 1901
 
 #define ID_ANI_MARIO_SMALL_HOLDING_SHELL_IDLE_LEFT 1910
 #define ID_ANI_MARIO_SMALL_HOLDING_SHELL_IDLE_RIGHT 1911
@@ -120,6 +134,7 @@
 
 
 #define MARIO_UNTOUCHABLE_TIME 2500
+#define MARIO_KICK_TIME 300
 
 class CMario : public CGameObject
 {
@@ -130,8 +145,8 @@ class CMario : public CGameObject
 
 	int level; 
 	int untouchable; 
-	ULONGLONG untouchable_start;
-	BOOLEAN isOnPlatform, isHoldingShell;
+	ULONGLONG untouchable_start,kick_start;
+	BOOLEAN isOnPlatform, isHoldingShell, inKickAni;
 	int coin; 
 	CKoopaShell* shell;
 	void OnCollisionWithGoomba(LPCOLLISIONEVENT e);
@@ -155,10 +170,12 @@ public:
 		ay = MARIO_GRAVITY; 
 		this->shell = NULL;
 
-		level = MARIO_LEVEL_SMALL;
+		level = MARIO_LEVEL_BIG;
 		untouchable = 0;
 		untouchable_start = -1;
 		isOnPlatform = false;
+		kick_start = 0;
+		inKickAni = false;
 		coin = 0;
 	}
 	void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);
@@ -176,6 +193,7 @@ public:
 	void OnCollisionWith(LPCOLLISIONEVENT e);
 	void SetLevel(int l);
 	void StartUntouchable() { untouchable = 1; untouchable_start = GetTickCount64(); }
+	void StartKickAni() { inKickAni = true; kick_start = GetTickCount64(); }
 	void HoldShell(CKoopaShell* shell);
 	void ReleaseShell();
 	void GetBoundingBox(float& left, float& top, float& right, float& bottom);

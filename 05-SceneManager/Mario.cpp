@@ -30,6 +30,12 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 		untouchable = 0;
 	}
 
+	if (GetTickCount64() - kick_start > MARIO_KICK_TIME) {
+		kick_start = 0;
+		inKickAni = false;
+	}
+
+
 	isOnPlatform = false;
 
 	CCollision::GetInstance()->Process(this, dt, coObjects);
@@ -122,15 +128,17 @@ void CMario::ReleaseShell() {
 	this->isHoldingShell = false;
 	this->shell->StartMove(this->x);
 	this->shell = NULL;
+	this->StartKickAni();
 }
 
 
 void CMario::OnCollisionWithKoopaShell(LPCOLLISIONEVENT e) {
 	CKoopaShell* shell = dynamic_cast<CKoopaShell*>(e->obj);
 	if (shell->GetState() == KOOPA_SHELL_STATE_STOP) {
-		if (this->state == MARIO_STATE_RUNNING_LEFT || this->state == MARIO_STATE_RUNNING_RIGHT) {
+		if (abs(ax) == MARIO_ACCEL_RUN_X && e->nx != 0 )  {
 			this->HoldShell(shell);
 		} else {
+			this->StartKickAni();
 			shell->StartMove(x);
 		}
 	}
@@ -175,7 +183,7 @@ void CMario::OnCollisionWithFireBullet(LPCOLLISIONEVENT e)
 
 void CMario::OnCollisionWithMushroom(LPCOLLISIONEVENT e) {
 	CMushroom* mushroom = dynamic_cast<CMushroom*>(e->obj);
-	level = MARIO_LEVEL_BIG;	
+	this->SetLevel(MARIO_LEVEL_BIG);
 	mushroom->Delete();
 }
 void CMario::OnCollosionWithGiftBox(LPCOLLISIONEVENT e) {
@@ -247,7 +255,15 @@ void CMario::OnCollisionWithPortal(LPCOLLISIONEVENT e)
 int CMario::GetAniIdSmall()
 {
 	int aniId = -1;
-	if (!isOnPlatform)
+	if (inKickAni) {
+		if (nx >= 0) {
+			aniId = ID_ANI_MARIO_SMALL_RIGHT_KICK;
+		}
+		else {
+			aniId = ID_ANI_MARIO_SMALL_LEFT_KICK;
+		}
+	}
+	else if (!isOnPlatform)
 	{
 		if (isHoldingShell) {
 			if (nx >= 0)
@@ -329,9 +345,25 @@ int CMario::GetAniIdSmall()
 int CMario::GetAniIdBig()
 {
 	int aniId = -1;
-	if (!isOnPlatform)
+
+	if (inKickAni) {
+		if (nx >= 0) {
+			aniId = ID_ANI_MARIO_RIGHT_KICK;
+		}
+		else {
+			aniId = ID_ANI_MARIO_LEFT_KICK;
+		}
+	}
+	else if (!isOnPlatform)
 	{
-		if (abs(ax) == MARIO_ACCEL_RUN_X)
+
+		if (isHoldingShell) {
+			if (nx >= 0)
+				aniId = ID_ANI_MARIO_HOLDING_SHELL_JUMP_RIGHT;
+			else
+				aniId = ID_ANI_MARIO_HOLDING_SHELL_JUMP_LEFT;
+		}
+		else if (abs(ax) == MARIO_ACCEL_RUN_X)
 		{
 			if (nx >= 0)
 				aniId = ID_ANI_MARIO_JUMP_RUN_RIGHT;
@@ -344,6 +376,18 @@ int CMario::GetAniIdBig()
 				aniId = ID_ANI_MARIO_JUMP_WALK_RIGHT;
 			else
 				aniId = ID_ANI_MARIO_JUMP_WALK_LEFT;
+		}
+	}
+	else if (isHoldingShell) {
+		if (vx > 0) {
+			aniId = ID_ANI_MARIO_HOLDING_SHELL_RUN_RIGHT;
+		}
+		else if (vx < 0) {
+			aniId = ID_ANI_MARIO_HOLDING_SHELL_RUN_LEFT;
+		}
+		else {
+			if (nx > 0) aniId = ID_ANI_MARIO_HOLDING_SHELL_IDLE_RIGHT;
+			else aniId = ID_ANI_MARIO_HOLDING_SHELL_IDLE_LEFT;
 		}
 	}
 	else
@@ -365,8 +409,7 @@ int CMario::GetAniIdBig()
 				if (ax < 0)
 					aniId = ID_ANI_MARIO_BRACE_RIGHT;
 				else if (ax == MARIO_ACCEL_RUN_X) {
-					if (!isHoldingShell)
-						aniId = ID_ANI_MARIO_RUNNING_RIGHT;
+					aniId = ID_ANI_MARIO_RUNNING_RIGHT;
 				}
 				else if (ax == MARIO_ACCEL_WALK_X)
 					aniId = ID_ANI_MARIO_WALKING_RIGHT;
@@ -402,7 +445,7 @@ void CMario::Render()
 
 	animations->Get(aniId)->Render(x, y);
 
-	//RenderBoundingBox();
+	RenderBoundingBox();
 	
 	DebugOutTitle(L"Coins: %d", coin);
 }
@@ -410,7 +453,7 @@ void CMario::Render()
 void CMario::SetState(int state)
 {
 	 //DIE is the end state, cannot be changed! 
-	//if (this->state == MARIO_STATE_DIE) return; 
+	if (this->state == MARIO_STATE_DIE) return; 
 
 	switch (state)
 	{
@@ -522,6 +565,11 @@ void CMario::SetLevel(int l)
 	{
 		y -= (MARIO_BIG_BBOX_HEIGHT - MARIO_SMALL_BBOX_HEIGHT) / 2;
 	}
+	else if (this->level == MARIO_LEVEL_BIG) {
+		y -= (MARIO_BIG_BBOX_HEIGHT - MARIO_SMALL_BBOX_HEIGHT) / 2;
+	}
+
+
 	level = l;
 }
 
