@@ -3,6 +3,7 @@
 
 #include "Animation.h"
 #include "Animations.h"
+#include "KoopaShell.h"
 
 #include "debug.h"
 
@@ -33,7 +34,11 @@
 #define MARIO_STATE_SIT				600
 #define MARIO_STATE_SIT_RELEASE		601
 
+#define MARIO_STATE_HOLD_SHELL_LEFT	700
+#define MARIO_STATE_HOLD_SHELL_RIGHT	701
 
+#define MARIO_SHELL_X_OFF_SET	12
+#define MARIO_SHELL_Y_OFF_SET	1
 
 #pragma region ANIMATION_ID
 
@@ -52,14 +57,14 @@
 #define ID_ANI_MARIO_JUMP_RUN_RIGHT 800
 #define ID_ANI_MARIO_JUMP_RUN_LEFT 801
 
-#define MARIO_STATE_HOLD_SHELL_LEFT 1100
-#define MARIO_STATE_HOLD_SHELL_RIGHT	1101
 
 #define ID_ANI_MARIO_SIT_RIGHT 900
 #define ID_ANI_MARIO_SIT_LEFT 901
 
 #define ID_ANI_MARIO_BRACE_RIGHT 1000
 #define ID_ANI_MARIO_BRACE_LEFT 1001
+
+
 
 #define ID_ANI_MARIO_DIE 999
 
@@ -81,6 +86,17 @@
 
 #define ID_ANI_MARIO_SMALL_JUMP_RUN_RIGHT 1600
 #define ID_ANI_MARIO_SMALL_JUMP_RUN_LEFT 1601
+
+#define ID_ANI_MARIO_SMALL_HOLDING_SHELL_RUN_LEFT	1700
+#define ID_ANI_MARIO_SMALL_HOLDING_SHELL_RUN_RIGHT	1701
+
+#define ID_ANI_MARIO_SMALL_HOLDING_SHELL_JUMP_LEFT	1800
+#define ID_ANI_MARIO_SMALL_HOLDING_SHELL_JUMP_RIGHT	1801
+
+
+#define ID_ANI_MARIO_SMALL_HOLDING_SHELL_IDLE_LEFT 1910
+#define ID_ANI_MARIO_SMALL_HOLDING_SHELL_IDLE_RIGHT 1911
+
 
 #pragma endregion
 
@@ -115,9 +131,9 @@ class CMario : public CGameObject
 	int level; 
 	int untouchable; 
 	ULONGLONG untouchable_start;
-	BOOLEAN isOnPlatform;
+	BOOLEAN isOnPlatform, isHoldingShell;
 	int coin; 
-
+	CKoopaShell* shell;
 	void OnCollisionWithGoomba(LPCOLLISIONEVENT e);
 	void OnCollisionWithCoin(LPCOLLISIONEVENT e);
 	void OnCollosionWithGiftBox(LPCOLLISIONEVENT e);
@@ -126,7 +142,7 @@ class CMario : public CGameObject
 	void OnCollisionWithKoopa(LPCOLLISIONEVENT e);
 	void OnCollisionWithKoopaShell(LPCOLLISIONEVENT e);
 	void OnCollisionWithFireBullet(LPCOLLISIONEVENT e);
-
+	
 	int GetAniIdBig();
 	int GetAniIdSmall();
 
@@ -137,6 +153,7 @@ public:
 		maxVx = 0.0f;
 		ax = 0.0f;
 		ay = MARIO_GRAVITY; 
+		this->shell = NULL;
 
 		level = MARIO_LEVEL_SMALL;
 		untouchable = 0;
@@ -154,11 +171,12 @@ public:
 	}
 
 	int IsBlocking() { return (state != MARIO_STATE_DIE && untouchable==0); }
-
+	bool IsHoldingShell() { return isHoldingShell; }
 	void OnNoCollision(DWORD dt);
 	void OnCollisionWith(LPCOLLISIONEVENT e);
 	void SetLevel(int l);
 	void StartUntouchable() { untouchable = 1; untouchable_start = GetTickCount64(); }
-
+	void HoldShell(CKoopaShell* shell);
+	void ReleaseShell();
 	void GetBoundingBox(float& left, float& top, float& right, float& bottom);
 };

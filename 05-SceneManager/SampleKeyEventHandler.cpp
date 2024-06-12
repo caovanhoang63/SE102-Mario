@@ -54,7 +54,7 @@ void CSampleKeyHandler::KeyState(BYTE *states)
 {
 	LPGAME game = CGame::GetInstance();
 	CMario* mario = (CMario*)((LPPLAYSCENE)CGame::GetInstance()->GetCurrentScene())->GetPlayer();
-
+	
 	if (game->IsKeyDown(DIK_RIGHT))
 	{
 		if (game->IsKeyDown(DIK_A))
@@ -66,9 +66,14 @@ void CSampleKeyHandler::KeyState(BYTE *states)
 	{
 		if (game->IsKeyDown(DIK_A))
 			mario->SetState(MARIO_STATE_RUNNING_LEFT);
-		else
+		else 
 			mario->SetState(MARIO_STATE_WALKING_LEFT);
 	}
 	else
 		mario->SetState(MARIO_STATE_IDLE);
+
+	if (mario->IsHoldingShell()) {
+		if (!game->IsKeyDown(DIK_A))
+			mario->ReleaseShell();
+	}
 }

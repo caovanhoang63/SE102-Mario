@@ -1,6 +1,6 @@
 #pragma once
 #include "GameObject.h"
-#define KOOPA_SHELL_SPEED 0.1f
+#define KOOPA_SHELL_SPEED 0.2f
 #define KOOPA_SHELL_GRAVITY 0.02f
 
 #define ID_ANI_KOOPA_SHELL_ROTATE  130010

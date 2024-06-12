@@ -33,12 +33,27 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 	isOnPlatform = false;
 
 	CCollision::GetInstance()->Process(this, dt, coObjects);
+
+	if (this->isHoldingShell) {
+		if (vx > 0) {
+			this->shell->SetPosition(this->x + MARIO_SHELL_X_OFF_SET, this->y - MARIO_SHELL_Y_OFF_SET );
+		}
+		else if (vx < 0 ) {
+			this->shell->SetPosition(this->x - MARIO_SHELL_X_OFF_SET, this->y - MARIO_SHELL_Y_OFF_SET);
+		}
+		else {
+			float sx, sy;
+			this->shell->GetPosition(sx, sy);
+			this->shell->SetPosition(sx, this->y - MARIO_SHELL_Y_OFF_SET);
+		}
+	}
 }
 
 void CMario::OnNoCollision(DWORD dt)
 {
 	x += vx * dt;
 	y += vy * dt;
+
 }
 
 void CMario::OnCollisionWith(LPCOLLISIONEVENT e)
@@ -98,11 +113,23 @@ void CMario::OnCollisionWithKoopa(LPCOLLISIONEVENT e) {
 		}
 	}
 }
+
+void CMario::HoldShell(CKoopaShell* shell) {
+	this->isHoldingShell = true;
+	this->shell = shell;
+}
+void CMario::ReleaseShell() {
+	this->isHoldingShell = false;
+	this->shell->StartMove(this->x);
+	this->shell = NULL;
+}
+
+
 void CMario::OnCollisionWithKoopaShell(LPCOLLISIONEVENT e) {
 	CKoopaShell* shell = dynamic_cast<CKoopaShell*>(e->obj);
 	if (shell->GetState() == KOOPA_SHELL_STATE_STOP) {
 		if (this->state == MARIO_STATE_RUNNING_LEFT || this->state == MARIO_STATE_RUNNING_RIGHT) {
-
+			this->HoldShell(shell);
 		} else {
 			shell->StartMove(x);
 		}
@@ -222,12 +249,18 @@ int CMario::GetAniIdSmall()
 	int aniId = -1;
 	if (!isOnPlatform)
 	{
-		if (abs(ax) == MARIO_ACCEL_RUN_X)
-		{
+		if (isHoldingShell) {
 			if (nx >= 0)
-				aniId = ID_ANI_MARIO_SMALL_JUMP_RUN_RIGHT;
+				aniId = ID_ANI_MARIO_SMALL_HOLDING_SHELL_JUMP_RIGHT;
 			else
-				aniId = ID_ANI_MARIO_SMALL_JUMP_RUN_LEFT;
+				aniId = ID_ANI_MARIO_SMALL_HOLDING_SHELL_JUMP_LEFT;
+		}
+		else if (abs(ax) == MARIO_ACCEL_RUN_X)
+		{
+				if (nx >= 0)
+					aniId = ID_ANI_MARIO_SMALL_JUMP_RUN_RIGHT;
+				else
+					aniId = ID_ANI_MARIO_SMALL_JUMP_RUN_LEFT;
 		}
 		else
 		{
@@ -235,6 +268,18 @@ int CMario::GetAniIdSmall()
 				aniId = ID_ANI_MARIO_SMALL_JUMP_WALK_RIGHT;
 			else
 				aniId = ID_ANI_MARIO_SMALL_JUMP_WALK_LEFT;
+		}
+	}
+	else if (isHoldingShell) {
+		if (vx > 0) {
+			aniId = ID_ANI_MARIO_SMALL_HOLDING_SHELL_RUN_RIGHT;
+		}
+		else if (vx < 0) {
+			aniId = ID_ANI_MARIO_SMALL_HOLDING_SHELL_RUN_LEFT;
+		}
+		else {
+			if (nx > 0) aniId = ID_ANI_MARIO_SMALL_HOLDING_SHELL_IDLE_RIGHT;
+			else aniId = ID_ANI_MARIO_SMALL_HOLDING_SHELL_IDLE_LEFT;
 		}
 	}
 	else
@@ -255,8 +300,9 @@ int CMario::GetAniIdSmall()
 			{
 				if (ax < 0)
 					aniId = ID_ANI_MARIO_SMALL_BRACE_RIGHT;
-				else if (ax == MARIO_ACCEL_RUN_X)
+				else if (ax == MARIO_ACCEL_RUN_X) {
 					aniId = ID_ANI_MARIO_SMALL_RUNNING_RIGHT;
+				}
 				else if (ax == MARIO_ACCEL_WALK_X)
 					aniId = ID_ANI_MARIO_SMALL_WALKING_RIGHT;
 			}
@@ -264,8 +310,9 @@ int CMario::GetAniIdSmall()
 			{
 				if (ax > 0)
 					aniId = ID_ANI_MARIO_SMALL_BRACE_LEFT;
-				else if (ax == -MARIO_ACCEL_RUN_X)
+				else if (ax == -MARIO_ACCEL_RUN_X) {
 					aniId = ID_ANI_MARIO_SMALL_RUNNING_LEFT;
+				}
 				else if (ax == -MARIO_ACCEL_WALK_X)
 					aniId = ID_ANI_MARIO_SMALL_WALKING_LEFT;
 			}
@@ -317,8 +364,10 @@ int CMario::GetAniIdBig()
 			{
 				if (ax < 0)
 					aniId = ID_ANI_MARIO_BRACE_RIGHT;
-				else if (ax == MARIO_ACCEL_RUN_X)
-					aniId = ID_ANI_MARIO_RUNNING_RIGHT;
+				else if (ax == MARIO_ACCEL_RUN_X) {
+					if (!isHoldingShell)
+						aniId = ID_ANI_MARIO_RUNNING_RIGHT;
+				}
 				else if (ax == MARIO_ACCEL_WALK_X)
 					aniId = ID_ANI_MARIO_WALKING_RIGHT;
 			}
@@ -326,8 +375,10 @@ int CMario::GetAniIdBig()
 			{
 				if (ax > 0)
 					aniId = ID_ANI_MARIO_BRACE_LEFT;
-				else if (ax == -MARIO_ACCEL_RUN_X)
-					aniId = ID_ANI_MARIO_RUNNING_LEFT;
+				else if (ax == -MARIO_ACCEL_RUN_X) {
+					if (!isHoldingShell)
+						aniId = ID_ANI_MARIO_RUNNING_LEFT;
+				}
 				else if (ax == -MARIO_ACCEL_WALK_X)
 					aniId = ID_ANI_MARIO_WALKING_LEFT;
 			}
@@ -358,7 +409,7 @@ void CMario::Render()
 
 void CMario::SetState(int state)
 {
-	// DIE is the end state, cannot be changed! 
+	 //DIE is the end state, cannot be changed! 
 	//if (this->state == MARIO_STATE_DIE) return; 
 
 	switch (state)

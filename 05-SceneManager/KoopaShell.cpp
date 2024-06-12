@@ -44,7 +44,7 @@ void CKoopaShell::OnCollisionWith(LPCOLLISIONEVENT e) {
 	if (dynamic_cast<CKoopaShell*>(e->obj)) return;
 	if (dynamic_cast<CGiftBox*>(e->obj)) {
 		CGiftBox* box = dynamic_cast<CGiftBox*>(e->obj);
-		if (box->GetState() != GIFTBOX_STATE_OPENED)
+		if (box->GetState() != GIFTBOX_STATE_OPENED && this->state == KOOPA_SHELL_STATE_MOVING)
 		{
 			box->SetState(GIFTBOX_STATE_OPENED);
 			box->StartMove();
