@@ -15,6 +15,7 @@
 #include "CBlock.h"
 #include "Flower.h"
 #include "FireBullet.h"
+#include "WingedGoomba.h"
 #include "SampleKeyEventHandler.h"
 
 using namespace std;
@@ -161,6 +162,7 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 		obj = new CBlock(x, y, sprite_width, sprite_height, sprite_id);
 
 	}; break;
+	case OBJECT_TYPE_WINGED_GOOMBA: obj = new CWingedGoomba(x, y); break;
 	case OBJECT_TYPE_FLOWER: {
 		int width = atoi(tokens[3].c_str());
 		int height = atoi(tokens[4].c_str());

@@ -283,5 +283,6 @@
     <Text Include="firebullet.txt" />
     <Text Include="mushroom.txt" />
     <Text Include="koopa.txt" />
+    <Text Include="winged_goomba.txt" />
   </ItemGroup>
 </Project>

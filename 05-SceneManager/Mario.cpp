@@ -14,6 +14,7 @@
 #include "Koopa.h"
 #include "KoopaShell.h"
 #include "FireBullet.h"
+#include "WingedGoomba.h"
 
 
 void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
@@ -75,7 +76,10 @@ void CMario::OnCollisionWith(LPCOLLISIONEVENT e)
 		vx = 0;
 	}
 
-	if (dynamic_cast<CGoomba*>(e->obj))
+
+	if (dynamic_cast<CWingedGoomba*>(e->obj))
+		OnCollisionWithWingedGoomba(e);
+	else if (dynamic_cast<CGoomba*>(e->obj))
 		OnCollisionWithGoomba(e);
 	else if (dynamic_cast<CCoin*>(e->obj))
 		OnCollisionWithCoin(e);
@@ -93,6 +97,43 @@ void CMario::OnCollisionWith(LPCOLLISIONEVENT e)
 		OnCollisionWithFireBullet(e);
 
 }
+
+void CMario::OnCollisionWithWingedGoomba(LPCOLLISIONEVENT e)
+{
+	CWingedGoomba* goomba = dynamic_cast<CWingedGoomba*>(e->obj);
+
+	if (e->ny < 0)
+	{
+		if (goomba->GetState() != WINGED_GOOMBA_STATE_NO_WINGS_WALKING) {
+			goomba->SetState(WINGED_GOOMBA_STATE_NO_WINGS_WALKING);
+		}
+		else {
+			goomba->SetState(WINGED_GOOMBA_STATE_DIE);
+		}
+	}
+	else 
+	{
+		if (untouchable == 0)
+		{
+			if (goomba->GetState() != WINGED_GOOMBA_STATE_DIE)
+			{
+				if (level > MARIO_LEVEL_SMALL)
+				{
+					level = MARIO_LEVEL_SMALL;
+					StartUntouchable();
+				}
+				else
+				{
+					DebugOut(L">>> Mario DIE >>> \n");
+					SetState(MARIO_STATE_DIE);
+				}
+			}
+		}
+	}
+
+
+}
+
 
 
 void CMario::OnCollisionWithKoopa(LPCOLLISIONEVENT e) {
@@ -180,6 +221,8 @@ void CMario::OnCollisionWithFireBullet(LPCOLLISIONEVENT e)
 		}
 	}
 }
+
+
 
 void CMario::OnCollisionWithMushroom(LPCOLLISIONEVENT e) {
 	CMushroom* mushroom = dynamic_cast<CMushroom*>(e->obj);

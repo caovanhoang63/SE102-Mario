@@ -1,7 +1,7 @@
 #pragma once
 #include "Enemy.h"
 
-#define GOOMBA_GRAVITY 0.002f
+#define GOOMBA_GRAVITY 0.001f
 #define GOOMBA_WALKING_SPEED 0.05f
 
 
@@ -20,8 +20,6 @@
 class CGoomba : public CEnemy
 {
 protected:
-	float ax;				
-	float ay; 
 
 	ULONGLONG die_start;
 

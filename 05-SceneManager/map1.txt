@@ -14,6 +14,7 @@ firebullet.txt
 coin.txt
 mushroom.txt
 koopa.txt
+winged_goomba.txt
 #
 [OBJECTS]
 # type	x	y	extra_settings per object type
@@ -86,3 +87,5 @@ koopa.txt
 
 
 13	560	100	0
+
+14 	1066	50	0

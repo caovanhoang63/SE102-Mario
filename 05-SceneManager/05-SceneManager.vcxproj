@@ -238,6 +238,7 @@
     <Text Include="scene01.txt" />
     <Text Include="scene02.txt" />
     <Text Include="specials.txt" />
+    <Text Include="winged_goomba.txt" />
     <Text Include="x64\Debug\05-SceneManager.vcxproj.FileListAbsolute.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
