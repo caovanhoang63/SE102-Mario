@@ -1,11 +1,13 @@
 #include "WingedGoomba.h"
-
+#include "PlayScene.h"
 
 CWingedGoomba::CWingedGoomba(float x, float y) : CGoomba(x,y)
 {
 	die_start = -1;
 	walking_start = -1;
 	jumpCount = 0;
+	observe_start = GetTickCount64();
+	vx = -GOOMBA_WALKING_SPEED;
 	SetState(WINGED_GOOMBA_STATE_WALKING);
 }
 
@@ -16,17 +18,17 @@ void CWingedGoomba::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	vy += ay * dt;
 	vx += ax * dt;
 
+	Observe();
+
 	if ((state == WINGED_GOOMBA_STATE_DIE) && (GetTickCount64() - die_start > WINGED_GOOMBA_DIE_TIMEOUT))
 	{
 		isDeleted = true;
 		return;
 	}
-
-	if ((state == WINGED_GOOMBA_STATE_WALKING && (GetTickCount64() - walking_start > WINGED_GOOMBA_WALKING_TIME))) 	{
+	else if ((state == WINGED_GOOMBA_STATE_WALKING && (GetTickCount64() - walking_start > WINGED_GOOMBA_WALKING_TIME))) 	{
 		SetState(WINGED_GOOMBA_STATE_JUMP);
 	}
-
-	if (state == WINGED_GOOMBA_STATE_JUMP){
+	else if (state == WINGED_GOOMBA_STATE_JUMP){
 		if (jumpCount != WINGEG_GOOMBA_NUM_OF_JUMP) {
 			if (isOnPlatform)
 			{
@@ -62,7 +64,6 @@ void CWingedGoomba::SetState(int state)
 		break;
 	case WINGED_GOOMBA_STATE_WALKING:
 		walking_start = GetTickCount64();
-		vx = -GOOMBA_WALKING_SPEED;
 		break;
 	case WINGED_GOOMBA_STATE_JUMP:
 		jumpCount = 0;
@@ -112,6 +113,30 @@ void CWingedGoomba::OnCollisionWith(LPCOLLISIONEVENT e)
 	{
 		vx = -vx;
 	}
+}
+
+void CWingedGoomba::Observe()
+{
+	if (state == WINGED_GOOMBA_STATE_NO_WINGS_WALKING) return;
+	if (GetTickCount64() - observe_start > WINGED_GOOMBA_OBSERVE_TIME) {
+		observe_start = GetTickCount64();
+
+		if (state == WINGED_GOOMBA_STATE_HIGH_JUMP) return;
+		
+		if (dynamic_cast<CPlayScene*>(CGame::GetInstance()->GetCurrentScene())) {
+			CPlayScene* scene = dynamic_cast<CPlayScene*>(CGame::GetInstance()->GetCurrentScene());
+			float marioX, marioY;
+			scene->GetPlayer()->GetPosition(marioX, marioY);
+			if (marioX > x) {
+				vx = GOOMBA_WALKING_SPEED;
+			}
+			else {
+				vx = -GOOMBA_WALKING_SPEED;
+			}
+		}
+	}
+
+	
 }
 
 
