@@ -37,6 +37,10 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 		inKickAni = false;
 	}
 
+	if (GetTickCount64() - spin_start > MARIO_SPIN_TIME) {
+		spin_start = 0;
+		isSpin = false;
+	}
 
 	isOnPlatform = false;
 
@@ -141,7 +145,7 @@ void CMario::OnCollisionWithWingedGoomba(LPCOLLISIONEVENT e)
 {
 	CWingedGoomba* goomba = dynamic_cast<CWingedGoomba*>(e->obj);
 
-	if (e->ny < 0)
+	if (CanKillEnemy(e))
 	{
 		if (goomba->GetState() != WINGED_GOOMBA_STATE_NO_WINGS_WALKING) {
 			goomba->SetState(WINGED_GOOMBA_STATE_NO_WINGS_WALKING);
@@ -160,20 +164,17 @@ void CMario::OnCollisionWithWingedGoomba(LPCOLLISIONEVENT e)
 			}
 		}
 	}
-
-
 }
-
-
 
 
 
 void CMario::OnCollisionWithKoopa(LPCOLLISIONEVENT e) {
 	CKoopa* koopa = dynamic_cast<CKoopa*>(e->obj);
-	if (e->ny < 0)
+	if (CanKillEnemy(e))
 	{
 		koopa->EnterShell();
-		vy = -MARIO_JUMP_DEFLECT_SPEED;
+		if (e->ny < 0)
+			vy = -MARIO_JUMP_DEFLECT_SPEED;
 	}
 	else // hit by Koopa
 	{
@@ -256,11 +257,12 @@ void CMario::OnCollisionWithGoomba(LPCOLLISIONEVENT e)
 	CGoomba* goomba = dynamic_cast<CGoomba*>(e->obj);
 
 	// jump on top >> kill Goomba and deflect a bit 
-	if (e->ny < 0)
+	if (CanKillEnemy(e))
 	{
 		if (goomba->GetState() != GOOMBA_STATE_DIE)
 		{
 			goomba->SetState(GOOMBA_STATE_DIE);
+			if (e->ny < 0)
 			vy = -MARIO_JUMP_DEFLECT_SPEED;
 		}
 	}
@@ -482,6 +484,10 @@ int CMario::GetAniIdRacoon()
 			aniId = ID_ANI_MARIO_RACOON_LEFT_KICK;
 		}
 	}
+	else if (isSpin) {
+		if (nx > 0) aniId = ID_ANI_MARIO_RACOON_SPIN_RIGHT;
+		else aniId = ID_ANI_MARIO_RACOON_SPIN_LEFT;
+	}
 	else if (!isOnPlatform)
 	{
 
@@ -518,6 +524,7 @@ int CMario::GetAniIdRacoon()
 			else aniId = ID_ANI_MARIO_RACOON_HOLDING_SHELL_IDLE_LEFT;
 		}
 	}
+
 	else
 		if (isSitting)
 		{
@@ -675,6 +682,12 @@ void CMario::GetBoundingBox(float &left, float &top, float &right, float &bottom
 			top = y - MARIO_BIG_SITTING_BBOX_HEIGHT / 2;
 			right = left + MARIO_BIG_SITTING_BBOX_WIDTH;
 			bottom = top + MARIO_BIG_SITTING_BBOX_HEIGHT;
+		}
+		else if (isSpin) {
+			left = x - MARIO_BIG_BBOX_WIDTH / 2 -5 ;
+			top = y - MARIO_BIG_BBOX_HEIGHT / 2;
+			right = left + MARIO_BIG_BBOX_WIDTH + 5;
+			bottom = top + MARIO_BIG_BBOX_HEIGHT;
 		}
 		else 
 		{

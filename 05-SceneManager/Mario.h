@@ -37,6 +37,10 @@
 #define MARIO_STATE_HOLD_SHELL_LEFT	700
 #define MARIO_STATE_HOLD_SHELL_RIGHT	701
 
+#define MARIO_STATE_SPIN	800
+
+
+
 #define MARIO_SHELL_X_OFF_SET	12
 #define MARIO_SHELL_Y_OFF_SET	1
 
@@ -148,7 +152,8 @@
 #define ID_ANI_MARIO_RACOON_HOLDING_SHELL_IDLE_LEFT 2040
 #define ID_ANI_MARIO_RACOON_HOLDING_SHELL_IDLE_RIGHT 2041
 
-
+#define ID_ANI_MARIO_RACOON_SPIN_LEFT 2100
+#define ID_ANI_MARIO_RACOON_SPIN_RIGHT 2101
 
 
 #pragma endregion
@@ -175,17 +180,18 @@
 
 #define MARIO_UNTOUCHABLE_TIME 2500
 #define MARIO_KICK_TIME 300
+#define MARIO_SPIN_TIME 400
 
 class CMario : public CGameObject
 {
-	BOOLEAN isSitting;
+	BOOLEAN isSitting,isSpin;
 	float maxVx;
 	float ax;				// acceleration on x 
 	float ay;				// acceleration on y 
 
 	int level; 
 	int untouchable; 
-	ULONGLONG untouchable_start,kick_start;
+	ULONGLONG untouchable_start,kick_start,spin_start;
 	BOOLEAN isOnPlatform, isHoldingShell, inKickAni;
 	int coin; 
 	CKoopaShell* shell;
@@ -224,7 +230,6 @@ public:
 	void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);
 	void Render();
 	void SetState(int state);
-
 	int IsCollidable()
 	{ 
 		return (state != MARIO_STATE_DIE); 
@@ -232,9 +237,11 @@ public:
 	int GetLevel() { return this->level; }
 	int IsBlocking() { return (state != MARIO_STATE_DIE && untouchable==0); }
 	bool IsHoldingShell() { return isHoldingShell; }
+	bool CanKillEnemy(LPCOLLISIONEVENT e) { return (e->ny < 0 || isSpin); }
 	void OnNoCollision(DWORD dt);
 	void OnCollisionWith(LPCOLLISIONEVENT e);
 	void SetLevel(int l);
+	void StartSpin() { isSpin = true; spin_start = GetTickCount64(); }
 	void StartUntouchable() { untouchable = 1; untouchable_start = GetTickCount64(); }
 	void StartKickAni() { inKickAni = true; kick_start = GetTickCount64(); }
 	void HoldShell(CKoopaShell* shell);
