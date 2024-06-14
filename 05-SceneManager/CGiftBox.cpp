@@ -24,7 +24,7 @@ void CGiftBox::GenerateGift() {
 	if (dynamic_cast<CPlayScene*>(CGame::GetInstance()->GetCurrentScene())) {
 		CPlayScene* scene = (CPlayScene*)CGame::GetInstance()->GetCurrentScene();
 		if (!hasBuff) {
-			CFlyingCoin* coin = new CFlyingCoin(x, y);
+			CFlyingCoin* coin = new CFlyingCoin(x, y - GIFTBOX_BBOX_WIDTH /2 );
 			scene->AddBeforeObject(coin,this);
 		}
 	}

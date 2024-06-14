@@ -8,7 +8,7 @@
 #include "debug.h"
 
 #define MARIO_WALKING_SPEED		0.1f
-#define MARIO_RUNNING_SPEED		0.2f
+#define MARIO_RUNNING_SPEED		0.3f
 
 #define MARIO_ACCEL_WALK_X	0.0005f
 #define MARIO_ACCEL_RUN_X	0.0007f
@@ -42,6 +42,7 @@
 
 
 #define MARIO_SHELL_X_OFF_SET	12
+#define MARIO_RACOON_SHELL_X_OFF_SET	16
 #define MARIO_SHELL_Y_OFF_SET	1
 
 #pragma region ANIMATION_ID
@@ -126,6 +127,9 @@
 #define ID_ANI_MARIO_RACOON_RUNNING_RIGHT 2600
 #define ID_ANI_MARIO_RACOON_RUNNING_LEFT 2601
 
+#define ID_ANI_MARIO_RACOON_RUNNING_MAX_SPEED_RIGHT 2610
+#define ID_ANI_MARIO_RACOON_RUNNING_MAX_SPEED_LEFT 2611
+
 #define ID_ANI_MARIO_RACOON_JUMP_WALK_RIGHT 2700
 #define ID_ANI_MARIO_RACOON_JUMP_WALK_LEFT 2701
 
@@ -173,7 +177,7 @@
 #define MARIO_BIG_SITTING_BBOX_HEIGHT 16
 
 #define MARIO_RACOON_BBOX_WIDTH  16
-#define MARIO_RACOON_BBOX_HEIGHT 28
+#define MARIO_RACOON_BBOX_HEIGHT 26
 #define MARIO_RACOON_SITTING_BBOX_WIDTH  14
 #define MARIO_RACOON_SITTING_BBOX_HEIGHT 16
 
@@ -190,7 +194,7 @@
 
 class CMario : public CGameObject
 {
-	BOOLEAN isSitting,isSpin;
+	BOOLEAN isSitting,isSpin,canFly;
 	float maxVx;
 	float ax;				// acceleration on x 
 	float ay;				// acceleration on y 
@@ -224,7 +228,10 @@ public:
 		ax = 0.0f;
 		ay = MARIO_GRAVITY; 
 		this->shell = NULL;
-
+		canFly = false;
+		isHoldingShell = false;
+		isSpin = false;
+		spin_start = -1;
 		level = MARIO_LEVEL_BIG;
 		untouchable = 0;
 		untouchable_start = -1;
@@ -244,6 +251,7 @@ public:
 	int IsBlocking() { return (state != MARIO_STATE_DIE && untouchable==0); }
 	bool IsHoldingShell() { return isHoldingShell; }
 	bool CanKillEnemy(LPCOLLISIONEVENT e) { return (e->ny < 0 || isSpin); }
+	void UpdateShellPosition();
 	void OnNoCollision(DWORD dt);
 	void OnCollisionWith(LPCOLLISIONEVENT e);
 	void SetLevel(int l);

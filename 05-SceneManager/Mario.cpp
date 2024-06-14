@@ -23,6 +23,13 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 	vy += ay * dt;
 	vx += ax * dt;
 
+	if (level == MARIO_LEVEL_RACOON_FORM && abs(vx) >= MARIO_RUNNING_SPEED ) {
+		canFly = true;
+	}
+	else{
+		canFly = false;
+	}
+
 	if (abs(vx) > abs(maxVx)) vx = maxVx;
 
 	// reset untouchable timer if untouchable time has passed
@@ -42,15 +49,36 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 		isSpin = false;
 	}
 
+	
 	isOnPlatform = false;
 
 	CCollision::GetInstance()->Process(this, dt, coObjects);
 
 	if (this->isHoldingShell) {
+		UpdateShellPosition();
+	}
+}
+
+void CMario::UpdateShellPosition()
+{
+	if (level == MARIO_LEVEL_RACOON_FORM) {
 		if (vx > 0) {
-			this->shell->SetPosition(this->x + MARIO_SHELL_X_OFF_SET, this->y - MARIO_SHELL_Y_OFF_SET );
+			this->shell->SetPosition(this->x + MARIO_RACOON_SHELL_X_OFF_SET, this->y - MARIO_SHELL_Y_OFF_SET);
 		}
-		else if (vx < 0 ) {
+		else if (vx < 0) {
+			this->shell->SetPosition(this->x - MARIO_RACOON_SHELL_X_OFF_SET, this->y - MARIO_SHELL_Y_OFF_SET);
+		}
+		else {
+			float sx, sy;
+			this->shell->GetPosition(sx, sy);
+			this->shell->SetPosition(sx, this->y - MARIO_SHELL_Y_OFF_SET);
+		}
+	}
+	else {
+		if (vx > 0) {
+			this->shell->SetPosition(this->x + MARIO_SHELL_X_OFF_SET, this->y - MARIO_SHELL_Y_OFF_SET);
+		}
+		else if (vx < 0) {
 			this->shell->SetPosition(this->x - MARIO_SHELL_X_OFF_SET, this->y - MARIO_SHELL_Y_OFF_SET);
 		}
 		else {
@@ -546,7 +574,12 @@ int CMario::GetAniIdRacoon()
 				if (ax < 0)
 					aniId = ID_ANI_MARIO_RACOON_BRACE_RIGHT;
 				else if (ax == MARIO_ACCEL_RUN_X) {
-					aniId = ID_ANI_MARIO_RACOON_RUNNING_RIGHT;
+					if (abs(vx) == MARIO_RUNNING_SPEED) {
+						aniId = ID_ANI_MARIO_RACOON_RUNNING_MAX_SPEED_RIGHT;
+					}
+					else {
+						aniId = ID_ANI_MARIO_RACOON_RUNNING_RIGHT;
+					}
 				}
 				else if (ax == MARIO_ACCEL_WALK_X)
 					aniId = ID_ANI_MARIO_RACOON_WALKING_RIGHT;
@@ -556,8 +589,12 @@ int CMario::GetAniIdRacoon()
 				if (ax > 0)
 					aniId = ID_ANI_MARIO_RACOON_BRACE_LEFT;
 				else if (ax == -MARIO_ACCEL_RUN_X) {
-					if (!isHoldingShell)
-						aniId = ID_ANI_MARIO_RACOON_RUNNING_LEFT;
+					if(abs(vx) == MARIO_RUNNING_SPEED) {
+						aniId = ID_ANI_MARIO_RACOON_RUNNING_MAX_SPEED_LEFT;
+					}
+					else {
+					aniId = ID_ANI_MARIO_RACOON_RUNNING_LEFT;
+					}
 				}
 				else if (ax == -MARIO_ACCEL_WALK_X)
 					aniId = ID_ANI_MARIO_RACOON_WALKING_LEFT;

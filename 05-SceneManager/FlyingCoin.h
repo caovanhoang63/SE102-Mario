@@ -2,17 +2,17 @@
 #include "Coin.h"
 
 #define ID_ANI_FLYING_COIN 12000
+#define FlYING_COIN_SPEED_Y 0.35f
+#define FLYING_COIN_GRAVITY 0.001f
 
-#define FLYING_DISTANCE 40
-#define FLYING_TIME 100
 
 class CFlyingCoin :public CCoin
 {
 protected:
-	float distance;
+	float ax, ay;
 public:
 	CFlyingCoin(float x, float y);
-	virtual void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects = NULL);
+	virtual void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects );
 	virtual void Render();
 };
 

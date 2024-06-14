@@ -3,7 +3,10 @@
 
 
 CFlyingCoin::CFlyingCoin(float x, float y) : CCoin(x, y) {
-	distance = FLYING_DISTANCE;
+	this->ax = 0;
+	this->ay = FLYING_COIN_GRAVITY;
+	this->vx = 0;
+	this->vy = -FlYING_COIN_SPEED_Y;
 }
 
 void CFlyingCoin::Render() {
@@ -12,15 +15,13 @@ void CFlyingCoin::Render() {
 }
 
 
-#define MIN_MOVE 1.0f
-
 void CFlyingCoin::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects) {
-	float speed = distance / FLYING_TIME;
-	float s = speed * dt;
-	s = max(MIN_MOVE, s);
-	this->y -= s;
-	distance -= s;
-	if (distance <= 0) {
-		isDeleted = true;
+	vx += ax *dt;
+	vy += ay * dt;
+	x += vx * dt;
+	y += vy * dt;
+	if (this->y > this->initY) {
+		this->isDeleted = true;
 	}
+
 }
