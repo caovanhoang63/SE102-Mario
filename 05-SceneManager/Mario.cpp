@@ -144,14 +144,16 @@ void CMario::OnCollisionWithEnemy(LPCOLLISIONEVENT e)
 void CMario::OnCollisionWithWingedGoomba(LPCOLLISIONEVENT e)
 {
 	CWingedGoomba* goomba = dynamic_cast<CWingedGoomba*>(e->obj);
-
-	if (CanKillEnemy(e))
+	if (goomba->GetState() == WINGED_GOOMBA_STATE_DIE)
+		return;
+	else if (CanKillEnemy(e))
 	{
-		if (goomba->GetState() != WINGED_GOOMBA_STATE_NO_WINGS_WALKING) {
-			goomba->SetState(WINGED_GOOMBA_STATE_NO_WINGS_WALKING);
+		if (goomba->GetState() == WINGED_GOOMBA_STATE_NO_WINGS_WALKING) {
+			goomba->SetState(WINGED_GOOMBA_STATE_DIE);
 		}
 		else {
-			goomba->SetState(WINGED_GOOMBA_STATE_DIE);
+			goomba->SetState(WINGED_GOOMBA_STATE_NO_WINGS_WALKING);
+
 		}
 	}
 	else 

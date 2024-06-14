@@ -45,9 +45,11 @@ void CWingedGoomba::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
 	if ((state == WINGED_GOOMBA_STATE_DIE) && (GetTickCount64() - die_start > WINGED_GOOMBA_DIE_TIMEOUT))
 	{
+
 		isDeleted = true;
 		return;
 	}
+
 	else if ((state == WINGED_GOOMBA_STATE_WALKING && (GetTickCount64() - walking_start > WINGED_GOOMBA_WALKING_TIME))) 	{
 		SetState(WINGED_GOOMBA_STATE_JUMP);
 	}
@@ -86,6 +88,7 @@ void CWingedGoomba::SetState(int state)
 		ay = 0;
 		break;
 	case WINGED_GOOMBA_STATE_WALKING:
+
 		walking_start = GetTickCount64();
 		break;
 	case WINGED_GOOMBA_STATE_JUMP:
