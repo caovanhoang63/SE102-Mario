@@ -22,8 +22,6 @@ void CLeaf::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
 	vx += ax * dt;
 	vy += ay * dt;
-	DebugOut(L"ACCEL: %f\n", ax);
-	DebugOut(L"SPEED: %f\n", vx);
 	if (this->vy >= 0 && ay != 0) {
 		this->vx = LEAF_SPEED_X;
 		this->ax = LEAF_ACCEL_X;

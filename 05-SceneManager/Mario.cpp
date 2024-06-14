@@ -113,6 +113,28 @@ void CMario::OnCollisionWithLeaf(LPCOLLISIONEVENT e)
 	leaf->Delete();
 }
 
+void CMario::OnCollisionWithEnemy(LPCOLLISIONEVENT e)
+{
+	if (level > MARIO_LEVEL_SMALL)
+	{
+		if (level == MARIO_LEVEL_RACOON_FORM)
+		{
+			level = MARIO_LEVEL_BIG;
+		}
+		else
+		{
+			level = MARIO_LEVEL_SMALL;
+		}
+		StartUntouchable();
+	}
+	else
+	{
+		DebugOut(L">>> Mario DIE >>> \n");
+		SetState(MARIO_STATE_DIE);
+	}
+
+}
+
 
 
 void CMario::OnCollisionWithWingedGoomba(LPCOLLISIONEVENT e)
@@ -134,16 +156,7 @@ void CMario::OnCollisionWithWingedGoomba(LPCOLLISIONEVENT e)
 		{
 			if (goomba->GetState() != WINGED_GOOMBA_STATE_DIE)
 			{
-				if (level > MARIO_LEVEL_SMALL)
-				{
-					level = MARIO_LEVEL_SMALL;
-					StartUntouchable();
-				}
-				else
-				{
-					DebugOut(L">>> Mario DIE >>> \n");
-					SetState(MARIO_STATE_DIE);
-				}
+				OnCollisionWithEnemy(e);
 			}
 		}
 	}
@@ -166,16 +179,7 @@ void CMario::OnCollisionWithKoopa(LPCOLLISIONEVENT e) {
 	{
 		if (untouchable == 0)
 		{
-			if (level > MARIO_LEVEL_SMALL)
-			{
-				level = MARIO_LEVEL_SMALL;
-				StartUntouchable();
-			}
-			else
-			{
-				DebugOut(L">>> Mario DIE >>> \n");
-				SetState(MARIO_STATE_DIE);
-			}
+			OnCollisionWithEnemy(e);
 		}
 	}
 }
@@ -209,16 +213,7 @@ void CMario::OnCollisionWithKoopaShell(LPCOLLISIONEVENT e) {
 		}
 		else if (untouchable == 0)
 		{
-			if (level > MARIO_LEVEL_SMALL)
-			{
-				level = MARIO_LEVEL_SMALL;
-				StartUntouchable();
-			}
-			else
-			{
-				DebugOut(L">>> Mario DIE >>> \n");
-				SetState(MARIO_STATE_DIE);
-			}
+			OnCollisionWithEnemy(e);
 		}
 	}
 }
@@ -228,16 +223,7 @@ void CMario::OnCollisionWithFireBullet(LPCOLLISIONEVENT e)
 	CFireBullet* bullet = dynamic_cast<CFireBullet*>(e->obj);
 	if (untouchable == 0)
 	{
-		if (level > MARIO_LEVEL_SMALL)
-		{
-			level = MARIO_LEVEL_SMALL;
-			StartUntouchable();
-		}
-		else
-		{
-			DebugOut(L">>> Mario DIE >>> \n");
-			SetState(MARIO_STATE_DIE);
-		}
+		OnCollisionWithEnemy(e);
 	}
 }
 
@@ -284,16 +270,7 @@ void CMario::OnCollisionWithGoomba(LPCOLLISIONEVENT e)
 		{
 			if (goomba->GetState() != GOOMBA_STATE_DIE)
 			{
-				if (level > MARIO_LEVEL_SMALL)
-				{
-					level = MARIO_LEVEL_SMALL;
-					StartUntouchable();
-				}
-				else
-				{
-					DebugOut(L">>> Mario DIE >>> \n");
-					SetState(MARIO_STATE_DIE);
-				}
+				OnCollisionWithEnemy(e);
 			}
 		}
 	}
