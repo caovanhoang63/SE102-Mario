@@ -121,6 +121,7 @@
 
 #define	MARIO_LEVEL_SMALL	1
 #define	MARIO_LEVEL_BIG		2
+#define MARIO_LEVEL_RACOON_FORM 3
 
 #define MARIO_BIG_BBOX_WIDTH  14
 #define MARIO_BIG_BBOX_HEIGHT 24
@@ -158,6 +159,8 @@ class CMario : public CGameObject
 	void OnCollisionWithKoopaShell(LPCOLLISIONEVENT e);
 	void OnCollisionWithFireBullet(LPCOLLISIONEVENT e);
 	void OnCollisionWithWingedGoomba(LPCOLLISIONEVENT e);
+	void OnCollisionWithLeaf(LPCOLLISIONEVENT e);
+	int GetAniIdRacoon();
 	int GetAniIdBig();
 	int GetAniIdSmall();
 
@@ -186,7 +189,7 @@ public:
 	{ 
 		return (state != MARIO_STATE_DIE); 
 	}
-
+	int GetLevel() { return this->level; }
 	int IsBlocking() { return (state != MARIO_STATE_DIE && untouchable==0); }
 	bool IsHoldingShell() { return isHoldingShell; }
 	void OnNoCollision(DWORD dt);

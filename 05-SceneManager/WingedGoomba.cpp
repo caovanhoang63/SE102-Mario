@@ -11,8 +11,6 @@ CWingedGoomba::CWingedGoomba(float x, float y) : CGoomba(x,y)
 	SetState(WINGED_GOOMBA_STATE_WALKING);
 }
 
-
-
 void CWingedGoomba::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
 	vy += ay * dt;

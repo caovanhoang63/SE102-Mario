@@ -1,4 +1,5 @@
 #include "CGiftBox.h"
+#include "Leaf.h"
 
 CGiftBox::CGiftBox(float x, float y,bool hasBuff) : CGameObject(x, y) {
 	this->SetState(GIFTBOX_STATE_CLOSED);
@@ -32,8 +33,15 @@ void CGiftBox::GenerateGift() {
 void CGiftBox::GenerateBuff() {
 	if (dynamic_cast<CPlayScene*>(CGame::GetInstance()->GetCurrentScene())) {
 		CPlayScene* scene = (CPlayScene*)CGame::GetInstance()->GetCurrentScene();
-		CMushroom* mushroom = new CMushroom(x, y);
-		scene->AddBeforeObject(mushroom,this);
+		CMario* mario = (CMario*)scene->GetPlayer();
+		if (mario->GetLevel() == MARIO_LEVEL_SMALL) {
+			CMushroom* mushroom = new CMushroom(x, y);
+			scene->AddBeforeObject(mushroom,this);
+		}
+		else {
+			CLeaf* leaf = new CLeaf(x, y);
+			scene->AddAfterObject(leaf, this);
+		}
 	}
 }
 

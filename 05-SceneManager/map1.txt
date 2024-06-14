@@ -15,6 +15,7 @@ coin.txt
 mushroom.txt
 koopa.txt
 winged_goomba.txt
+leaf.txt
 #
 [OBJECTS]
 # type	x	y	extra_settings per object type
