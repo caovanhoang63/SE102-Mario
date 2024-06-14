@@ -7,6 +7,11 @@
 #define WINGEG_GOOMBA_NUM_OF_JUMP 3
 #define WINGED_GOOMBA_OBSERVE_TIME 1000
 
+#define WINGED_GOOMBA_BBOX_WIDTH 16
+#define WINGED_GOOMBA_BBOX_HEIGHT 18
+#define WINGED_GOOMBA_NO_WINGS_BBOX_HEIGHT 14
+#define WINGED_GOOMBA_BBOX_HEIGHT_DIE 7
+
 
 #define WINGED_GOOMBA_SPEED_JUMP_Y	0.1f
 #define WINGED_GOOMBA_SPEED_HIGH_JUMP_Y	0.3f
@@ -31,7 +36,7 @@ protected:
 	bool isOnPlatform;
 	int jumpCount;
 	ULONGLONG die_start,walking_start,observe_start;
-
+	virtual void GetBoundingBox(float& left, float& top, float& right, float& bottom);
 	virtual void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);
 	virtual void Render();
 	virtual void OnCollisionWith(LPCOLLISIONEVENT e);

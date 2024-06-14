@@ -11,6 +11,31 @@ CWingedGoomba::CWingedGoomba(float x, float y) : CGoomba(x,y)
 	SetState(WINGED_GOOMBA_STATE_WALKING);
 }
 
+void CWingedGoomba::GetBoundingBox(float& left, float& top, float& right, float& bottom)
+{
+	if (state == WINGED_GOOMBA_STATE_DIE)
+	{
+		left = x - WINGED_GOOMBA_BBOX_WIDTH / 2;
+		top = y - WINGED_GOOMBA_BBOX_HEIGHT_DIE / 2;
+		right = left + WINGED_GOOMBA_BBOX_WIDTH;
+		bottom = top + WINGED_GOOMBA_BBOX_HEIGHT_DIE;
+	}
+	else if (state == WINGED_GOOMBA_STATE_NO_WINGS_WALKING) {
+		left = x - WINGED_GOOMBA_BBOX_WIDTH / 2;
+		top = y - WINGED_GOOMBA_NO_WINGS_BBOX_HEIGHT / 2;
+		right = left + WINGED_GOOMBA_BBOX_WIDTH;
+		bottom = top + WINGED_GOOMBA_NO_WINGS_BBOX_HEIGHT;
+	}
+	else
+	{
+		left = x - WINGED_GOOMBA_BBOX_WIDTH / 2;
+		top = y - WINGED_GOOMBA_BBOX_HEIGHT / 2;
+		right = left + WINGED_GOOMBA_BBOX_WIDTH;
+		bottom = top + WINGED_GOOMBA_BBOX_HEIGHT;
+	}
+
+}
+
 void CWingedGoomba::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
 	vy += ay * dt;
