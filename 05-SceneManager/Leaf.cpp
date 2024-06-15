@@ -16,6 +16,7 @@ void CLeaf::Render()
 		sprites->Get(ID_SPRITE_LEAF_LEFT)->Draw(x, y);
 	else 
 		sprites->Get(ID_SPRITE_LEAF_RIGHT)->Draw(x, y);
+	RenderBoundingBox();
 }
 
 void CLeaf::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)

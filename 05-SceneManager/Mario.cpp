@@ -15,6 +15,7 @@
 #include "KoopaShell.h"
 #include "FireBullet.h"
 #include "WingedGoomba.h"
+#include "Flower.h"
 #include "Leaf.h"
 
 
@@ -30,6 +31,7 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 		canFly = false;
 	}
 
+	
 	if (abs(vx) > abs(maxVx)) vx = maxVx;
 
 	// reset untouchable timer if untouchable time has passed
@@ -47,6 +49,11 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 	if (GetTickCount64() - spin_start > MARIO_SPIN_TIME) {
 		spin_start = 0;
 		isSpin = false;
+	}
+
+	if (GetTickCount64() - drag_force_start > MARIO_DRAG_FORCE_TIME) {
+		drag_force_start = 0;
+		ay = MARIO_GRAVITY;
 	}
 
 	
@@ -130,6 +137,8 @@ void CMario::OnCollisionWith(LPCOLLISIONEVENT e)
 		OnCollisionWithFireBullet(e);
 	else if (dynamic_cast<CLeaf*>(e->obj))
 		OnCollisionWithLeaf(e);
+	else if (dynamic_cast<CFlower*>(e->obj))
+		OnCollisionWithFlower(e);
 
 }
 
@@ -141,7 +150,6 @@ void CMario::OnCollisionWithLeaf(LPCOLLISIONEVENT e)
 	}
 	else
 		this->SetLevel(MARIO_LEVEL_RACOON_FORM);
-
 	leaf->Delete();
 }
 
@@ -165,6 +173,11 @@ void CMario::OnCollisionWithEnemy(LPCOLLISIONEVENT e)
 		SetState(MARIO_STATE_DIE);
 	}
 
+}
+
+void CMario::OnCollisionWithFlower(LPCOLLISIONEVENT e)
+{
+	OnCollisionWithEnemy(e);
 }
 
 
@@ -554,7 +567,6 @@ int CMario::GetAniIdRacoon()
 			else aniId = ID_ANI_MARIO_RACOON_HOLDING_SHELL_IDLE_LEFT;
 		}
 	}
-
 	else
 		if (isSitting)
 		{
@@ -709,6 +721,18 @@ void CMario::SetState(int state)
 	}
 
 	CGameObject::SetState(state);
+}
+
+void CMario::PerformFly()
+{
+	if (canContinueFlying() || canFly) {
+		vy = -MARIO_FLY_SPEED_Y;
+		canFly = false;
+		isFlying = true;
+	}
+	else {
+		isFlying = false;
+	}
 }
 
 void CMario::GetBoundingBox(float& left, float& top, float& right, float& bottom)

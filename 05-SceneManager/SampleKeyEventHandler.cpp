@@ -22,7 +22,16 @@ void CSampleKeyHandler::OnKeyDown(int KeyCode)
 		}
 		break;
 	case DIK_S:
-		mario->SetState(MARIO_STATE_JUMP);
+		if (mario->GetCanFly()) {
+			mario->PerformFly();
+		}
+	/*	else if (mario->GetLevel()== MARIO_LEVEL_RACOON_FORM && !mario->IsOnPlatform())  {
+			mario->StartDragForce();
+		}*/
+		else {
+			mario->SetState(MARIO_STATE_JUMP);
+
+		}
 		break;
 	case DIK_1:
 		mario->SetLevel(MARIO_LEVEL_SMALL);
@@ -62,7 +71,10 @@ void CSampleKeyHandler::KeyState(BYTE *states)
 {
 	LPGAME game = CGame::GetInstance();
 	CMario* mario = (CMario*)((LPPLAYSCENE)CGame::GetInstance()->GetCurrentScene())->GetPlayer();
-	
+	float vx, vy;
+	mario->GetSpeed(vx, vy);
+
+
 	if (game->IsKeyDown(DIK_RIGHT))
 	{
 		if (game->IsKeyDown(DIK_A))

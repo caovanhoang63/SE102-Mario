@@ -8,13 +8,15 @@
 #include "debug.h"
 
 #define MARIO_WALKING_SPEED		0.1f
-#define MARIO_RUNNING_SPEED		0.3f
-
-#define MARIO_ACCEL_WALK_X	0.0005f
-#define MARIO_ACCEL_RUN_X	0.0007f
+#define MARIO_RUNNING_SPEED		0.2f
+#define MARIO_DRAG_FORCE		0.02f
+#define MARIO_ACCEL_WALK_X	0.0003f
+#define MARIO_ACCEL_RUN_X	0.0005f
 
 #define MARIO_JUMP_SPEED_Y		0.5f
 #define MARIO_JUMP_RUN_SPEED_Y	0.6f
+#define MARIO_FLY_SPEED_Y	0.5f
+ 
 
 #define MARIO_GRAVITY			0.002f
 
@@ -38,7 +40,8 @@
 #define MARIO_STATE_HOLD_SHELL_RIGHT	701
 
 #define MARIO_STATE_SPIN	800
-
+#define MARIO_STATE_FLY	900
+#define MARIO_STATE_FALL	1000
 
 
 #define MARIO_SHELL_X_OFF_SET	12
@@ -191,19 +194,21 @@
 #define MARIO_UNTOUCHABLE_TIME 2500
 #define MARIO_KICK_TIME 300
 #define MARIO_SPIN_TIME 400
+#define MARIO_DRAG_FORCE_TIME 300
 
 class CMario : public CGameObject
 {
-	BOOLEAN isSitting,isSpin,canFly;
+	BOOLEAN isSitting,isSpin,canFly, isFlying;
 	float maxVx;
 	float ax;				// acceleration on x 
 	float ay;				// acceleration on y 
 
 	int level; 
 	int untouchable; 
-	ULONGLONG untouchable_start,kick_start,spin_start;
+	ULONGLONG untouchable_start,kick_start,spin_start,drag_force_start;
 	BOOLEAN isOnPlatform, isHoldingShell, inKickAni;
 	int coin; 
+	int fly_count;
 	CKoopaShell* shell;
 	void OnCollisionWithGoomba(LPCOLLISIONEVENT e);
 	void OnCollisionWithCoin(LPCOLLISIONEVENT e);
@@ -216,6 +221,7 @@ class CMario : public CGameObject
 	void OnCollisionWithWingedGoomba(LPCOLLISIONEVENT e);
 	void OnCollisionWithLeaf(LPCOLLISIONEVENT e);
 	void OnCollisionWithEnemy(LPCOLLISIONEVENT e);
+	void OnCollisionWithFlower(LPCOLLISIONEVENT e);
 	int GetAniIdRacoon();
 	int GetAniIdBig();
 	int GetAniIdSmall();
@@ -223,6 +229,8 @@ class CMario : public CGameObject
 public:
 	CMario(float x, float y) : CGameObject(x, y)
 	{
+		isFlying = false;
+		fly_count = 0;
 		isSitting = false;
 		maxVx = 0.0f;
 		ax = 0.0f;
@@ -238,6 +246,7 @@ public:
 		isOnPlatform = false;
 		kick_start = 0;
 		inKickAni = false;
+		drag_force_start = 0;
 		coin = 0;
 	}
 	void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);
@@ -247,10 +256,22 @@ public:
 	{ 
 		return (state != MARIO_STATE_DIE); 
 	}
+	void PerformFly();
+	bool canContinueFlying() {
+		return vy < -0.25f;
+	}
 	int GetLevel() { return this->level; }
+	void StartDragForce() {
+		/*drag_force_start = GetTickCount64();
+		if (ay == MARIO_GRAVITY)
+			ay -= MARIO_DRAG_FORCE;*/
+	}
+	bool IsOnPlatform() { return isOnPlatform; }
 	int IsBlocking() { return (state != MARIO_STATE_DIE && untouchable==0); }
+	bool IsFlying() { return isFlying; }
 	bool IsHoldingShell() { return isHoldingShell; }
 	bool CanKillEnemy(LPCOLLISIONEVENT e) { return (e->ny < 0 || isSpin); }
+	bool GetCanFly() { return canFly; }
 	void UpdateShellPosition();
 	void OnNoCollision(DWORD dt);
 	void OnCollisionWith(LPCOLLISIONEVENT e);

@@ -51,6 +51,7 @@ void CKoopaShell::OnCollisionWith(LPCOLLISIONEVENT e) {
 			box->GenerateGift();
 		}
 	}
+
 	if (e->ny != 0)
 	{
 		vy = 0;
