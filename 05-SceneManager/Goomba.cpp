@@ -117,7 +117,6 @@ void CGoomba::SetState(int state)
 			}
 			else  {
 				vx = isHitted > 0 ? -GOOMBA_WALKING_SPEED : GOOMBA_WALKING_SPEED;
-				vy = -0.3f;
 			}
 			break;
 		case GOOMBA_STATE_WALKING: 

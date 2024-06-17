@@ -5,7 +5,7 @@ CKoopa::CKoopa(float x, float y, int color) : CEnemy(x, y) {
 	this->ay = KOOPA_GRAVITY;
 	this->vx = KOOPA_WALKING_SPEED;
 	this->ax = 0;
-	this->shell = new CKoopaShell(x,y,color);
+	this->shell = NULL;
 	this->color = color;
 	this->is_in_shell = false;
 	this->in_shell_start = -1;
@@ -25,19 +25,16 @@ CKoopa::CKoopa(float x, float y, int color) : CEnemy(x, y) {
 void CKoopa::Hitted(int nx)
 {
 	CEnemy::Hitted(nx);
-	this->isDeleted = true;
+	this->EnterShell(KOOPA_SHELL_DIRECTION_DOWN);
+	this->shell->Hitted(nx);
 }
 
 
 void CKoopa::Pressed()
 {
 	CEnemy::Pressed();
-	if (this->is_in_shell) {
-		this->ExitShell();
-	}
-	else {
-		this->EnterShell();
-	}
+
+	this->EnterShell(KOOPA_SHELL_DIRECTION_UP);
 }
 
 bool CKoopa::IsInStateDie()
@@ -51,14 +48,15 @@ void CKoopa::Render() {
 	animations->Get(this->GetAniId() + this->color)->Render(x, y);
 }
 
-void CKoopa::EnterShell() {
+void CKoopa::EnterShell(int direction) {
 	this->is_in_shell = true;
 	this->in_shell_start = GetTickCount64();
 	if (dynamic_cast<CPlayScene*>(CGame::GetInstance()->GetCurrentScene())) {
 		CPlayScene* scene = (CPlayScene*)(CGame::GetInstance()->GetCurrentScene());
-		this->shell = new CKoopaShell(x, y, color);
+		this->shell = new CKoopaShell(x, y, color,direction);
 		this->shell->SetPosition(x, y + 2);
 		scene->AddNewObjectToTail(this->shell);
+		
 	}
 }
 void CKoopa::ExitShell()

@@ -26,3 +26,4 @@ height	240
 80	textures\sprite05_reverse.png
 90	textures\sprite06.png
 100	textures\sprite07.png
+110	textures\sprite06_reverse.png

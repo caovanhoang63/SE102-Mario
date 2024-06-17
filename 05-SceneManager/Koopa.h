@@ -46,7 +46,7 @@ public:
 	virtual void Pressed();
 	virtual bool IsInStateDie();
 	virtual void SetState(int state);
-	virtual void EnterShell();
+	virtual void EnterShell(int direction);
 	virtual void ExitShell();
 };
 

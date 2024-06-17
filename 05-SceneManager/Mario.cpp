@@ -205,7 +205,6 @@ void CMario::OnCollisionWithKoopa(LPCOLLISIONEVENT e) {
 	CKoopa* koopa = dynamic_cast<CKoopa*>(e->obj);
 	if (CanKillEnemy(e))
 	{
-		koopa->EnterShell();
 		if (e->ny < 0)
 			vy = -MARIO_JUMP_DEFLECT_SPEED;
 	}
