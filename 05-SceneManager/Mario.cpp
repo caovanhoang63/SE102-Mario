@@ -116,11 +116,8 @@ void CMario::OnCollisionWith(LPCOLLISIONEVENT e)
 		vx = 0;
 	}
 
-
-	if (dynamic_cast<CWingedGoomba*>(e->obj))
-		OnCollisionWithWingedGoomba(e);
-	else if (dynamic_cast<CGoomba*>(e->obj))
-		OnCollisionWithGoomba(e);
+	if (dynamic_cast<CEnemy*>(e->obj)) 
+		OnCollisionWithEnemy(e);
 	else if (dynamic_cast<CCoin*>(e->obj))
 		OnCollisionWithCoin(e);
 	else if (dynamic_cast<CPortal*>(e->obj))
@@ -129,8 +126,6 @@ void CMario::OnCollisionWith(LPCOLLISIONEVENT e)
 		OnCollosionWithGiftBox(e);
 	else if (dynamic_cast<CMushroom*>(e->obj))
 		OnCollisionWithMushroom(e);
-	else if (dynamic_cast<CKoopa*>(e->obj))
-		OnCollisionWithKoopa(e);
 	else if (dynamic_cast<CKoopaShell*>(e->obj))
 		OnCollisionWithKoopaShell(e);
 	else if (dynamic_cast<CFireBullet*>(e->obj))
@@ -139,7 +134,6 @@ void CMario::OnCollisionWith(LPCOLLISIONEVENT e)
 		OnCollisionWithLeaf(e);
 	else if (dynamic_cast<CFlower*>(e->obj))
 		OnCollisionWithFlower(e);
-
 }
 
 void CMario::OnCollisionWithLeaf(LPCOLLISIONEVENT e)
@@ -155,32 +149,29 @@ void CMario::OnCollisionWithLeaf(LPCOLLISIONEVENT e)
 
 void CMario::OnCollisionWithEnemy(LPCOLLISIONEVENT e)
 {
-	if (level > MARIO_LEVEL_SMALL)
+	CEnemy* enemy = (CEnemy*)e->obj;
+	if (enemy->IsInStateDie())
 	{
-		if (level == MARIO_LEVEL_RACOON_FORM)
-		{
-			level = MARIO_LEVEL_BIG;
-		}
-		else
-		{
-			level = MARIO_LEVEL_SMALL;
-		}
-		StartUntouchable();
+		return;
 	}
-	else
-	{
-		DebugOut(L">>> Mario DIE >>> \n");
-		SetState(MARIO_STATE_DIE);
+	if (e->ny < 0) {
+		enemy->Pressed();
+		vy = -MARIO_JUMP_DEFLECT_SPEED;
 	}
+	else if (isSpin && e->nx != 0) {
+		enemy->Hitted(e->nx);
+	}
+	else {
+		if (untouchable == true) return;
 
+		this->Hitted();
+	}
 }
 
 void CMario::OnCollisionWithFlower(LPCOLLISIONEVENT e)
 {
-	OnCollisionWithEnemy(e);
+	this->Hitted();
 }
-
-
 
 void CMario::OnCollisionWithWingedGoomba(LPCOLLISIONEVENT e)
 {
@@ -194,7 +185,6 @@ void CMario::OnCollisionWithWingedGoomba(LPCOLLISIONEVENT e)
 		}
 		else {
 			goomba->SetState(WINGED_GOOMBA_STATE_NO_WINGS_WALKING);
-
 		}
 	}
 	else 
@@ -252,23 +242,16 @@ void CMario::OnCollisionWithKoopaShell(LPCOLLISIONEVENT e) {
 	}
 	else {
 		if (e->ny < 0)
-		{
 			shell->StopMove();
-		}
-		else if (untouchable == 0)
-		{
-			OnCollisionWithEnemy(e);
-		}
+		else
+			this->Hitted();
 	}
 }
 
 void CMario::OnCollisionWithFireBullet(LPCOLLISIONEVENT e)
 {
 	CFireBullet* bullet = dynamic_cast<CFireBullet*>(e->obj);
-	if (untouchable == 0)
-	{
-		OnCollisionWithEnemy(e);
-	}
+	this->Hitted();
 }
 
 
@@ -420,6 +403,24 @@ int CMario::GetAniIdSmall()
 	if (aniId == -1) aniId = ID_ANI_MARIO_SMALL_IDLE_RIGHT;
 
 	return aniId;
+}
+
+void CMario::Hitted()
+{
+	if (this->untouchable == 1) return;
+	if (level > MARIO_LEVEL_SMALL)
+	{
+		if (level == MARIO_LEVEL_RACOON_FORM)
+			this->SetLevel(MARIO_LEVEL_BIG);
+		else
+			this->SetLevel(MARIO_LEVEL_SMALL);
+		StartUntouchable();
+	}
+	else
+	{
+		DebugOut(L">>> Mario DIE >>> \n");
+		SetState(MARIO_STATE_DIE);
+	}
 }
 
 

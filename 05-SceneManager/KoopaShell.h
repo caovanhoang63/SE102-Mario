@@ -37,14 +37,7 @@ public:
 		this->vx = 0;
 		this->vy = 0;
 	}
-	void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects) {
-		vx += ax * dt;
-		vy += ay * dt;
-		if (this->state == KOOPA_SHELL_STATE_STOP && GetTickCount64() - this->stop_start > KOOPA_SHELL_SHAKE_STOP_TIME) {
-			this->state = KOOPA_SHELL_STATE_SHAKE;
-		}
-		CCollision::GetInstance()->Process(this, dt, coObjects);
-	}
+	void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);
 	void Render();
 	void GetBoundingBox(float& l, float& t, float& r, float& b);
 	void StartMove(float x);

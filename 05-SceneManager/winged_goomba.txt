@@ -14,6 +14,9 @@
 #DIE
 149999	120	8	135	15	90
 
+#HITTED 
+140006	22	25	37	40	90
+
 # ani_id	sprite1_id	time1	sprite2_id	time2	...
 [ANIMATIONS]
 # ====== HAS WINGS ======
@@ -26,5 +29,9 @@
 # ====== NO WINGS ======
 # WALK
 140004	140004	100	140005	100
+
+#HITTED
+140005	140006	100
+
 # DIE
 149999	149999	100

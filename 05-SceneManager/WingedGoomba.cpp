@@ -45,7 +45,6 @@ void CWingedGoomba::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
 	if ((state == WINGED_GOOMBA_STATE_DIE) && (GetTickCount64() - die_start > WINGED_GOOMBA_DIE_TIMEOUT))
 	{
-
 		isDeleted = true;
 		return;
 	}
@@ -82,10 +81,16 @@ void CWingedGoomba::SetState(int state)
 	{
 	case WINGED_GOOMBA_STATE_DIE:
 		die_start = GetTickCount64();
-		y += (GOOMBA_BBOX_HEIGHT - GOOMBA_BBOX_HEIGHT_DIE) / 2;
-		vx = 0;
-		vy = 0;
-		ay = 0;
+		if (isPressed) {
+			y += (GOOMBA_BBOX_HEIGHT - GOOMBA_BBOX_HEIGHT_DIE) / 2;
+			vx = 0;
+			vy = 0;
+			ay = 0;
+		}
+		else {
+			vx = isHitted > 0 ? -GOOMBA_WALKING_SPEED : GOOMBA_WALKING_SPEED;
+			vy = -0.3f;
+		}
 		break;
 	case WINGED_GOOMBA_STATE_WALKING:
 
@@ -100,6 +105,30 @@ void CWingedGoomba::SetState(int state)
 	}
 }
 
+void CWingedGoomba::Hitted(int nx)
+{
+	CEnemy::Hitted(nx);
+	if (this->GetState() != WINGED_GOOMBA_STATE_DIE) {
+		this->SetState(WINGED_GOOMBA_STATE_DIE);
+	}
+}
+
+void CWingedGoomba::Pressed()
+{
+	CEnemy::Pressed();
+	if (this->GetState() == WINGED_GOOMBA_STATE_NO_WINGS_WALKING) {
+		this->SetState(WINGED_GOOMBA_STATE_DIE);
+	}
+	else {
+		this->SetState(WINGED_GOOMBA_STATE_NO_WINGS_WALKING);
+	}
+}
+
+
+bool CWingedGoomba::IsInStateDie()
+{
+	return this->state == WINGED_GOOMBA_STATE_DIE;
+}
 void CWingedGoomba::Render()
 {
 	int aniId = -1;
@@ -115,7 +144,10 @@ void CWingedGoomba::Render()
 		aniId = ID_ANI_WINGED_GOOMBA_HIGH_JUMP;
 		break;
 	case WINGED_GOOMBA_STATE_DIE:
-		aniId = ID_ANI_WINGED_DIE;
+		if (isPressed)
+			aniId = ID_ANI_WINGED_DIE;
+		else
+			aniId = ID_ANI_WINGED_GOOMBA_NO_WINGS_HITTED;
 		break;
 	default:
 		aniId = ID_ANI_WINGED_GOOMBA_NO_WINGS_WALKING;
@@ -161,8 +193,6 @@ void CWingedGoomba::Observe()
 			}
 		}
 	}
-
-	
 }
 
 

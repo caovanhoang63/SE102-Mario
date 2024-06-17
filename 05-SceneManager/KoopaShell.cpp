@@ -2,6 +2,16 @@
 #include "CGiftBox.h"
 
 
+void CKoopaShell::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
+{
+	vx += ax * dt;
+	vy += ay * dt;
+	if (this->state == KOOPA_SHELL_STATE_STOP && GetTickCount64() - this->stop_start > KOOPA_SHELL_SHAKE_STOP_TIME) {
+		this->state = KOOPA_SHELL_STATE_SHAKE;
+	}
+	CCollision::GetInstance()->Process(this, dt, coObjects);
+}
+
 void CKoopaShell::Render() {
 	if (this->state == KOOPA_SHELL_STATE_MOVING) {
 		CAnimations* animations = CAnimations::GetInstance();
@@ -40,8 +50,23 @@ void CKoopaShell::OnNoCollision(DWORD dt) {
 }
 
 void CKoopaShell::OnCollisionWith(LPCOLLISIONEVENT e) {
+	if (dynamic_cast<CEnemy*>(e->obj) && this->state == KOOPA_SHELL_STATE_MOVING) {
+		CEnemy* enemy = dynamic_cast<CEnemy*>(e->obj);
+		float ex, ey;
+		enemy->GetPosition(ex, ey);
+		int isHitted = 0;
+		if (this->x > ex)
+			isHitted = 1;
+		else
+			isHitted = -1;
+		enemy->Hitted(isHitted);
+		return;
+	}
+
 	if (!e->obj->IsBlocking()) return;
+
 	if (dynamic_cast<CKoopaShell*>(e->obj)) return;
+
 	if (dynamic_cast<CGiftBox*>(e->obj)) {
 		CGiftBox* box = dynamic_cast<CGiftBox*>(e->obj);
 		if (box->GetState() != GIFTBOX_STATE_OPENED && this->state == KOOPA_SHELL_STATE_MOVING)
@@ -51,7 +76,6 @@ void CKoopaShell::OnCollisionWith(LPCOLLISIONEVENT e) {
 			box->GenerateGift();
 		}
 	}
-
 	if (e->ny != 0)
 	{
 		vy = 0;

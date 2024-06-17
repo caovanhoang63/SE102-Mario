@@ -22,6 +22,28 @@ CKoopa::CKoopa(float x, float y, int color) : CEnemy(x, y) {
 	this->state = KOOPA_STATE_WALKING_LEFT;
 }
 
+void CKoopa::Hitted(int nx)
+{
+	CEnemy::Hitted(nx);
+	this->isDeleted = true;
+}
+
+
+void CKoopa::Pressed()
+{
+	CEnemy::Pressed();
+	if (this->is_in_shell) {
+		this->ExitShell();
+	}
+	else {
+		this->EnterShell();
+	}
+}
+
+bool CKoopa::IsInStateDie()
+{
+	return this->state == KOOPA_STATE_DIE;
+}
 
 void CKoopa::Render() {
 	if (this->is_in_shell) return;

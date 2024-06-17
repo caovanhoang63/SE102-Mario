@@ -8,6 +8,31 @@ CGoomba::CGoomba(float x, float y): CEnemy(x, y )
 	SetState(GOOMBA_STATE_WALKING);
 }
 
+void CGoomba::Hitted(int nx)
+{
+	CEnemy::Hitted(nx);
+	if (this->GetState() != GOOMBA_STATE_DIE)
+	{
+		this->SetState(GOOMBA_STATE_DIE);
+	}
+}
+
+void CGoomba::Pressed()
+{
+	CEnemy::Pressed();
+	if (this->GetState() != GOOMBA_STATE_DIE)
+	{
+		this->SetState(GOOMBA_STATE_DIE);
+	}
+}
+
+bool CGoomba::IsInStateDie()
+{
+	return this->state == GOOMBA_STATE_DIE;
+}
+
+
+
 void CGoomba::GetBoundingBox(float &left, float &top, float &right, float &bottom)
 {
 	if (state == GOOMBA_STATE_DIE)
@@ -65,14 +90,16 @@ void CGoomba::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 void CGoomba::Render()
 {
 	int aniId = ID_ANI_GOOMBA_WALKING;
-	if (state == GOOMBA_STATE_DIE) 
-	{
-		aniId = ID_ANI_GOOMBA_DIE;
-	}
+	if (isPressed)
+		aniId = ID_ANI_GOOMBA_PRESSED;
+	else if (isHitted)
+		aniId = ID_ANI_GOOMBA_HITTED;
+
 
 	CAnimations::GetInstance()->Get(aniId)->Render(x,y);
 	//RenderBoundingBox();
 }
+
 
 void CGoomba::SetState(int state)
 {
@@ -81,10 +108,17 @@ void CGoomba::SetState(int state)
 	{
 		case GOOMBA_STATE_DIE:
 			die_start = GetTickCount64();
-			y += (GOOMBA_BBOX_HEIGHT - GOOMBA_BBOX_HEIGHT_DIE)/2;
-			vx = 0;
-			vy = 0;
-			ay = 0; 
+
+			if (isPressed) {
+				y += (GOOMBA_BBOX_HEIGHT - GOOMBA_BBOX_HEIGHT_DIE) / 2;
+				vx = 0;
+				vy = 0;
+				ay = 0;
+			}
+			else  {
+				vx = isHitted > 0 ? -GOOMBA_WALKING_SPEED : GOOMBA_WALKING_SPEED;
+				vy = -0.3f;
+			}
 			break;
 		case GOOMBA_STATE_WALKING: 
 			vx = -GOOMBA_WALKING_SPEED;

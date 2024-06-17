@@ -27,6 +27,7 @@
 #define ID_ANI_WINGED_GOOMBA_JUMP 140002
 #define ID_ANI_WINGED_GOOMBA_HIGH_JUMP 140003
 #define ID_ANI_WINGED_GOOMBA_NO_WINGS_WALKING 140004
+#define ID_ANI_WINGED_GOOMBA_NO_WINGS_HITTED 140005
 #define ID_ANI_WINGED_DIE 149999
 
 class CWingedGoomba :
@@ -44,6 +45,8 @@ protected:
 public:
 	CWingedGoomba(float x, float y);
 	virtual void SetState(int state);
-
+	virtual void Hitted(int nx);
+	virtual void Pressed();
+	virtual bool IsInStateDie();
 };
 

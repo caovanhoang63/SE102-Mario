@@ -266,11 +266,12 @@ public:
 		if (ay == MARIO_GRAVITY)
 			ay -= MARIO_DRAG_FORCE;*/
 	}
+	void Hitted();
 	bool IsOnPlatform() { return isOnPlatform; }
 	int IsBlocking() { return (state != MARIO_STATE_DIE && untouchable==0); }
 	bool IsFlying() { return isFlying; }
 	bool IsHoldingShell() { return isHoldingShell; }
-	bool CanKillEnemy(LPCOLLISIONEVENT e) { return (e->ny < 0 || isSpin); }
+	bool CanKillEnemy(LPCOLLISIONEVENT e) { return (e->ny < 0 || (isSpin && e->nx != 0 )); }
 	bool GetCanFly() { return canFly; }
 	void UpdateShellPosition();
 	void OnNoCollision(DWORD dt);

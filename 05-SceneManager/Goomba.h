@@ -15,7 +15,8 @@
 #define GOOMBA_STATE_DIE 200
 
 #define ID_ANI_GOOMBA_WALKING 5000
-#define ID_ANI_GOOMBA_DIE 5001
+#define ID_ANI_GOOMBA_PRESSED 5001
+#define ID_ANI_GOOMBA_HITTED 5002
 
 class CGoomba : public CEnemy
 {
@@ -30,10 +31,12 @@ protected:
 	virtual int IsCollidable() { return 1; };
 	virtual int IsBlocking() { return 0; }
 	virtual void OnNoCollision(DWORD dt);
-
 	virtual void OnCollisionWith(LPCOLLISIONEVENT e);
 
 public: 	
 	CGoomba(float x, float y);
+	virtual void Hitted(int nx);
+	virtual void Pressed();
+	virtual bool IsInStateDie();
 	virtual void SetState(int state);
 };

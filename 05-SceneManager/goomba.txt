@@ -8,9 +8,13 @@
 #DIE
 32001	44	19	62	30	10
 
+#HITTED
+33001	6	25	21	40	90
+
 # ani_id	sprite1_id	time1	sprite2_id	time2	...
 [ANIMATIONS]
 5000	31001	100	31002	100
 5001	32001	100
+5002	33001	100
 
 

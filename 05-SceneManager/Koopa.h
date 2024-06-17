@@ -42,6 +42,9 @@ protected:
 	virtual int GetAniId();
 public:
 	CKoopa(float x, float y, int color);
+	virtual void Hitted(int nx);
+	virtual void Pressed();
+	virtual bool IsInStateDie();
 	virtual void SetState(int state);
 	virtual void EnterShell();
 	virtual void ExitShell();
