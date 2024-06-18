@@ -29,7 +29,6 @@ void CKoopaShell::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
 	isOnPlatform = false;
 	vx += ax * dt;
-	DebugOut(L"vx: %f\n", vx);
 	vy += ay * dt;
 	if (this->isHittedDeflect && vx * ax >= 0) {
 		this->vx = 0;

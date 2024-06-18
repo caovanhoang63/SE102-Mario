@@ -286,10 +286,23 @@
     <Text Include="flower.txt">
       <Filter>Resource Files</Filter>
     </Text>
-    <Text Include="firebullet.txt" />
-    <Text Include="mushroom.txt" />
-    <Text Include="koopa.txt" />
-    <Text Include="winged_goomba.txt" />
-    <Text Include="leaf.txt" />
+    <Text Include="mushroom.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
+    <Text Include="firebullet.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
+    <Text Include="koopa.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
+    <Text Include="leaf.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
+    <Text Include="winged_goomba.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
+    <Text Include="test_scene.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
   </ItemGroup>
 </Project>

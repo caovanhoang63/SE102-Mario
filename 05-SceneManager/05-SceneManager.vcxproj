@@ -241,6 +241,7 @@
     <Text Include="scene01.txt" />
     <Text Include="scene02.txt" />
     <Text Include="specials.txt" />
+    <Text Include="test_scene.txt" />
     <Text Include="winged_goomba.txt" />
     <Text Include="x64\Debug\05-SceneManager.vcxproj.FileListAbsolute.txt" />
   </ItemGroup>

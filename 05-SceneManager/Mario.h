@@ -8,17 +8,23 @@
 #include "debug.h"
 
 #define MARIO_WALKING_SPEED		0.1f
-#define MARIO_RUNNING_SPEED		0.2f
-#define MARIO_DRAG_FORCE		0.02f
+#define MARIO_RUNNING_SPEED		0.25f
+#define MARIO_DRAG_FORCE		0.0016f
 #define MARIO_ACCEL_WALK_X	0.0003f
 #define MARIO_ACCEL_RUN_X	0.0005f
+#define MARIO_WALKING_FRICTION_X	0.0001f
+#define MARIO_RUNNING_FRICTION_X	0.0002f
+
+#define MARIO_MAX_MANA		900
+#define MARIO_MANA_STEP		150
 
 #define MARIO_JUMP_SPEED_Y		0.5f
 #define MARIO_JUMP_RUN_SPEED_Y	0.6f
+#define MARIO_JUMP_DRAG_SPEED_Y	0.05f
 #define MARIO_FLY_SPEED_Y	0.5f
  
 
-#define MARIO_GRAVITY			0.002f
+#define MARIO_GRAVITY			0.0018f
 
 #define MARIO_JUMP_DEFLECT_SPEED  0.4f
 
@@ -194,18 +200,21 @@
 #define MARIO_UNTOUCHABLE_TIME 2500
 #define MARIO_KICK_TIME 300
 #define MARIO_SPIN_TIME 400
-#define MARIO_DRAG_FORCE_TIME 300
+#define MARIO_DRAG_FORCE_TIME 100
+#define MARIO_DECREASE_MANA_TIME 600
+
 
 class CMario : public CGameObject
 {
-	BOOLEAN isSitting,isSpin,canFly, isFlying;
+	BOOLEAN isSitting,isSpin,canFly, isFlying, isInInertia;
 	float maxVx;
 	float ax;				// acceleration on x 
 	float ay;				// acceleration on y 
-
+	int mana_display;
+	int mana;
 	int level; 
 	int untouchable; 
-	ULONGLONG untouchable_start,kick_start,spin_start,drag_force_start;
+	ULONGLONG untouchable_start,kick_start,spin_start,drag_force_start,update_time, pre_update_time ;
 	BOOLEAN isOnPlatform, isHoldingShell, inKickAni;
 	int coin; 
 	int fly_count;
@@ -229,6 +238,10 @@ class CMario : public CGameObject
 public:
 	CMario(float x, float y) : CGameObject(x, y)
 	{
+		isInInertia = false;
+		update_time = GetTickCount64();
+		mana_display = 0;
+		mana = 0;
 		isFlying = false;
 		fly_count = 0;
 		isSitting = false;
@@ -249,6 +262,24 @@ public:
 		drag_force_start = 0;
 		coin = 0;
 	}
+
+	void IncreaseMana(int  value) {
+		mana += value;
+		if (mana > MARIO_MAX_MANA) {
+			mana = MARIO_MAX_MANA;
+		}
+		mana_display = mana / MARIO_MANA_STEP;
+	}
+
+	void DecreaseMana(int value) {
+		mana -= value;
+		if (mana < 0) {
+			mana = 0;
+		}
+		mana_display = mana / MARIO_MANA_STEP;
+	}
+
+
 	void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);
 	void Render();
 	void SetState(int state);
@@ -262,9 +293,12 @@ public:
 	}
 	int GetLevel() { return this->level; }
 	void StartDragForce() {
-		/*drag_force_start = GetTickCount64();
+		drag_force_start = GetTickCount64();
+		if (!isFlying) {
+			this->vy = MARIO_JUMP_DRAG_SPEED_Y;
+		}
 		if (ay == MARIO_GRAVITY)
-			ay -= MARIO_DRAG_FORCE;*/
+			ay -= MARIO_DRAG_FORCE;
 	}
 	void Hitted();
 	bool IsOnPlatform() { return isOnPlatform; }

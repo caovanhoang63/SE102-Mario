@@ -25,12 +25,11 @@ void CSampleKeyHandler::OnKeyDown(int KeyCode)
 		if (mario->GetCanFly()) {
 			mario->PerformFly();
 		}
-	/*	else if (mario->GetLevel()== MARIO_LEVEL_RACOON_FORM && !mario->IsOnPlatform())  {
-			mario->StartDragForce();
-		}*/
 		else {
 			mario->SetState(MARIO_STATE_JUMP);
-
+		}
+		if (mario->GetLevel() == MARIO_LEVEL_RACOON_FORM && !mario->IsOnPlatform()) {
+			mario->StartDragForce();
 		}
 		break;
 	case DIK_1:
