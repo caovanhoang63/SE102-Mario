@@ -21,6 +21,7 @@
 
 #define KOOPA_IN_SHELL_TIME 10000
 
+#define KOOPA_SCORE 100
 
 
 class CKoopa : public CEnemy

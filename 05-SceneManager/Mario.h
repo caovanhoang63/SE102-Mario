@@ -229,6 +229,7 @@ class CMario : public CGameObject
 	int mana;
 	int level; 
 	int untouchable; 
+	int score;
 	ULONGLONG untouchable_start,kick_start,spin_start,fly_drag_force_start,jump_drag_force_start, flying_start,wagging_tail_start;
 	BOOLEAN isOnPlatform, isHoldingShell, inKickAni;
 	int coin; 
@@ -282,6 +283,7 @@ public:
 		level = MARIO_LEVEL_BIG;
 		untouchable = 0;
 		coin = 0;
+		score = 0;
 	}
 
 	void IncreaseMana(int  value) {
@@ -300,7 +302,9 @@ public:
 		mana_display = mana / MARIO_MANA_STEP;
 	}
 
-
+	void IncScore(int value) {
+		score += value;
+	}
 	void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);
 	void Render();
 	void SetState(int state);

@@ -65,8 +65,6 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 		fly_drag_force_start = -1;
 		ay = MARIO_GRAVITY;
 	}
-	DebugOut(L"%d, Gravity: %f\n", GetTickCount64() - fly_drag_force_start,ay);
-
 	if (this->isFlying && (GetTickCount64() - flying_start > MARIO_FLY_TIME || this->level != MARIO_LEVEL_RACOON_FORM)) {
 		isFlying = false;
 		flying_start = 0;

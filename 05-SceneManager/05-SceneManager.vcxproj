@@ -155,6 +155,7 @@
     <ClCompile Include="Coin.cpp" />
     <ClCompile Include="Collision.cpp" />
     <ClCompile Include="debug.cpp" />
+    <ClCompile Include="Effect.cpp" />
     <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="FireBullet.cpp" />
     <ClCompile Include="Flower.cpp" />
@@ -172,6 +173,7 @@
     <ClCompile Include="Platform.cpp" />
     <ClCompile Include="PlayScene.cpp" />
     <ClCompile Include="Portal.cpp" />
+    <ClCompile Include="ScoreEffect.cpp" />
     <ClCompile Include="WingedGoomba.cpp" />
     <ClCompile Include="SampleKeyEventHandler.cpp" />
     <ClCompile Include="SmallTree.cpp" />
@@ -192,6 +194,7 @@
     <ClInclude Include="Coin.h" />
     <ClInclude Include="Collision.h" />
     <ClInclude Include="debug.h" />
+    <ClInclude Include="Effect.h" />
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="FireBullet.h" />
     <ClInclude Include="Flower.h" />
@@ -209,6 +212,7 @@
     <ClInclude Include="Platform.h" />
     <ClInclude Include="PlayScene.h" />
     <ClInclude Include="Portal.h" />
+    <ClInclude Include="ScoreEffect.h" />
     <ClInclude Include="WingedGoomba.h" />
     <ClInclude Include="SampleKeyEventHandler.h" />
     <ClInclude Include="Scene.h" />
@@ -240,6 +244,7 @@
     <Text Include="scene0005.txt" />
     <Text Include="scene01.txt" />
     <Text Include="scene02.txt" />
+    <Text Include="score.txt" />
     <Text Include="specials.txt" />
     <Text Include="test_scene.txt" />
     <Text Include="winged_goomba.txt" />

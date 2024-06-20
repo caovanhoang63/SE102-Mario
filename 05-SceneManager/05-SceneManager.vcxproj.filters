@@ -117,6 +117,12 @@
     <ClCompile Include="Leaf.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="ScoreEffect.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Effect.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Animation.h">
@@ -230,6 +236,12 @@
     <ClInclude Include="Leaf.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="ScoreEffect.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Effect.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Text Include="mario-sample.txt">
@@ -302,6 +314,9 @@
       <Filter>Resource Files</Filter>
     </Text>
     <Text Include="test_scene.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
+    <Text Include="score.txt">
       <Filter>Resource Files</Filter>
     </Text>
   </ItemGroup>

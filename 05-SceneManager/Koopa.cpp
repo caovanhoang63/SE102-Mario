@@ -20,6 +20,7 @@ CKoopa::CKoopa(float x, float y, int color) : CEnemy(x, y) {
 		}
 	}
 	this->state = KOOPA_STATE_WALKING_LEFT;
+	this->score = KOOPA_SCORE;
 }
 
 void CKoopa::Hitted(int nx)
