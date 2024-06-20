@@ -51,7 +51,13 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 
 	if (GetTickCount64() - drag_force_start > MARIO_DRAG_FORCE_TIME) {
 		drag_force_start = 0;
+		isWagging = false;
 		ay = MARIO_GRAVITY;
+	}
+	if (this->isFlying && (GetTickCount64() - flying_start > MARIO_FLY_TIME || this->level != MARIO_LEVEL_RACOON_FORM)) {
+		isFlying = false;
+		flying_start = 0;
+		isFallingAfterFly = true;
 	}
 
 	
@@ -63,19 +69,35 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 		UpdateShellPosition();
 	}
 
-	if (this->state == MARIO_STATE_RUNNING_LEFT || this->state == MARIO_STATE_RUNNING_RIGHT)
+	if (this->isFallingAfterFly == true && this->isOnPlatform == true ) {
+		this->isFallingAfterFly = false;
+		this->mana = 0;
+	}
+
+	if ((this->state == MARIO_STATE_RUNNING_LEFT || this->state == MARIO_STATE_RUNNING_RIGHT) && isOnPlatform || isFlying)
 		this->IncreaseMana((int)dt);
 	else
 		this->DecreaseMana((int)dt);
 
-	if (this->mana ==  MARIO_MAX_MANA && this->level == MARIO_LEVEL_RACOON_FORM) {
+	if (this->mana == MARIO_MAX_MANA && this->level == MARIO_LEVEL_RACOON_FORM && isFlying == false && isOnPlatform ) {
 		canFly = true;
 	}
 	else {
 		canFly = false;
 	}
 
+	if (this->isFlying && this->isOnPlatform) {
+		this->isFlying = false;
+		this->flying_start = 0;
+	}
+	DebugOut(L"vy: %f\n", vy);
+}
 
+void CMario::PerformFly()
+{
+	this->vy = -MARIO_FLY_SPEED_Y;
+	this->isWagging = true;
+	this->drag_force_start = GetTickCount64();
 }
 
 void CMario::UpdateShellPosition()
@@ -243,7 +265,7 @@ void CMario::ReleaseShell() {
 
 void CMario::OnCollisionWithKoopaShell(LPCOLLISIONEVENT e) {
 	CKoopaShell* shell = dynamic_cast<CKoopaShell*>(e->obj);
-	if (shell->GetState() == KOOPA_SHELL_STATE_STOP) {
+	if (shell->GetState() != KOOPA_SHELL_STATE_MOVING) {
 		if (abs(ax) == MARIO_ACCEL_RUN_X && e->nx != 0 )  {
 			this->HoldShell(shell);
 		} else {
@@ -252,8 +274,10 @@ void CMario::OnCollisionWithKoopaShell(LPCOLLISIONEVENT e) {
 		}
 	}
 	else {
-		if (e->ny < 0)
+		if (e->ny < 0) {
 			shell->StopMove();
+			this->vy = -MARIO_JUMP_DEFLECT_SPEED;
+		}
 		else
 			this->Hitted();
 	}
@@ -553,19 +577,46 @@ int CMario::GetAniIdRacoon()
 	}
 	else if (!isOnPlatform)
 	{
-
 		if (isHoldingShell) {
 			if (nx >= 0)
 				aniId = ID_ANI_MARIO_RACOON_HOLDING_SHELL_JUMP_RIGHT;
 			else
 				aniId = ID_ANI_MARIO_RACOON_HOLDING_SHELL_JUMP_LEFT;
+
 		}
-		else if (abs(ax) == MARIO_ACCEL_RUN_X)
-		{
-			if (nx >= 0)
-				aniId = ID_ANI_MARIO_RACOON_JUMP_RUN_RIGHT;
-			else
-				aniId = ID_ANI_MARIO_RACOON_JUMP_RUN_LEFT;
+		else if (this->isFlying == true || this->mana == MARIO_MAX_MANA ) {
+			if (isWagging) {
+				if (nx >= 0)
+					aniId = ID_ANI_MARIO_RACOON_FLY_WAGGING_TAIL_RIGHT;
+				else
+					aniId = ID_ANI_MARIO_RACOON_FLY_WAGGING_TAIL_LEFT;
+			}
+			else if (vy >= 0) {
+				if (nx >= 0)
+					aniId = ID_ANI_MARIO_RACOON_FLY_FALLING_RIGHT;
+				else
+					aniId = ID_ANI_MARIO_RACOON_FLY_FALLING_LEFT;
+			}
+			else {
+				if (nx >= 0)
+					aniId = ID_ANI_MARIO_RACOON_JUMP_RUN_RIGHT;
+				else
+					aniId = ID_ANI_MARIO_RACOON_JUMP_RUN_LEFT;
+			}
+				
+		} else if (vy >= 0) {
+			if (isWagging) {
+				if (nx >= 0)
+					aniId = ID_ANI_MARIO_RACOON_WAGGING_TAIL_RIGHT;
+				else
+					aniId = ID_ANI_MARIO_RACOON_WAGGING_TAIL_LEFT;
+			}
+			else {
+				if (nx >= 0)
+					aniId = ID_ANI_MARIO_RACOON_DROP_RIGHT;
+				else
+					aniId = ID_ANI_MARIO_RACOON_DROP_LEFT;
+			}
 		}
 		else
 		{
@@ -766,16 +817,12 @@ void CMario::SetState(int state)
 	CGameObject::SetState(state);
 }
 
-void CMario::PerformFly()
+void CMario::StartFly()
 {
-	if (canContinueFlying() || canFly) {
-		vy = -MARIO_FLY_SPEED_Y;
-		canFly = false;
-		isFlying = true;
-	}
-	else {
-		isFlying = false;
-	}
+	canFly = false;
+	flying_start = GetTickCount64();
+	isFlying = true;
+	PerformFly();
 }
 
 void CMario::GetBoundingBox(float& left, float& top, float& right, float& bottom)

@@ -9,11 +9,12 @@
 
 #define MARIO_WALKING_SPEED		0.1f
 #define MARIO_RUNNING_SPEED		0.2f
-#define MARIO_DRAG_FORCE		0.0016f
+#define MARIO_DRAG_FORCE		0.0018f
 #define MARIO_ACCEL_WALK_X	0.0003f
 #define MARIO_ACCEL_RUN_X	0.0005f
 #define MARIO_WALKING_FRICTION_X	0.0001f
 #define MARIO_RUNNING_FRICTION_X	0.0002f
+
 
 #define MARIO_MAX_MANA		900
 #define MARIO_MANA_STEP		150
@@ -168,6 +169,17 @@
 #define ID_ANI_MARIO_RACOON_SPIN_LEFT 2100
 #define ID_ANI_MARIO_RACOON_SPIN_RIGHT 2101
 
+#define ID_ANI_MARIO_RACOON_DROP_LEFT 2110
+#define ID_ANI_MARIO_RACOON_DROP_RIGHT 2111
+
+#define ID_ANI_MARIO_RACOON_WAGGING_TAIL_LEFT 2120
+#define ID_ANI_MARIO_RACOON_WAGGING_TAIL_RIGHT 2121
+
+#define ID_ANI_MARIO_RACOON_FLY_WAGGING_TAIL_LEFT 2130
+#define ID_ANI_MARIO_RACOON_FLY_WAGGING_TAIL_RIGHT 2131
+
+#define ID_ANI_MARIO_RACOON_FLY_FALLING_LEFT 2140
+#define ID_ANI_MARIO_RACOON_FLY_FALLING_RIGHT 2141
 
 #pragma endregion
 
@@ -202,11 +214,12 @@
 #define MARIO_SPIN_TIME 400
 #define MARIO_DRAG_FORCE_TIME 100
 #define MARIO_DECREASE_MANA_TIME 600
+#define MARIO_FLY_TIME 10000
 
 
 class CMario : public CGameObject
 {
-	BOOLEAN isSitting,isSpin,canFly, isFlying, isInInertia;
+	BOOLEAN isSitting,isSpin,canFly, isFlying, isInInertia, isWagging, isFallingAfterFly;
 	float maxVx;
 	float ax;				// acceleration on x 
 	float ay;				// acceleration on y 
@@ -214,7 +227,7 @@ class CMario : public CGameObject
 	int mana;
 	int level; 
 	int untouchable; 
-	ULONGLONG untouchable_start,kick_start,spin_start,drag_force_start,update_time, pre_update_time ;
+	ULONGLONG untouchable_start,kick_start,spin_start,drag_force_start, flying_start;
 	BOOLEAN isOnPlatform, isHoldingShell, inKickAni;
 	int coin; 
 	int fly_count;
@@ -239,7 +252,6 @@ public:
 	CMario(float x, float y) : CGameObject(x, y)
 	{
 		isInInertia = false;
-		update_time = GetTickCount64();
 		mana_display = 0;
 		mana = 0;
 		isFlying = false;
@@ -261,6 +273,9 @@ public:
 		inKickAni = false;
 		drag_force_start = 0;
 		coin = 0;
+		isWagging = false;
+		flying_start = -1;
+		isFallingAfterFly = false;
 	}
 
 	void IncreaseMana(int  value) {
@@ -287,19 +302,20 @@ public:
 	{ 
 		return (state != MARIO_STATE_DIE); 
 	}
-	void PerformFly();
+	void StartFly();
 	bool canContinueFlying() {
 		return vy < -0.25f;
 	}
 	int GetLevel() { return this->level; }
 	void StartDragForce() {
+		isWagging = true;
 		drag_force_start = GetTickCount64();
-		if (!isFlying) {
-			this->vy = MARIO_JUMP_DRAG_SPEED_Y;
-		}
+		this->vy = MARIO_JUMP_DRAG_SPEED_Y;
 		if (ay == MARIO_GRAVITY)
 			ay -= MARIO_DRAG_FORCE;
 	}
+	bool GetIsFlying() { return isFlying; }
+	bool GetIsFallingAfterFly() { return isFallingAfterFly; }
 	void Hitted();
 	bool IsOnPlatform() { return isOnPlatform; }
 	int IsBlocking() { return (state != MARIO_STATE_DIE && untouchable==0); }
@@ -307,6 +323,7 @@ public:
 	bool IsHoldingShell() { return isHoldingShell; }
 	bool CanKillEnemy(LPCOLLISIONEVENT e) { return (e->ny < 0 || (isSpin && e->nx != 0 )); }
 	bool GetCanFly() { return canFly; }
+	void PerformFly();
 	void UpdateShellPosition();
 	void OnNoCollision(DWORD dt);
 	void OnCollisionWith(LPCOLLISIONEVENT e);

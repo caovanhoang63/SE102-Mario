@@ -309,12 +309,12 @@ void CPlayScene::Update(DWORD dt)
 
 	if (cx < 0) cx = 0;
 
-	/*if (dynamic_cast<CMario*>(player)->IsFlying()) {
+	if (dynamic_cast<CMario*>(player)->IsFlying() || dynamic_cast<CMario*>(player)->GetIsFallingAfterFly()) {
 		CGame::GetInstance()->SetCamPos(cx,cy);
 	}
-	else {*/
+	else {
 		CGame::GetInstance()->SetCamPos(cx, 0.0f /*cy*/);
-	//}
+	}
 
 	PurgeDeletedObjects();
 }
