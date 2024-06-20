@@ -36,6 +36,7 @@ protected:
 	int direction;
 	bool isOnPlatform;
 	bool isHittedDeflect;
+	int hitCount;
 	ULONGLONG stop_start;
 public:
 	CKoopaShell(float x, float y, int color, int direction);
@@ -47,7 +48,9 @@ public:
 		this->state = KOOPA_SHELL_STATE_STOP;
 		this->stop_start = GetTickCount64();
 		this->vx = 0;
+		this->hitCount = 0;
 	}
+	virtual void IncScore();
 	virtual void Hitted(int nx);
 	virtual void OnNoCollision(DWORD dt);
 	virtual void OnCollisionWith(LPCOLLISIONEVENT e);

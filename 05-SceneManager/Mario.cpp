@@ -17,7 +17,20 @@
 #include "WingedGoomba.h"
 #include "Flower.h"
 #include "Leaf.h"
+#include "ScoreEffect.h"
 
+
+void CMario::IncScoreWhenStomp()
+{
+	if (jump_count < MARIO_JUMP_MAX_SCORE) {
+		CScoreEffect* effect = new CScoreEffect(x, y,SCORES[jump_count]);
+		effect->StartEffect();
+	}
+	else {
+
+	}
+	jump_count++;
+}
 
 void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 {
@@ -72,8 +85,6 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 	}
 
 	
-
-	
 	isOnPlatform = false;
 
 	CCollision::GetInstance()->Process(this, dt, coObjects);
@@ -102,6 +113,10 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 	if (this->isFlying && this->isOnPlatform) {
 		this->isFlying = false;
 		this->flying_start = 0;
+	}
+
+	if (isOnPlatform) {
+		jump_count = 0;
 	}
 }
 
@@ -204,6 +219,7 @@ void CMario::OnCollisionWithEnemy(LPCOLLISIONEVENT e)
 	}
 	if (e->ny < 0) {
 		enemy->Pressed();
+		this->IncScoreWhenStomp();
 		vy = -MARIO_JUMP_DEFLECT_SPEED;
 	}
 	else if (isSpin && e->nx != 0) {
@@ -285,12 +301,14 @@ void CMario::OnCollisionWithKoopaShell(LPCOLLISIONEVENT e) {
 		} else {
 			this->StartKickAni();
 			shell->StartMove(x);
+			this->IncScoreWhenStomp();
 		}
 	}
 	else {
 		if (e->ny < 0) {
 			shell->StopMove();
 			this->vy = -MARIO_JUMP_DEFLECT_SPEED;
+			this->IncScoreWhenStomp();
 		}
 		else
 			this->Hitted();

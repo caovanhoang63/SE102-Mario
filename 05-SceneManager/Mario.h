@@ -23,7 +23,6 @@
 #define MARIO_JUMP_RUN_SPEED_Y	0.6f
 #define MARIO_JUMP_DRAG_SPEED_Y	0.05f
 #define MARIO_FLY_SPEED_Y	0.3f
- 
 
 #define MARIO_GRAVITY			0.0018f
 
@@ -217,11 +216,17 @@
 #define MARIO_DECREASE_MANA_TIME 600
 #define MARIO_FLY_TIME 5000
 #define MARIO_WAGGING_TIME 100
-
+#define	MARIO_JUMP_MAX_SCORE 8
 
 class CMario : public CGameObject
 {
-	BOOLEAN isSitting,isSpin,canFly, isFlying, isInInertia, isWagging, isFallingAfterFly;
+	BOOLEAN isSitting,
+		isSpin,
+		canFly,
+		isFlying,
+		isInInertia, 
+		isWagging, 
+		isFallingAfterFly;
 	float maxVx;
 	float ax;				// acceleration on x 
 	float ay;				// acceleration on y 
@@ -230,7 +235,13 @@ class CMario : public CGameObject
 	int level; 
 	int untouchable; 
 	int score;
-	ULONGLONG untouchable_start,kick_start,spin_start,fly_drag_force_start,jump_drag_force_start, flying_start,wagging_tail_start;
+	int jump_count ;
+	ULONGLONG untouchable_start,
+		kick_start,spin_start,
+		fly_drag_force_start,
+		jump_drag_force_start,
+		flying_start,
+		wagging_tail_start;
 	BOOLEAN isOnPlatform, isHoldingShell, inKickAni;
 	int coin; 
 	int fly_count;
@@ -260,7 +271,8 @@ public:
 		spin_start = -1;
 		untouchable_start = -1;
 		flying_start = -1;
-		kick_start = 1;
+		kick_start = -1;
+		jump_count = 0;
 
 		isInInertia = false;
 		isFlying = false;
@@ -301,10 +313,10 @@ public:
 		}
 		mana_display = mana / MARIO_MANA_STEP;
 	}
+	void IncScore(int value) {score += value;}
 
-	void IncScore(int value) {
-		score += value;
-	}
+	void IncScoreWhenStomp();
+
 	void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);
 	void Render();
 	void SetState(int state);
@@ -313,9 +325,6 @@ public:
 		return (state != MARIO_STATE_DIE); 
 	}
 	void StartFly();
-	bool canContinueFlying() {
-		return vy < -0.25f;
-	}
 	int GetLevel() { return this->level; }
 	void StartDragForce() {
 		isWagging = true;

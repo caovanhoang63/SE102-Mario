@@ -1,6 +1,6 @@
 #include "KoopaShell.h"
 #include "CGiftBox.h"
-
+#include "ScoreEffect.h"
 
 CKoopaShell::CKoopaShell(float x, float y, int color, int direction) : CGameObject(x, y) {
 	this->ax = 0;
@@ -13,6 +13,20 @@ CKoopaShell::CKoopaShell(float x, float y, int color, int direction) : CGameObje
 	this->vy = 0;
 	this->isHittedDeflect = false;
 	this->isOnPlatform = false;
+	this->hitCount = 0;
+}
+
+void CKoopaShell::IncScore()
+{
+	
+	if (hitCount < 8) {
+		CScoreEffect* effect = new CScoreEffect(x, y, SCORES[hitCount]);
+		effect->StartEffect();
+	}
+	else {
+		// +1 life 
+	}
+	hitCount++;
 }
 
 void CKoopaShell::Hitted(int nx)
@@ -83,6 +97,7 @@ void CKoopaShell::OnNoCollision(DWORD dt) {
 	y += vy * dt;
 }
 
+
 void CKoopaShell::OnCollisionWith(LPCOLLISIONEVENT e) {
 	if (dynamic_cast<CEnemy*>(e->obj) && this->state == KOOPA_SHELL_STATE_MOVING) {
 		CEnemy* enemy = dynamic_cast<CEnemy*>(e->obj);
@@ -94,10 +109,9 @@ void CKoopaShell::OnCollisionWith(LPCOLLISIONEVENT e) {
 		else
 			isHitted = -1;
 		enemy->Hitted(isHitted);
+		IncScore();
 		return;
 	}
-
-
 
 	if (dynamic_cast<CKoopaShell*>(e->obj)) return;
 

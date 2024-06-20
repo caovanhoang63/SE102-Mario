@@ -22,7 +22,7 @@ public:
 	virtual void OnNoCollision(DWORD dt) {};
 	virtual void OnCollisionWith(LPCOLLISIONEVENT e);
 	virtual void Pressed();
-	virtual void Hitted(int nx) { this->isHitted = nx; this->isPressed = false; this->vy = -ENEMY_DEFLECT_SPEED_Y; }
+	virtual void Hitted(int nx);
 	virtual bool IsInStateDie() = 0;
 	virtual int IsBlocking() { return 1; }
 	virtual void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);
