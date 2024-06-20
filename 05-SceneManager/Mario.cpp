@@ -715,6 +715,10 @@ int CMario::GetAniIdRacoon()
 
 void CMario::Render()
 {
+	if (untouchable == 1)
+		if (GetTickCount64() % 2 == 0)
+			return;
+
 	CAnimations* animations = CAnimations::GetInstance();
 	int aniId = -1;
 
