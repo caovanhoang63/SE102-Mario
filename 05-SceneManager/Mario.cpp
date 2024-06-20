@@ -23,6 +23,7 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 {
 	vy += ay * dt;
 	vx += ax * dt;
+	if (vy > MARIO_MAX_FALLING_SPEED) vy = MARIO_MAX_FALLING_SPEED;
 
 	if (isInInertia && ax * vx >=0) {
 		vx = 0;
@@ -49,16 +50,30 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 		isSpin = false;
 	}
 
-	if (GetTickCount64() - drag_force_start > MARIO_DRAG_FORCE_TIME) {
-		drag_force_start = 0;
+	if (GetTickCount64() - wagging_tail_start > MARIO_WAGGING_TIME) {
+		wagging_tail_start = 0;
 		isWagging = false;
+	}
+
+	if (jump_drag_force_start != -1 && GetTickCount64() - jump_drag_force_start > MARIO_JUMP_DRAG_FORCE_TIME) {
+		jump_drag_force_start = -1;
 		ay = MARIO_GRAVITY;
 	}
+
+
+	if (fly_drag_force_start != -1 && GetTickCount64() - fly_drag_force_start > MARIO_FLY_DRAG_FORCE_TIME) {
+		fly_drag_force_start = -1;
+		ay = MARIO_GRAVITY;
+	}
+	DebugOut(L"%d, Gravity: %f\n", GetTickCount64() - fly_drag_force_start,ay);
+
 	if (this->isFlying && (GetTickCount64() - flying_start > MARIO_FLY_TIME || this->level != MARIO_LEVEL_RACOON_FORM)) {
 		isFlying = false;
 		flying_start = 0;
 		isFallingAfterFly = true;
 	}
+
+	
 
 	
 	isOnPlatform = false;
@@ -90,14 +105,15 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 		this->isFlying = false;
 		this->flying_start = 0;
 	}
-	DebugOut(L"vy: %f\n", vy);
 }
 
 void CMario::PerformFly()
 {
-	this->vy = -MARIO_FLY_SPEED_Y;
+	this->wagging_tail_start = GetTickCount64();
+	this->fly_drag_force_start = GetTickCount64();
 	this->isWagging = true;
-	this->drag_force_start = GetTickCount64();
+	this->vy = -MARIO_FLY_SPEED_Y;
+	this->ay = 0;
 }
 
 void CMario::UpdateShellPosition()
@@ -820,8 +836,8 @@ void CMario::SetState(int state)
 void CMario::StartFly()
 {
 	canFly = false;
-	flying_start = GetTickCount64();
 	isFlying = true;
+	flying_start = GetTickCount64();
 	PerformFly();
 }
 

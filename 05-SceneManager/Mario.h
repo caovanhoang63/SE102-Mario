@@ -14,7 +14,7 @@
 #define MARIO_ACCEL_RUN_X	0.0005f
 #define MARIO_WALKING_FRICTION_X	0.0001f
 #define MARIO_RUNNING_FRICTION_X	0.0002f
-
+#define MARIO_MAX_FALLING_SPEED	0.4f
 
 #define MARIO_MAX_MANA		900
 #define MARIO_MANA_STEP		150
@@ -22,7 +22,7 @@
 #define MARIO_JUMP_SPEED_Y		0.5f
 #define MARIO_JUMP_RUN_SPEED_Y	0.6f
 #define MARIO_JUMP_DRAG_SPEED_Y	0.05f
-#define MARIO_FLY_SPEED_Y	0.5f
+#define MARIO_FLY_SPEED_Y	0.3f
  
 
 #define MARIO_GRAVITY			0.0018f
@@ -212,9 +212,11 @@
 #define MARIO_UNTOUCHABLE_TIME 2500
 #define MARIO_KICK_TIME 300
 #define MARIO_SPIN_TIME 400
-#define MARIO_DRAG_FORCE_TIME 100
+#define MARIO_JUMP_DRAG_FORCE_TIME 100
+#define MARIO_FLY_DRAG_FORCE_TIME 500
 #define MARIO_DECREASE_MANA_TIME 600
-#define MARIO_FLY_TIME 10000
+#define MARIO_FLY_TIME 5000
+#define MARIO_WAGGING_TIME 100
 
 
 class CMario : public CGameObject
@@ -227,7 +229,7 @@ class CMario : public CGameObject
 	int mana;
 	int level; 
 	int untouchable; 
-	ULONGLONG untouchable_start,kick_start,spin_start,drag_force_start, flying_start;
+	ULONGLONG untouchable_start,kick_start,spin_start,fly_drag_force_start,jump_drag_force_start, flying_start,wagging_tail_start;
 	BOOLEAN isOnPlatform, isHoldingShell, inKickAni;
 	int coin; 
 	int fly_count;
@@ -251,31 +253,35 @@ class CMario : public CGameObject
 public:
 	CMario(float x, float y) : CGameObject(x, y)
 	{
+		fly_drag_force_start = -1;
+		wagging_tail_start = -1;
+		jump_drag_force_start = 1;
+		spin_start = -1;
+		untouchable_start = -1;
+		flying_start = -1;
+		kick_start = 1;
+
 		isInInertia = false;
+		isFlying = false;
+		isSitting = false;
+		canFly = false;
+		isHoldingShell = false;
+		isSpin = false;
+		isOnPlatform = false;
+		inKickAni = false;
+		isWagging = false;
+		isFallingAfterFly = false;
+
 		mana_display = 0;
 		mana = 0;
-		isFlying = false;
 		fly_count = 0;
-		isSitting = false;
 		maxVx = 0.0f;
 		ax = 0.0f;
 		ay = MARIO_GRAVITY; 
 		this->shell = NULL;
-		canFly = false;
-		isHoldingShell = false;
-		isSpin = false;
-		spin_start = -1;
 		level = MARIO_LEVEL_BIG;
 		untouchable = 0;
-		untouchable_start = -1;
-		isOnPlatform = false;
-		kick_start = 0;
-		inKickAni = false;
-		drag_force_start = 0;
 		coin = 0;
-		isWagging = false;
-		flying_start = -1;
-		isFallingAfterFly = false;
 	}
 
 	void IncreaseMana(int  value) {
@@ -309,10 +315,10 @@ public:
 	int GetLevel() { return this->level; }
 	void StartDragForce() {
 		isWagging = true;
-		drag_force_start = GetTickCount64();
+		this->wagging_tail_start = GetTickCount64();
+		this->jump_drag_force_start = GetTickCount64();
 		this->vy = MARIO_JUMP_DRAG_SPEED_Y;
-		if (ay == MARIO_GRAVITY)
-			ay -= MARIO_DRAG_FORCE;
+		this->ay = 0;
 	}
 	bool GetIsFlying() { return isFlying; }
 	bool GetIsFallingAfterFly() { return isFallingAfterFly; }
