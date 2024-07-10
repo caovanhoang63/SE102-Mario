@@ -17,6 +17,7 @@
 #include "WingedGoomba.h"
 #include "Flower.h"
 #include "Leaf.h"
+#include "Spawner.h"
 #include "ScoreEffect.h"
 
 
@@ -179,7 +180,7 @@ void CMario::OnCollisionWith(LPCOLLISIONEVENT e)
 		vx = 0;
 	}
 
-	if (dynamic_cast<CEnemy*>(e->obj)) 
+	if (dynamic_cast<CEnemy*>(e->obj))
 		OnCollisionWithEnemy(e);
 	else if (dynamic_cast<CCoin*>(e->obj))
 		OnCollisionWithCoin(e);
@@ -197,6 +198,8 @@ void CMario::OnCollisionWith(LPCOLLISIONEVENT e)
 		OnCollisionWithLeaf(e);
 	else if (dynamic_cast<CFlower*>(e->obj))
 		OnCollisionWithFlower(e);
+	else if (dynamic_cast<CSpawner*>(e->obj))
+		OnCollisionWithSpawner(e);
 }
 
 void CMario::OnCollisionWithLeaf(LPCOLLISIONEVENT e)
@@ -235,6 +238,12 @@ void CMario::OnCollisionWithEnemy(LPCOLLISIONEVENT e)
 void CMario::OnCollisionWithFlower(LPCOLLISIONEVENT e)
 {
 	this->Hitted();
+}
+
+void CMario::OnCollisionWithSpawner(LPCOLLISIONEVENT e)
+{	
+	CSpawner* spawner = (CSpawner*)e->obj;
+	spawner->Spawn();
 }
 
 void CMario::OnCollisionWithWingedGoomba(LPCOLLISIONEVENT e)

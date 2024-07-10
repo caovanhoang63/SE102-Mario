@@ -159,6 +159,7 @@ void CWingedGoomba::Render()
 
 void CWingedGoomba::OnCollisionWith(LPCOLLISIONEVENT e)
 {
+	if (!e->obj->IsBlocking()) return;
 	if (dynamic_cast<CGoomba*>(e->obj)) return;
 
 	if (e->ny != 0 && e->obj->IsBlocking())

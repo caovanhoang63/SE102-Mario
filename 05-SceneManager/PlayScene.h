@@ -8,6 +8,7 @@
 #include "Goomba.h"
 #include "Koopa.h"
 #include "InvisibleBlock.h"
+#include "Spawner.h"
 //#include "Koopas.h"
 
 
@@ -16,7 +17,7 @@ class CPlayScene: public CScene
 protected: 
 	// A play scene has to have player, right? 
 	LPGAMEOBJECT player;					
-
+	CSpawner* curSpawner;
 	vector<LPGAMEOBJECT> objects;
 
 	void _ParseSection_SPRITES(string line);

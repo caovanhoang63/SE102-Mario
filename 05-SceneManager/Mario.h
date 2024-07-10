@@ -258,6 +258,7 @@ class CMario : public CGameObject
 	void OnCollisionWithLeaf(LPCOLLISIONEVENT e);
 	void OnCollisionWithEnemy(LPCOLLISIONEVENT e);
 	void OnCollisionWithFlower(LPCOLLISIONEVENT e);
+	void OnCollisionWithSpawner(LPCOLLISIONEVENT e);
 	int GetAniIdRacoon();
 	int GetAniIdBig();
 	int GetAniIdSmall();

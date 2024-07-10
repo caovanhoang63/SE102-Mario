@@ -16,6 +16,7 @@
 #include "Flower.h"
 #include "FireBullet.h"
 #include "WingedGoomba.h"
+
 #include "SampleKeyEventHandler.h"
 
 using namespace std;
@@ -99,7 +100,6 @@ void CPlayScene::_ParseSection_ANIMATIONS(string line)
 void CPlayScene::_ParseSection_OBJECTS(string line)
 {
 	vector<string> tokens = split(line);
-
 	// skip invalid lines - an object set must have at least id, x, y
 	if (tokens.size() < 2) return;
 
@@ -170,6 +170,17 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 		obj = new CFlower(x, y, width, height, color,(CMario*)player);
 		break;
 	}
+	case OBJECT_TYPE_SPAWNER: { 
+		obj = new CSpawner(x, y); 
+		curSpawner = (CSpawner*)obj;
+		obj->SetPosition(x, y);
+		objects.push_back(obj);
+		return;
+	}
+	case OBJECT_TYPE_SPAWNER_END :{
+		curSpawner = NULL;
+		return;
+	}
 	case OBJECT_TYPE_PLATFORM:
 	{
 
@@ -179,7 +190,6 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 		int sprite_begin = atoi(tokens[6].c_str());
 		int sprite_middle = atoi(tokens[7].c_str());
 		int sprite_end = atoi(tokens[8].c_str());
-
 		obj = new CPlatform(
 			x, y,
 			cell_width, cell_height, length,
@@ -194,6 +204,7 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 		float r = (float)atof(tokens[3].c_str());
 		float b = (float)atof(tokens[4].c_str());
 		int scene_id = atoi(tokens[5].c_str());
+		vector <string> c;
 		obj = new CPortal(x, y, r, b, scene_id);
 	}
 	break;
@@ -204,9 +215,12 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 		return;
 	}
 
-	// General object setup
-	obj->SetPosition(x, y);
+	if (curSpawner != NULL) {
 
+		curSpawner->AddObject(obj);
+		return;
+	}
+	obj->SetPosition(x, y);
 	objects.push_back(obj);
 }
 
@@ -308,7 +322,6 @@ void CPlayScene::Update(DWORD dt)
 	cy = my - game->GetBackBufferHeight() / 2;
 
 	if (cx < 0) cx = 0;
-	DebugOut(L"my: %f\n", my);
 	if (dynamic_cast<CMario*>(player)->IsFlying() && my < 25 ) {
 		CGame::GetInstance()->SetCamPos(cx, my - 25);
 	}
