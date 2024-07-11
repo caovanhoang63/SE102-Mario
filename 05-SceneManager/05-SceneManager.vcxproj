@@ -219,7 +219,7 @@
     <ClInclude Include="WingedGoomba.h" />
     <ClInclude Include="SampleKeyEventHandler.h" />
     <ClInclude Include="Scene.h" />
-    <ClInclude Include="SmallTree.h" />
+    <ClInclude Include="LongBackground.h" />
     <ClInclude Include="Sprite.h" />
     <ClInclude Include="Sprites.h" />
     <ClInclude Include="Texture.h" />

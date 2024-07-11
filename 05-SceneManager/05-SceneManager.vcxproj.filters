@@ -200,7 +200,7 @@
     <ClInclude Include="Portal.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="SmallTree.h">
+    <ClInclude Include="LongBackground.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="CColorBox.h">

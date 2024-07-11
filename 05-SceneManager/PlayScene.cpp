@@ -9,7 +9,7 @@
 #include "Portal.h"
 #include "Coin.h"
 #include "Platform.h"
-#include "SmallTree.h"
+#include "LongBackground.h"
 #include "CColorBox.h"
 #include "CGiftBox.h"
 #include "CBlock.h"
@@ -136,12 +136,18 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 	}; break;
 	case OBJECT_TYPE_BACKGROUND:{
 		
-		int sprite_width = atoi(tokens[3].c_str());
-		int sprite_height = atoi(tokens[4].c_str());
-		int sprite_id = atoi(tokens[5].c_str());
+		float cell_width = (float)atof(tokens[3].c_str());
+		float cell_height = (float)atof(tokens[4].c_str());
+		int length = atoi(tokens[5].c_str());
+		int sprite_begin = atoi(tokens[6].c_str());
+		int sprite_middle = atoi(tokens[7].c_str());
+		int sprite_end = atoi(tokens[8].c_str());
 
-		obj = new CSmallTree(x, y, sprite_width, sprite_height, sprite_id);
-
+		obj = new CLongBackground(
+			x, y,
+			cell_width, cell_height, length,
+			sprite_begin, sprite_middle, sprite_end
+		);
 
 	}; break;
 
