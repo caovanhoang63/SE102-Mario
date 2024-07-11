@@ -17,6 +17,7 @@
 #include "FireBullet.h"
 #include "WingedGoomba.h"
 #include "WingedKoopa.h"
+#include "Background.h"
 
 #include "SampleKeyEventHandler.h"
 
@@ -134,7 +135,18 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 		int sprite_id = atoi(tokens[5].c_str());
 		obj = new CColorBox(x, y, sprite_width, sprite_height, sprite_id);
 	}; break;
-	case OBJECT_TYPE_BACKGROUND:{
+	case OBJECT_TYPE_BACKGROUND: {
+
+		int sprite_width = atoi(tokens[3].c_str());
+		int sprite_height = atoi(tokens[4].c_str());
+		int sprite_id = atoi(tokens[5].c_str());
+
+		obj = new CBackground(x, y, sprite_width, sprite_height, sprite_id);
+
+
+	}; break;
+
+	case OBJECT_TYPE_LONGBACKGROUND:{
 		
 		float cell_width = (float)atof(tokens[3].c_str());
 		float cell_height = (float)atof(tokens[4].c_str());
