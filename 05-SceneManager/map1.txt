@@ -17,6 +17,7 @@ koopa.txt
 winged_goomba.txt
 leaf.txt
 score.txt
+winged_koopa.txt
 #
 [OBJECTS]
 # type	x	y	extra_settings per object type
@@ -47,8 +48,10 @@ score.txt
 7	1063	128	16	16	210000
 
 
+
+
 #coin
-4	1080	64	1
+#4	1080	64	1
 4	1112	32	1
 4	1144	0	1
 4	1176	-32	1
@@ -110,7 +113,7 @@ score.txt
 8	663	128	1
 8	711	96	0
 8	423	64	0 
-
+8	1479	112	1
 #Red Flower
 10	368	120	16	32	0
 
@@ -118,15 +121,18 @@ score.txt
 9	368	112	29	16	90001	0
 9	368	136	29	31	90002	0
 
-
+#Goomba
 2	236	120
 2	620	120
 
-
+#Koopa
 13	560	100	0
 
-18	800	50
-
-14 	1066	50	0
-
-19	0	0
+#Open Spawner
+51	800	50
+#2	1000	50
+#2	1032	50
+#14 	1066	50	0
+18	850	50	1000
+52	0	0
+#Close Spawner

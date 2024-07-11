@@ -3,7 +3,7 @@
 #include "KoopaShell.h"
 #include "InvisibleBlock.h"
 
-#define KOOPA_GRAVITY 0.02f
+#define KOOPA_GRAVITY 0.0005f
 #define KOOPA_WALKING_SPEED 0.05f
 
 #define KOOPA_COLOR_RED 0

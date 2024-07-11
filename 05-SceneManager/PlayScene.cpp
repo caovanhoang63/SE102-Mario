@@ -16,6 +16,7 @@
 #include "Flower.h"
 #include "FireBullet.h"
 #include "WingedGoomba.h"
+#include "WingedKoopa.h"
 
 #include "SampleKeyEventHandler.h"
 
@@ -143,11 +144,19 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 
 
 	}; break;
+
+
 	case OBJECT_TYPE_KOOPA: {
-	int color = atoi(tokens[3].c_str());
-	obj = new CKoopa(x, y,color );
+		int color = atoi(tokens[3].c_str());
+		obj = new CKoopa(x, y,color );
+		break;
+
 	}
-	break;
+	case OBJECT_TYPE_WINGED_KOOPA: {
+		int color = atoi(tokens[3].c_str());
+		obj = new CWingedKoopa(x, y, color);
+		break;
+	}
 
 	case OBJECT_TYPE_FIRE_BULLET:obj = new CFireBullet(x, y, player); break;
 	case OBJECT_TYPE_GIFT_BOX: {

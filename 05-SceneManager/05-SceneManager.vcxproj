@@ -182,6 +182,7 @@
     <ClCompile Include="Sprites.cpp" />
     <ClCompile Include="Textures.cpp" />
     <ClCompile Include="Utils.cpp" />
+    <ClCompile Include="WingedKoopa.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Animation.h" />
@@ -224,6 +225,7 @@
     <ClInclude Include="Texture.h" />
     <ClInclude Include="Textures.h" />
     <ClInclude Include="Utils.h" />
+    <ClInclude Include="WingedKoopa.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="background.txt" />
@@ -250,6 +252,7 @@
     <Text Include="specials.txt" />
     <Text Include="test_scene.txt" />
     <Text Include="winged_goomba.txt" />
+    <Text Include="winged_koopa.txt" />
     <Text Include="x64\Debug\05-SceneManager.vcxproj.FileListAbsolute.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
