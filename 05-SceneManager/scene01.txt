@@ -5,6 +5,7 @@ brick.txt
 coin.txt
 goomba.txt
 cloud.txt
+score_board.txt
 #
 [OBJECTS]
 # type	x	y	extra_settings per object type

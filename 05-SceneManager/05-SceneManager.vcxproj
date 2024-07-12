@@ -176,6 +176,7 @@
     <ClCompile Include="Platform.cpp" />
     <ClCompile Include="PlayScene.cpp" />
     <ClCompile Include="Portal.cpp" />
+    <ClCompile Include="ScoreBoard.cpp" />
     <ClCompile Include="ScoreEffect.cpp" />
     <ClCompile Include="Spawner.cpp" />
     <ClCompile Include="TallBlock.cpp" />
@@ -221,6 +222,7 @@
     <ClInclude Include="Platform.h" />
     <ClInclude Include="PlayScene.h" />
     <ClInclude Include="Portal.h" />
+    <ClInclude Include="ScoreBoard.h" />
     <ClInclude Include="ScoreEffect.h" />
     <ClInclude Include="Spawner.h" />
     <ClInclude Include="TallBlock.h" />
@@ -241,6 +243,7 @@
     <Text Include="brick.txt" />
     <Text Include="cloud.txt" />
     <Text Include="coin.txt" />
+    <Text Include="effect.txt" />
     <Text Include="firebullet.txt" />
     <Text Include="flower.txt" />
     <Text Include="flower_no_fire.txt" />
@@ -258,6 +261,7 @@
     <Text Include="scene01.txt" />
     <Text Include="scene02.txt" />
     <Text Include="score.txt" />
+    <Text Include="score_board.txt" />
     <Text Include="specials.txt" />
     <Text Include="test_scene.txt" />
     <Text Include="winged_goomba.txt" />

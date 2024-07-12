@@ -22,6 +22,7 @@
 #include "OneWayLongBlock.h"
 #include "TallBlock.h"
 #include "SampleKeyEventHandler.h"
+#include "ScoreBoard.h"
 
 using namespace std;
 
@@ -30,6 +31,7 @@ CPlayScene::CPlayScene(int id, LPCWSTR filePath):
 {
 	player = NULL;
 	key_handler = new CSampleKeyHandler(this);
+	ScoreBoard = new CScoreBoard(0,0);
 }
 
 
@@ -385,7 +387,6 @@ void CPlayScene::Update(DWORD dt)
 	CGame *game = CGame::GetInstance();
 	cx = mx - game->GetBackBufferWidth() / 2;
 	cy = my - game->GetBackBufferHeight() / 2;
-
 	if (cx < 0) cx = 0;
 	if (dynamic_cast<CMario*>(player)->IsFlying() && my < 25 ) {
 		CGame::GetInstance()->SetCamPos(cx, my - 25);
@@ -395,7 +396,9 @@ void CPlayScene::Update(DWORD dt)
 	}
 	else {
 		CGame::GetInstance()->SetCamPos(cx, 0.0f /*cy*/);
+		this->ScoreBoard->SetPosition(cx + 160, game->GetBackBufferHeight() / 2 + 96);
 	}
+
 
 	PurgeDeletedObjects();
 }
@@ -406,6 +409,7 @@ void CPlayScene::Render()
 		objects[i]->Render();
 	}
 	player->Render();
+	this->ScoreBoard->Render();
 }
 
 /*

@@ -141,6 +141,9 @@
     <ClCompile Include="TallBlock.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="ScoreBoard.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Animation.h">
@@ -278,6 +281,9 @@
     <ClInclude Include="TallBlock.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="ScoreBoard.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Text Include="mario-sample.txt">
@@ -359,6 +365,12 @@
       <Filter>Resource Files</Filter>
     </Text>
     <Text Include="flower_no_fire.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
+    <Text Include="score_board.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
+    <Text Include="effect.txt">
       <Filter>Resource Files</Filter>
     </Text>
   </ItemGroup>

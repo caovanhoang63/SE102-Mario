@@ -20,6 +20,7 @@ score.txt
 winged_koopa.txt
 flower_no_fire.txt
 cloud.txt
+score_board.txt
 #
 [OBJECTS]
 # type	x	y	extra_settings per object type
@@ -38,6 +39,7 @@ cloud.txt
 19	2415	88	96	128	200003
 19	2616	104	32	96	220001
 19	2776	128	32	96	220000
+19	2646	-55	338	416	69900
 
 #type	x	y	width	height	idSprite
 
@@ -94,7 +96,39 @@ cloud.txt
 4	1816	-160	1
 4	1848	-128	1
 
+
 #Obj background end
+
+#BRICK
+1	1958	144
+1	1974	144
+1	1990	144
+1	2006	144
+1	2022	144
+1	2038	144
+1	2054	144
+
+1	1974	128
+1	1990	128
+1	2006	128
+1	2022	128
+1	2038	128
+
+
+1	1990	112
+1	2006	112
+1	2022	112
+1	2038	112
+
+
+1	2102	144
+1	2118	144
+
+13	2102	100	0
+1	2102	128
+
+
+
 
 #Box color
 #type	x	y	width	height	
