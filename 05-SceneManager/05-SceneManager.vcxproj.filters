@@ -132,6 +132,9 @@
     <ClCompile Include="Background.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="FlowerNoFire.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Animation.h">
@@ -260,6 +263,9 @@
     <ClInclude Include="Background.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="FlowerNoFire.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Text Include="mario-sample.txt">
@@ -338,6 +344,9 @@
       <Filter>Resource Files</Filter>
     </Text>
     <Text Include="winged_koopa.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
+    <Text Include="flower_no_fire.txt">
       <Filter>Resource Files</Filter>
     </Text>
   </ItemGroup>

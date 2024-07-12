@@ -18,6 +18,7 @@
 #include "WingedGoomba.h"
 #include "WingedKoopa.h"
 #include "Background.h"
+#include "FlowerNoFire.h"
 
 #include "SampleKeyEventHandler.h"
 
@@ -195,6 +196,13 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 		int height = atoi(tokens[4].c_str());
 		int color = atoi(tokens[5].c_str());
 		obj = new CFlower(x, y, width, height, color,(CMario*)player);
+		break;
+	}
+	case OBJECT_TYPE_FLOWER_NO_FIRE: {
+		int width = atoi(tokens[3].c_str());
+		int height = atoi(tokens[4].c_str());
+		int color = atoi(tokens[5].c_str());
+		obj = new CFlowerNoFire(x, y, width, height, color);
 		break;
 	}
 	case OBJECT_TYPE_SPAWNER: { 

@@ -35,6 +35,9 @@ void CFlower::Render() {
 	default:
 		break;
 	}
+	DebugOut(L"color: %d\n", this->color);
+	int aniId = ani + this->color + this->direction;
+	DebugOut(L"aniId: %d\n", aniId);
 	animations->Get(ani + this->color + this->direction)->Render(x, y);
 }
 
