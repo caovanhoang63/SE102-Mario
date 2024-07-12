@@ -19,6 +19,7 @@ leaf.txt
 score.txt
 winged_koopa.txt
 flower_no_fire.txt
+cloud.txt
 #
 [OBJECTS]
 # type	x	y	extra_settings per object type
@@ -183,3 +184,10 @@ flower_no_fire.txt
 18	1440	40	1000
 52	0	0
 #Close Spawner
+
+
+
+#CLOUD 
+#CLOUD 
+24	1415	-64	16	16	4	241000	241000	241000
+24	1495	-80	16	16	13	241000	241000	241000
