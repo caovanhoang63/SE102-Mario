@@ -2,6 +2,8 @@
 [SPRITES]
 20001	372	153	387	168	20
 
+20002	167	7	182	22	120
+
 # ani_id	sprite1_id	time1	sprite2_id	time2	...
 [ANIMATIONS]
 10000	20001	1000

@@ -178,6 +178,7 @@
     <ClCompile Include="Portal.cpp" />
     <ClCompile Include="ScoreEffect.cpp" />
     <ClCompile Include="Spawner.cpp" />
+    <ClCompile Include="TallBlock.cpp" />
     <ClCompile Include="WingedGoomba.cpp" />
     <ClCompile Include="SampleKeyEventHandler.cpp" />
     <ClCompile Include="SmallTree.cpp" />
@@ -222,6 +223,7 @@
     <ClInclude Include="Portal.h" />
     <ClInclude Include="ScoreEffect.h" />
     <ClInclude Include="Spawner.h" />
+    <ClInclude Include="TallBlock.h" />
     <ClInclude Include="WingedGoomba.h" />
     <ClInclude Include="SampleKeyEventHandler.h" />
     <ClInclude Include="Scene.h" />
