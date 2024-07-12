@@ -214,7 +214,7 @@
 #define MARIO_JUMP_DRAG_FORCE_TIME 100
 #define MARIO_FLY_DRAG_FORCE_TIME 500
 #define MARIO_DECREASE_MANA_TIME 600
-#define MARIO_FLY_TIME 5000
+#define MARIO_FLY_TIME 10000
 #define MARIO_WAGGING_TIME 100
 #define	MARIO_JUMP_MAX_SCORE 8
 
@@ -226,7 +226,8 @@ class CMario : public CGameObject
 		isFlying,
 		isInInertia, 
 		isWagging, 
-		isFallingAfterFly;
+		isFallingAfterFly,
+		isCameraLock;
 	float maxVx;
 	float ax;				// acceleration on x 
 	float ay;				// acceleration on y 
@@ -285,6 +286,7 @@ public:
 		inKickAni = false;
 		isWagging = false;
 		isFallingAfterFly = false;
+		isCameraLock = false ;
 
 		mana_display = 0;
 		mana = 0;
@@ -317,7 +319,8 @@ public:
 	void IncScore(int value) {score += value;}
 
 	void IncScoreWhenStomp();
-
+	bool IsCameraLock() { return isCameraLock; }
+	void SetCameraLock(bool value) { isCameraLock = value; }
 	void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);
 	void Render();
 	void SetState(int state);

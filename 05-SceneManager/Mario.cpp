@@ -90,6 +90,15 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 
 	CCollision::GetInstance()->Process(this, dt, coObjects);
 
+	if (this->y <= 0 && isFlying) {
+		isCameraLock = true;
+	}
+	else {
+		if (y > 0 &&  isOnPlatform && isCameraLock) {
+			isCameraLock = false;
+		}
+	}
+
 	if (this->isHoldingShell) {
 		UpdateShellPosition();
 	}
@@ -867,6 +876,7 @@ void CMario::StartFly()
 	canFly = false;
 	isFlying = true;
 	flying_start = GetTickCount64();
+	isCameraLock = true;
 	PerformFly();
 }
 

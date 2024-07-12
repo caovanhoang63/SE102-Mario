@@ -249,6 +249,7 @@
     <Text Include="flower_no_fire.txt" />
     <Text Include="giftbox.txt" />
     <Text Include="goomba.txt" />
+    <Text Include="hidden-map.txt" />
     <Text Include="koopa.txt" />
     <Text Include="land.txt" />
     <Text Include="leaf.txt" />

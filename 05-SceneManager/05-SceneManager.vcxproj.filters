@@ -373,5 +373,8 @@
     <Text Include="effect.txt">
       <Filter>Resource Files</Filter>
     </Text>
+    <Text Include="hidden-map.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
   </ItemGroup>
 </Project>

@@ -329,7 +329,7 @@ void CPlayScene::LoadAssets(LPCWSTR assetFile)
 void CPlayScene::Load()
 {
 	DebugOut(L"[INFO] Start loading scene from : %s \n", sceneFilePath);
-
+	isLoaded = true;
 	ifstream f;
 	f.open(sceneFilePath);
 
@@ -387,17 +387,17 @@ void CPlayScene::Update(DWORD dt)
 	CGame *game = CGame::GetInstance();
 	cx = mx - game->GetBackBufferWidth() / 2;
 	cy = my - game->GetBackBufferHeight() / 2;
+	CMario *mario = dynamic_cast<CMario*>(player);
 	if (cx < 0) cx = 0;
-	if (dynamic_cast<CMario*>(player)->IsFlying() && my < 25 ) {
-		CGame::GetInstance()->SetCamPos(cx, my - 25);
+	if (!mario->IsCameraLock()) {
+		cy = 0.0f;
 	}
-	else if (dynamic_cast<CMario*>(player)->GetIsFallingAfterFly()) {
-		CGame::GetInstance()->SetCamPos(cx, cy);
-	}
-	else {
-		CGame::GetInstance()->SetCamPos(cx, 0.0f /*cy*/);
-		this->ScoreBoard->SetPosition(cx + 160, game->GetBackBufferHeight() / 2 + 96);
-	}
+
+
+
+	CGame::GetInstance()->SetCamPos(cx,cy);
+	this->ScoreBoard->SetPosition(cx + 160, cy + game->GetBackBufferHeight() / 2 + 96);
+
 
 
 	PurgeDeletedObjects();
@@ -465,3 +465,4 @@ void CPlayScene::PurgeDeletedObjects()
 }
 
 
+ 

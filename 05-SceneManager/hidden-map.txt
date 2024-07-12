@@ -1,0 +1,64 @@
+# list of object assets to load in this scene
+[ASSETS]
+mario.txt
+brick.txt
+land.txt
+boxcolor.txt
+background.txt
+giftbox.txt
+pipe.txt
+specials.txt
+flower.txt
+goomba.txt
+firebullet.txt
+coin.txt
+mushroom.txt
+koopa.txt
+winged_goomba.txt
+leaf.txt
+score.txt
+winged_koopa.txt
+flower_no_fire.txt
+cloud.txt
+score_board.txt
+#
+[OBJECTS]
+# type	x	y	extra_settings per object type
+# type: 0 = Mario , 1 = Brick, 2 = Goomba, 3 = Koopas
+# See OBJECT_TYPE constants in AssetIDs.h
+
+#Obj background start
+
+
+#type	x	y	width	height	amount	begin mid end
+
+25	-32	144	16	16	10	66000	66000	66000
+25	-16	144	16	16	10	66000	66000	66000
+25	0	144	16	16	10	66000	66000	66000
+25 	16	144	16	16	10	66000	66000	66000
+25 	32	144	16	16	10	66000	66000	66000
+25	48	144	16	16	10	66000	66000	66000
+25	64	144	16	16	10	66000	66000	66000
+
+5	0	160	16	16	30	66000	66000	66000
+5	0	176	16	16	30	66000	66000	66000
+5	208	144	16	16	30	66000	66000	66000
+5	224	128	16	16	30	66000	66000	66000
+5	240	112	16	16	30	66000	66000	66000
+5	256	96	16	16	30	66000	66000	66000
+5	272	80	16	16	30	66000	66000	66000
+5	288	64	16	16	30	66000	66000	66000
+5	304	48	16	16	30	66000	66000	66000
+5	352	32	16	16	30	66000	66000	66000
+5	352	16	16	16	30	66000	66000	66000
+5	304	0	16	16	30	66000	66000	66000
+5	0	0	0	16	60	66000	66000	66000
+
+9	88	0	39	39	90005	0
+19	280	0	39	39	90005	0
+50	280	0	290	30	1
+
+# MARIO
+0	88	10
+
+#5	127	88	256	224	1	510000	510000	510000

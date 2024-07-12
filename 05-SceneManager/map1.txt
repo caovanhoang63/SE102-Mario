@@ -28,8 +28,12 @@ score_board.txt
 # See OBJECT_TYPE constants in AssetIDs.h
 
 # MARIO
-#0	30	120
-0	2200	120
+0	30	120
+
+#Portal 
+50	200	120	210	140	2
+
+#0	2200	120
 
 #Obj background start
 19	79	120	128	64	200000
@@ -265,3 +269,8 @@ score_board.txt
 #CLOUD 
 24	1415	-64	16	16	4	241000	241000	241000
 24	1495	-80	16	16	13	241000	241000	241000
+
+
+
+
+

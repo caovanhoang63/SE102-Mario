@@ -11,7 +11,7 @@ protected:
 	LPKEYEVENTHANDLER key_handler;
 	int id;
 	LPCWSTR sceneFilePath;
-
+	bool isLoaded = false;
 public: 
 	CScene(int id, LPCWSTR filePath)
 	{
@@ -21,6 +21,7 @@ public:
 	}
 
 	LPKEYEVENTHANDLER GetKeyEventHandler() { return key_handler; }
+	bool IsLoaded() { return isLoaded; }
 	virtual void Load() = 0;
 	virtual void Unload() = 0;
 	virtual void Update(DWORD dt) = 0;
