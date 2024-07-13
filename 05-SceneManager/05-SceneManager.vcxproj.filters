@@ -150,6 +150,9 @@
     <ClCompile Include="ToCoinButton.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="EndPoint.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Animation.h">
@@ -296,6 +299,9 @@
     <ClInclude Include="ToCoinButton.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="EndPoint.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Text Include="mario-sample.txt">
@@ -389,6 +395,9 @@
       <Filter>Resource Files</Filter>
     </Text>
     <Text Include="button.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
+    <Text Include="endpoint.txt">
       <Filter>Resource Files</Filter>
     </Text>
   </ItemGroup>

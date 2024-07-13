@@ -23,6 +23,7 @@
 #include "SpecialBrick.h"
 #include "ToCoinButton.h"
 #include "FlowerNoFire.h"
+#include "EndPoint.h"
 
 
 void CMario::IncScoreWhenStomp()
@@ -219,7 +220,8 @@ void CMario::OnCollisionWith(LPCOLLISIONEVENT e)
 		OnCollisionWithButton(e);
 	else if (dynamic_cast<CBrick*>(e->obj))
 		OnCollisionWithBrick(e);
-	
+	else if (dynamic_cast<CEndPoint*>(e->obj))
+		OnCollisonWithEndPoint(e);
 }
 
 void CMario::OnCollisionWithLeaf(LPCOLLISIONEVENT e)
@@ -640,6 +642,11 @@ void CMario::OnCollisionWithFlowerNoFire(LPCOLLISIONEVENT e)
 	this->Hitted();
 }
 
+void CMario::OnCollisonWithEndPoint(LPCOLLISIONEVENT e)
+{
+	DebugOut(L"WIN\n");
+}
+
 int CMario::GetAniIdRacoon()
 {
 	int aniId = -1;
@@ -798,7 +805,7 @@ void CMario::Render()
 
 	animations->Get(aniId)->Render(x, y);
 
-	RenderBoundingBox();
+	//RenderBoundingBox();
 	
 	DebugOutTitle(L"Coins: %d", coin);
 }

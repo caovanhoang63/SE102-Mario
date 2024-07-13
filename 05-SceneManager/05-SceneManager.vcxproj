@@ -157,6 +157,7 @@
     <ClCompile Include="Collision.cpp" />
     <ClCompile Include="debug.cpp" />
     <ClCompile Include="Effect.cpp" />
+    <ClCompile Include="EndPoint.cpp" />
     <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="FireBullet.cpp" />
     <ClCompile Include="Flower.cpp" />
@@ -205,6 +206,7 @@
     <ClInclude Include="Collision.h" />
     <ClInclude Include="debug.h" />
     <ClInclude Include="Effect.h" />
+    <ClInclude Include="EndPoint.h" />
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="FireBullet.h" />
     <ClInclude Include="Flower.h" />
@@ -249,6 +251,7 @@
     <Text Include="cloud.txt" />
     <Text Include="coin.txt" />
     <Text Include="effect.txt" />
+    <Text Include="endpoint.txt" />
     <Text Include="firebullet.txt" />
     <Text Include="flower.txt" />
     <Text Include="flower_no_fire.txt" />

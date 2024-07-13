@@ -25,7 +25,7 @@
 #include "ScoreBoard.h"
 #include "SpecialBrick.h"
 #include "ToCoinButton.h"
-
+#include "EndPoint.h"
 using namespace std;
 
 CPlayScene::CPlayScene(int id, LPCWSTR filePath):
@@ -135,6 +135,7 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 	case OBJECT_TYPE_SPECIAL_BRICK: obj = new CSpecialBrick(x, y); break;
 	case OBJECT_TYPE_BRICK: obj = new CBrick(x,y); break;
 	case OBJECT_TYPE_COIN: obj = new CCoin(x, y); break;
+	case OBJECT_TYPE_END_POINT: obj = new CEndPoint(x, y); break;
 	case OBJECT_TYPE_COLOR_BOX:
 	{
 		int sprite_width = atoi(tokens[3].c_str());

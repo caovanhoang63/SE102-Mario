@@ -38,7 +38,7 @@ void CInvisibleBlock::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects) {
 void CInvisibleBlock::SetPosition(float x, float y) { this->x = x, this->y = y; }
 
 void CInvisibleBlock::Render() {
-	RenderBoundingBox();
+	//RenderBoundingBox();
 }
 
 void CInvisibleBlock::SetToLeft(float x,float y ) {

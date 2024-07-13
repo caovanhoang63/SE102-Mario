@@ -17,7 +17,7 @@ void CSpawner::SetPosition(float x, float y)
 
 void CSpawner::Render()
 {
-	RenderBoundingBox();	
+	//RenderBoundingBox();	
 }
 
 
