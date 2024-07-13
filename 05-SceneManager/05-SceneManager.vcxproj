@@ -179,7 +179,9 @@
     <ClCompile Include="ScoreBoard.cpp" />
     <ClCompile Include="ScoreEffect.cpp" />
     <ClCompile Include="Spawner.cpp" />
+    <ClCompile Include="SpecialBrick.cpp" />
     <ClCompile Include="TallBlock.cpp" />
+    <ClCompile Include="ToCoinButton.cpp" />
     <ClCompile Include="WingedGoomba.cpp" />
     <ClCompile Include="SampleKeyEventHandler.cpp" />
     <ClCompile Include="SmallTree.cpp" />
@@ -225,7 +227,9 @@
     <ClInclude Include="ScoreBoard.h" />
     <ClInclude Include="ScoreEffect.h" />
     <ClInclude Include="Spawner.h" />
+    <ClInclude Include="SpecialBrick.h" />
     <ClInclude Include="TallBlock.h" />
+    <ClInclude Include="ToCoinButton.h" />
     <ClInclude Include="WingedGoomba.h" />
     <ClInclude Include="SampleKeyEventHandler.h" />
     <ClInclude Include="Scene.h" />
@@ -241,6 +245,7 @@
     <Text Include="background.txt" />
     <Text Include="boxcolor.txt" />
     <Text Include="brick.txt" />
+    <Text Include="button.txt" />
     <Text Include="cloud.txt" />
     <Text Include="coin.txt" />
     <Text Include="effect.txt" />

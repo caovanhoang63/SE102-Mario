@@ -23,6 +23,8 @@
 #include "TallBlock.h"
 #include "SampleKeyEventHandler.h"
 #include "ScoreBoard.h"
+#include "SpecialBrick.h"
+#include "ToCoinButton.h"
 
 using namespace std;
 
@@ -130,6 +132,7 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 		DebugOut(L"[INFO] Player object has been created!\n");
 		return;
 	case OBJECT_TYPE_GOOMBA: obj = new CGoomba(x,y); break;
+	case OBJECT_TYPE_SPECIAL_BRICK: obj = new CSpecialBrick(x, y); break;
 	case OBJECT_TYPE_BRICK: obj = new CBrick(x,y); break;
 	case OBJECT_TYPE_COIN: obj = new CCoin(x, y); break;
 	case OBJECT_TYPE_COLOR_BOX:
@@ -440,6 +443,18 @@ void CPlayScene::Unload()
 	player = NULL;
 
 	DebugOut(L"[INFO] Scene %d unloaded! \n", id);
+}
+
+void CPlayScene::BrickToCoin()
+{
+	for (int i = 0; i < objects.size(); i++)
+	{
+		if (dynamic_cast<CBrick*>(objects[i]))
+		{
+			CBrick* brick = dynamic_cast<CBrick*>(objects[i]);
+			brick->ToCoin();
+		}
+	}																
 }
 
 bool CPlayScene::IsGameObjectDeleted(const LPGAMEOBJECT& o) { return o == NULL; }

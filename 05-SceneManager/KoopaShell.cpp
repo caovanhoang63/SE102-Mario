@@ -99,6 +99,7 @@ void CKoopaShell::OnNoCollision(DWORD dt) {
 
 
 void CKoopaShell::OnCollisionWith(LPCOLLISIONEVENT e) {
+	if (!e->obj->IsBlocking()) return;
 	if (dynamic_cast<CEnemy*>(e->obj) && this->state == KOOPA_SHELL_STATE_MOVING) {
 		CEnemy* enemy = dynamic_cast<CEnemy*>(e->obj);
 		float ex, ey;

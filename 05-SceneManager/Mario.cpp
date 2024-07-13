@@ -19,6 +19,10 @@
 #include "Leaf.h"
 #include "Spawner.h"
 #include "ScoreEffect.h"
+#include "Brick.h"
+#include "SpecialBrick.h"
+#include "ToCoinButton.h"
+#include "FlowerNoFire.h"
 
 
 void CMario::IncScoreWhenStomp()
@@ -209,6 +213,13 @@ void CMario::OnCollisionWith(LPCOLLISIONEVENT e)
 		OnCollisionWithFlower(e);
 	else if (dynamic_cast<CSpawner*>(e->obj))
 		OnCollisionWithSpawner(e);
+	else if (dynamic_cast<CFlowerNoFire*>(e->obj))
+		OnCollisionWithFlowerNoFire(e);
+	else if (dynamic_cast<CToCoinButton*>(e->obj))
+		OnCollisionWithButton(e);
+	else if (dynamic_cast<CBrick*>(e->obj))
+		OnCollisionWithBrick(e);
+	
 }
 
 void CMario::OnCollisionWithLeaf(LPCOLLISIONEVENT e)
@@ -254,6 +265,13 @@ void CMario::OnCollisionWithSpawner(LPCOLLISIONEVENT e)
 	CSpawner* spawner = (CSpawner*)e->obj;
 	spawner->Spawn();
 }
+
+void CMario::OnCollisionWithButton(LPCOLLISIONEVENT e)
+{
+	CToCoinButton* button = (CToCoinButton*)e->obj;
+	button->GenCoin();
+}
+
 
 void CMario::OnCollisionWithWingedGoomba(LPCOLLISIONEVENT e)
 {
@@ -607,6 +625,19 @@ int CMario::GetAniIdBig()
 	if (aniId == -1) aniId = ID_ANI_MARIO_IDLE_RIGHT;
 
 	return aniId;
+}
+
+void CMario::OnCollisionWithBrick(LPCOLLISIONEVENT e)
+{
+	CBrick* brick = dynamic_cast<CBrick*>(e->obj);
+	if (isSpin ) {
+		brick->Hitted();
+	}
+}
+
+void CMario::OnCollisionWithFlowerNoFire(LPCOLLISIONEVENT e)
+{
+	this->Hitted();
 }
 
 int CMario::GetAniIdRacoon()

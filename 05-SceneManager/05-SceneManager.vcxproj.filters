@@ -144,6 +144,12 @@
     <ClCompile Include="ScoreBoard.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="SpecialBrick.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ToCoinButton.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Animation.h">
@@ -284,6 +290,12 @@
     <ClInclude Include="ScoreBoard.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="SpecialBrick.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ToCoinButton.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Text Include="mario-sample.txt">
@@ -374,6 +386,9 @@
       <Filter>Resource Files</Filter>
     </Text>
     <Text Include="hidden-map.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
+    <Text Include="button.txt">
       <Filter>Resource Files</Filter>
     </Text>
   </ItemGroup>

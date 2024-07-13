@@ -36,6 +36,7 @@ public:
 	virtual void Update(DWORD dt);
 	virtual void Render();
 	virtual void Unload();
+	virtual void BrickToCoin();
 
 
 	LPGAMEOBJECT GetPlayer() { return player; }

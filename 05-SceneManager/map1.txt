@@ -21,6 +21,7 @@ winged_koopa.txt
 flower_no_fire.txt
 cloud.txt
 score_board.txt
+button.txt
 #
 [OBJECTS]
 # type	x	y	extra_settings per object type
@@ -28,10 +29,10 @@ score_board.txt
 # See OBJECT_TYPE constants in AssetIDs.h
 
 # MARIO
-0	30	120
+0	2000	120
 
 #Portal 
-50	200	120	210	140	2
+#50	200	120	210	140	2
 
 #0	2200	120
 
@@ -122,7 +123,7 @@ score_board.txt
 1	1990	112
 1	2006	112
 1	2022	112
-1	2038	112
+26	2038	112
 
 
 1	2102	144
